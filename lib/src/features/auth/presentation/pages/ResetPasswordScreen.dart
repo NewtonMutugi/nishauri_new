@@ -108,7 +108,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         ),
                         const SizedBox(height: Constants.SPACING),
                         Text(
-                          "No worries!Enter your phone number bellow \nand we will send you code to reset \npassword",
+                          "No worries! Enter your phone number below and we will send you code to reset password",
                           style: theme.textTheme.titleMedium,
                         ),
                         const SizedBox(height: Constants.SPACING * 3),
@@ -137,9 +137,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               },
                             ]),
                             keyboardType: TextInputType.phone,
+                            maxLength: 10,
                           ),
                         ),
-                        const SizedBox(height: Constants.SPACING*6),
+                        const SizedBox(height: Constants.SPACING * 6),
                         Button(
                           title: "Submit Request",
                           backgroundColor: theme.colorScheme.primary,
@@ -151,7 +152,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           height: Constants.SPACING,
                         ),
                         LinkedRichText(
-
                           linked: "",
                           unlinked: "Back to login",
                           onPress: () =>
