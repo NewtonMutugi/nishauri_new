@@ -108,7 +108,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   ),
                                   validator: FormBuilderValidators.compose([
                                     FormBuilderValidators.required(),
-                                    FormBuilderValidators.minLength(4),
+                                    FormBuilderValidators.minLength(2),
                                   ]),
                                 ),
                               ),
@@ -124,7 +124,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   ),
                                   validator: FormBuilderValidators.compose([
                                     FormBuilderValidators.required(),
-                                    FormBuilderValidators.minLength(4),
+                                    FormBuilderValidators.minLength(2),
                                   ]),
                                 ),
                               ),
