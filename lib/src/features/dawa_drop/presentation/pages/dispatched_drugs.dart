@@ -40,7 +40,7 @@ class DispatchedDrugs extends ConsumerWidget {
                   icon: Icons.vaccines_sharp,
                   color: Constants.dawaDropColor.withOpacity(0.5),
                 ),
-                svgImage: 'assets/images/background.svg',
+                svgImage: 'assets/images/lab-empty-state.svg',
                 notFoundText: "No Dispatched drug orders"),
           );
         }
@@ -91,8 +91,8 @@ class DispatchedDrugs extends ConsumerWidget {
           icon: Icons.vaccines_sharp,
           color: Constants.dawaDropColor.withOpacity(0.5),
         ),
-        svgImage: 'assets/images/background.svg',
-        notFoundText: error.toString(),
+        svgImage: 'assets/images/lab-empty-state.svg',
+        notFoundText: "No Dispatched order",
       ),
       loading: () => Center(
         child: Column(

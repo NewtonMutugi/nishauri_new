@@ -199,7 +199,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                                     color: Colors.white,
                                                   ),
                                                 ),
-                                              )),
+                                              ),
+                                            ),
                                       onSurfixIconPressed: () {
                                         if (!_sent || _countdownSeconds <= 0) {
                                           // Start countdown timer if the code is not yet sent or timer is zero
