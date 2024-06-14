@@ -7,7 +7,7 @@ import 'package:nishauri/src/shared/styles/input_styles.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class LifeStyleInformation extends StatelessWidget {
-  const LifeStyleInformation({super.key});
+  const LifeStyleInformation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class LifeStyleInformation extends StatelessWidget {
         return asyncUser.when(
           data: (user) => Column(
             children: [
-              const SizedBox(height: Constants.SPACING),
+              SizedBox(height: Constants.SPACING),
               FormBuilderDropdown(
                 initialValue: user.maritalStatus,
                 name: "maritalStatus",
@@ -33,10 +33,10 @@ class LifeStyleInformation extends StatelessWidget {
                       value: "widow-widower", child: Text("Widow/Widower")),
                 ],
                 validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
+                  FormBuilderValidators.min(0),
                 ]),
               ),
-              const SizedBox(height: Constants.SPACING),
+              SizedBox(height: Constants.SPACING),
               FormBuilderDropdown(
                 initialValue: user.educationLevel,
                 name: "educationLevel",
@@ -58,45 +58,45 @@ class LifeStyleInformation extends StatelessWidget {
                       child: Text("Postgraduate degree")),
                 ],
                 validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
+                  FormBuilderValidators.min(0),
                 ]),
               ),
-              const SizedBox(height: Constants.SPACING),
-              FormBuilderRadioGroup(
+              SizedBox(height: Constants.SPACING),
+              FormBuilderDropdown(
                 initialValue: user.primaryLanguage,
                 name: "primaryLanguage",
                 decoration: inputDecoration(
                   prefixIcon: Icons.language,
                   label: "Primary Language",
                 ),
-                options: const [
-                  FormBuilderFieldOption(
+                items: const [
+                  DropdownMenuItem(
                       value: "swahili", child: Text("Swahili")),
-                  FormBuilderFieldOption(
+                  DropdownMenuItem(
                       value: "english", child: Text("English")),
                 ],
                 validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
+                  FormBuilderValidators.min(0),
                 ]),
               ),
-              const SizedBox(height: Constants.SPACING),
-              FormBuilderRadioGroup(
+              SizedBox(height: Constants.SPACING),
+              FormBuilderDropdown(
                 initialValue: user.occupation,
                 name: "occupation",
                 decoration: inputDecoration(
                   prefixIcon: Icons.work,
                   label: "Occupation",
                 ),
-                options: const [
-                  FormBuilderFieldOption(
+                items: const [
+                  DropdownMenuItem(
                       value: "employed", child: Text("Employed")),
-                  FormBuilderFieldOption(
+                  DropdownMenuItem(
                       value: "self-employed", child: Text("Self Employed")),
-                  FormBuilderFieldOption(
+                  DropdownMenuItem(
                       value: "unemployed", child: Text("Unemployed")),
                 ],
                 validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(),
+                  FormBuilderValidators.min(0),
                 ]),
               ),
             ],

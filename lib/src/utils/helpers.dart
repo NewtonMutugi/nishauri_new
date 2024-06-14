@@ -1,32 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:nishauri/src/shared/exeptions/http_exceptions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Function to calculate BMI
 double calculateBMI(
-    String heightUnits, String weightUnits, double weight, double height) {
-  double heightValue = height;
-  double weightValue = weight;
-
-  // Convert height and weight to standard units (meters and kilograms)
-  if (heightUnits == 'cm') {
-    heightValue /= 100;
-  } else if (heightUnits == 'in') {
-    heightValue *= 0.0254;
-  } else if (heightUnits == 'ft') {
-    heightValue *= 0.3048;
-  }
-
-  if (weightUnits == 'g') {
-    weightValue /= 1000;
-  } else if (weightUnits == 'lb') {
-    weightValue *= 0.453592;
-  }
-
-  // Calculate BMI
-  double bmi = weightValue / (heightValue * heightValue);
-  return bmi;
+    double heightCm, int weightKgs) {
+  return  weightKgs / ((heightCm/100) * (heightCm/100));
 }
 
 String getBMIStatus(double bmi) {
@@ -42,6 +25,15 @@ String getBMIStatus(double bmi) {
     return "Obese Class 2 (Severe)";
   } else {
     return "Obese Class 3 (Very Severe)";
+  }
+}
+String getBMIStatusSimplified(double bmi) {
+  if (bmi >= 30) {
+    return "Obese";
+  } else if (bmi < 18.5) {
+    return "Malnutrition";
+  } else {
+    return "Normal";
   }
 }
 
@@ -129,4 +121,58 @@ void handleResponseError(
   //     content: Text(err.toString()),
   //   ),
   // );
+}
+
+
+Size getOrientationAwareScreenSize(BuildContext context) {
+  final media = MediaQuery.of(context);
+  final orientation = media.orientation;
+  if(orientation == Orientation.portrait) {
+    return media.size;
+  }
+  return Size(media.size.height, media.size.width);
+}
+
+Future<void> makePhoneCall(String phoneNumber) async {
+  final Uri launchUri = Uri(
+    scheme: 'tel',
+    path: phoneNumber,
+  );
+  await launchUrl(launchUri);
+}
+
+List<DateTime> getTimesBetween(DateTime startTime, DateTime endTime, Duration duration) {
+
+  List<DateTime> times = [];
+  DateTime currentTime = startTime;
+  while (currentTime.isBefore(endTime.add(duration))) {
+    times.add(currentTime);
+    currentTime = currentTime.add(duration);
+  }
+  return times;
+}
+
+
+class Debouncer {
+  /// Debouncer class used to limit the frequency of function executions.
+  /// Useful for reducing the number of calls to expensive operations like API calls.
+  ///
+  /// Example Usage:
+  /// ```
+  /// final debouncer = Debouncer(milliseconds: 500);
+  /// debouncer.run(() {
+  ///   // Your function that should be debounced
+  /// });
+  /// ```
+  final int milliseconds;
+  Timer? _timer;
+  Debouncer({required this.milliseconds});
+  /// Runs the provided action after [milliseconds] delay.
+  /// Cancels any previously scheduled action.
+  void run(VoidCallback action) {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
 }

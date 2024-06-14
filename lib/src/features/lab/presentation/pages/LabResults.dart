@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nishauri/src/features/lab/data/providers/VirolLoadprovider.dart';
 import 'package:nishauri/src/utils/constants.dart';
+import 'package:nishauri/src/shared/display/background_image_widget.dart';
 
 class LabResults extends StatelessWidget {
   const LabResults({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class LabResults extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final color = data[index].status == "Viral unsuppressed" ? Colors.red : null;
+                      final color = data[index].status == "Viral unsuppressed" ? Colors.red : Colors.greenAccent;
                       return Column(
                         children: [
                           const Divider(),
@@ -48,7 +49,7 @@ class LabResults extends StatelessWidget {
                                           : 'Viral Suppressed (${data[index].plot})',
                                       style: theme.textTheme.titleMedium,
                                     ),
-                                   const Divider(), // Add a Divider widget to separate the title and content
+                                    const Divider(), // Add a Divider widget to separate the title and content
                                   ],
                                 ),
                                 content: Text(
@@ -69,8 +70,8 @@ class LabResults extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  " ${data[index].date} ",
-                                  style: theme.textTheme.titleMedium
+                                    " ${data[index].date} ",
+                                    style: theme.textTheme.titleMedium
                                 ),
                                 Text(
                                   " ${data[index].result} ",
@@ -91,7 +92,10 @@ class LabResults extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            trailing: Icon(Icons.info_outline, color: color),
+
                           )
+
                         ],
                       );
                     },
@@ -99,7 +103,10 @@ class LabResults extends StatelessWidget {
                 ),
               ],
             ),
-            error: (error, _) => Center(child: Text(error.toString())),
+              error: (error, _) => BackgroundImageWidget(
+                svgImage: 'assets/images/background.svg',
+                notFoundText: error.toString(),
+              ),
             loading: () => Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

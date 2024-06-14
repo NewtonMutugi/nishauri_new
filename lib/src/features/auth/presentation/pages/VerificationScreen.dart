@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,8 +24,31 @@ class _VerificationScreenState extends State<VerificationScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _loading = false;
   bool _requestLoading = false;
-
   bool _sent = false;
+  int _countdownSeconds = 60;
+  Timer? _countdownTimer;
+
+  void _startCountdownTimer() {
+    // const oneMinute = Duration(minutes: 1);
+    _countdownSeconds = 60;
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_countdownSeconds > 0) {
+          _countdownSeconds--;
+        } else {
+          // If the countdown is finished, cancel the timer
+          _countdownTimer?.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // Cancel the countdown timer when the widget is disposed
+    _countdownTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +65,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
             userStateNotifier
                 .verify(_formKey.currentState!.value)
                 .then((value) {
-              // reload auth to redirect to profile update
               authStateNotifier.markProfileAsAccountVerified();
+              authStateNotifier.markProfileAsUpdated();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(value)),
               );
@@ -50,7 +74,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
               handleResponseError(context, _formKey.currentState!.fields, err,
                   authStateNotifier.logout);
             }).whenComplete(() {
-              // Set the submitting to false whether or not an exception is thrown
               setState(() {
                 _loading = false;
               });
@@ -111,30 +134,32 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     name: "mode",
                                     initialValue: "sms",
                                     decoration: const InputDecoration(
-                                        label: Text(
-                                            "Want to receive OTP code through?")),
+                                      label: Text(
+                                          "Want to receive OTP code through?"),
+                                    ),
                                     options: [
-                                      FormBuilderFieldOption(
-                                        value: "email",
-                                        child: ListTile(
-                                            title: const Text('Email'),
-                                            subtitle: Text(user.email),
-                                            trailing: const Icon(Icons.email)),
-                                      ),
-                                      FormBuilderFieldOption(
-                                        value: "watsapp",
-                                        child: ListTile(
-                                          title: const Text("WatsApp"),
-                                          subtitle: Text(user.phoneNumber),
-                                          trailing:
-                                              const Icon(Icons.chat_outlined),
-                                        ),
-                                      ),
+                                      // FormBuilderFieldOption(
+                                      //   value: "email",
+                                      //   child: ListTile(
+                                      //     title: const Text('Email'),
+                                      //     subtitle: Text(user.email ?? ''),
+                                      //     trailing: const Icon(Icons.email),
+                                      //   ),
+                                      // ),
+                                      // FormBuilderFieldOption(
+                                      //   value: "watsapp",
+                                      //   child: ListTile(
+                                      //     title: const Text("WatsApp"),
+                                      //     subtitle: Text(user.phoneNumber ?? ''),
+                                      //     trailing: const Icon(Icons.chat_outlined),
+                                      //   ),
+                                      // ),
                                       FormBuilderFieldOption(
                                         value: "sms",
                                         child: ListTile(
                                           title: const Text("SMS"),
-                                          subtitle: Text(user.phoneNumber),
+                                          subtitle:
+                                              Text(user.phoneNumber ?? ''),
                                           trailing: const Icon(Icons.sms),
                                         ),
                                       ),
@@ -154,51 +179,53 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                           ? const CircularProgressIndicator()
                                           : Text(
                                               _sent
-                                                  ? "Resend Code"
+                                                  ? (_countdownSeconds > 0
+                                                      ? "Resend Code ($_countdownSeconds)"
+                                                      : "Resend Code")
                                                   : "Get code",
                                             ),
                                       onSurfixIconPressed: () {
-                                        // TODO Handle outcome errors and success
-                                        setState(() {
-                                          _requestLoading = true;
-                                        });
-                                        ref
-                                            .read(userProvider.notifier)
-                                            .getOTPCode(_formKey.currentState
-                                                ?.instantValue["mode"])
-                                            .then((value) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(value),
-                                            ),
-                                          );
-                                        }).catchError((err) {
-                                          handleResponseError(
-                                            context,
-                                            _formKey.currentState!.fields,
-                                            err,
-                                            ref
-                                                .read(
-                                                    authStateProvider.notifier)
-                                                .logout,
-                                          );
-                                        }).whenComplete(() {
+                                        if (!_sent || _countdownSeconds <= 0) {
+                                          // Start countdown timer if the code is not yet sent or timer is zero
+                                          _startCountdownTimer();
                                           setState(() {
-                                            _requestLoading = false;
+                                            _requestLoading = true;
                                           });
-                                        });
-                                        setState(() {
-                                          _sent = true;
-                                          // _formState = _formState.copyWith(values: {..._formState.values,"otp": "1234"});
-                                        });
+                                          ref
+                                              .read(userProvider.notifier)
+                                              .getOTPCode(_formKey.currentState
+                                                  ?.instantValue["mode"])
+                                              .then((value) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(value),
+                                              ),
+                                            );
+                                          }).catchError((err) {
+                                            handleResponseError(
+                                              context,
+                                              _formKey.currentState!.fields,
+                                              err,
+                                              ref
+                                                  .read(authStateProvider
+                                                      .notifier)
+                                                  .logout,
+                                            );
+                                          }).whenComplete(() {
+                                            setState(() {
+                                              _requestLoading = false;
+                                              _sent = true;
+                                            });
+                                          });
+                                        }
                                       },
-                                      label: "OTP verification ode",
+                                      label: "OTP verification code",
                                     ),
-                                    // readOnly: !(_formKey.currentState!.value["mode"].isNotEmpty == true && _sent),
                                     validator: FormBuilderValidators.compose([
                                       FormBuilderValidators.required(),
                                     ]),
+                                    keyboardType: TextInputType.number,
                                   ),
                                   const SizedBox(height: Constants.SPACING),
                                   const SizedBox(height: Constants.SPACING),
@@ -207,9 +234,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     onPress: handleSubmit,
                                     loading: _loading,
                                   ),
-                                  const SizedBox(
-                                    height: Constants.SPACING,
-                                  ),
+                                  const SizedBox(height: Constants.SPACING),
                                   Consumer(
                                     builder: (context, ref, child) {
                                       return LinkedRichText(

@@ -26,10 +26,17 @@ class ProfileWizardFormScreen extends HookConsumerWidget {
     final loading = useState<bool>(false);
 
     final stepFieldsToValidate = [
-      ["image", "username"],
-      ["firstName", "lastName", "dateOfBirth", "gender"],
-      ["email", "phoneNumber", "county", "constituency"],
-      ["bloodGroup", "allergies", "disabilities", "chronics"],
+      [
+        // "image",
+        "username"
+      ],
+      ["f_name", "l_name", "dob", "gender"],
+      [
+        "email", "phone_no",
+        // "county",
+        "landmark"
+      ],
+      ["blood_group", "allergies", "disabilities", "chronics"],
       ["weight", "height"],
       ["maritalStatus", "educationLevel", "primaryLanguage", "occupation"],
     ];
@@ -110,16 +117,13 @@ class ProfileWizardFormScreen extends HookConsumerWidget {
     void handleSubmit() {
       if (formKey.currentState!.validate()) {
         loading.value = true;
-        final dateOfBirth = formKey.currentState!.instantValue["dateOfBirth"];
-        ref
-            .read(userProvider.notifier)
-            .updateUser(User.fromJson({
-              ...formKey.currentState!.instantValue,
-              "dateOfBirth": dateOfBirth is DateTime
-                  ? dateOfBirth.toIso8601String()
-                  : dateOfBirth
-            }))
-            .then((value) {
+        final dateOfBirth = formKey.currentState!.instantValue["dob"];
+        ref.read(userProvider.notifier).updateUser({
+          ...formKey.currentState!.instantValue,
+          "dob": dateOfBirth is DateTime
+              ? dateOfBirth.toIso8601String()
+              : dateOfBirth
+        }).then((value) {
           //     Update auth state and redirect to home
           return ref.read(authStateProvider.notifier).markProfileAsUpdated();
         }).then((value) {
@@ -128,14 +132,16 @@ class ProfileWizardFormScreen extends HookConsumerWidget {
         }).catchError((e) {
           switch (e) {
             case BadRequestException e:
-              handleResponseError(context, formKey.currentState!.fields, e, ref.read(authStateProvider.notifier).logout);
+              handleResponseError(context, formKey.currentState!.fields, e,
+                  ref.read(authStateProvider.notifier).logout);
               //   Navigate to 1st step with the error
               final fieldStep = stepFieldsToValidate.indexWhere((fields) =>
                   fields.any((field) => e.errors.containsKey(field)));
               currentStep.value = fieldStep;
               break;
             default:
-              handleResponseError(context, formKey.currentState!.fields, e, ref.read(authStateProvider.notifier).logout);
+              handleResponseError(context, formKey.currentState!.fields, e,
+                  ref.read(authStateProvider.notifier).logout);
               debugPrint("[PROFILE-WIZARD]: ${e.toString()}");
           }
         }).whenComplete(() => loading.value = false);
@@ -159,7 +165,7 @@ class ProfileWizardFormScreen extends HookConsumerWidget {
               return IconButton(
                 onPressed: () {
                   try {
-                    authState.whenData((value){
+                    authState.whenData((value) {
                       if (value.isProfileComplete) {
                         context.goNamed(RouteNames.PROFILE_SETTINGS);
                       }
@@ -231,18 +237,29 @@ class ProfileWizardFormScreen extends HookConsumerWidget {
                                     ),
                                   ),
                                   actions: [
-                                    Button(
-                                      title: "Submit",
-                                      onPress: () {
-                                        context.pop(1);
-                                      },
-                                    ),
-                                    Button(
-                                      title: "Cancel",
-                                      onPress: context.pop,
-                                      titleStyle: theme.textTheme.titleLarge
-                                          ?.copyWith(
-                                              color: theme.colorScheme.error),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Button(
+                                            title: "Submit",
+                                            onPress: () {
+                                              context.pop(1);
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(width: 8),
+                                        Expanded(
+                                          child: Button(
+                                            title: "Cancel",
+                                            onPress: context.pop,
+                                            titleStyle: theme
+                                                .textTheme.titleLarge
+                                                ?.copyWith(
+                                              color: theme.colorScheme.error,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

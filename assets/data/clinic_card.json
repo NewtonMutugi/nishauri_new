@@ -1,33 +1,27 @@
 {
   "programs": [
     {
-      "name": "ART",
-      "items": {
-        "currentRegimen": "string",
-        "currentViralLoad": "string",
-        "cd4Count": "string",
-        "adherence": "string",
-        "appointmentDate": "2021-04-13",
-        "nextRefillDate": "2021-04-13"
-      }
+      "name": "Tuberculosis Program",
+      "facility": "No facility",
+      "patient_observations": []
     },
     {
-      "name": "TB",
-      "items": {
-        "treatmentPlan": "string",
-        "drugAdherence": "string",
-        "treatmentOutcome": "string",
-        "lastFollowUpDate": "2021-04-13"
-      }
-    },
-    {
-      "name": "Malaria",
-      "items": {
-        "diagnosis": "string",
-        "treatment": "string",
-        "recoveryStatus": "string",
-        "nextCheckupDate": "2021-04-13"
-      }
+      "name": "ART Program",
+      "facility": "Kiseuni Dispensary",
+      "patient_observations": [
+        {
+          "label": "Ccc No",
+          "value": "1234500001"
+        },
+        {
+          "label": "Regimen",
+          "value": "AF2E"
+        },
+        {
+          "label": "Viral Load",
+          "value": "402 copies/ml"
+        }
+      ]
     }
   ]
 }

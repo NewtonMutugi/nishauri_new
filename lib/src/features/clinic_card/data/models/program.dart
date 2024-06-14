@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nishauri/src/features/clinic_card/data/models/PatientObservation.dart';
 import 'package:uuid/uuid.dart';
 part 'program.freezed.dart';
 
@@ -8,7 +9,8 @@ class Program with _$Program {
   const factory Program({
     required String id,
     required String name,
-    required Map<String, String> items,
+    String? facility_name,
+    required List<PatientObservation> obs,
   }) = _Program;
 
   factory Program.fromJson(Map<String, dynamic> json) {
@@ -16,7 +18,10 @@ class Program with _$Program {
     return Program(
       id:uuid,
       name: json['name'],
-      items: Map<String, String>.from(json['items']),
+      facility_name: json['facility'],
+      obs: (json['patient_observations'] as List<dynamic>? ?? [])
+          .map((obsJson) => PatientObservation.fromJson(obsJson))
+          .toList(),
     );
   }
 }

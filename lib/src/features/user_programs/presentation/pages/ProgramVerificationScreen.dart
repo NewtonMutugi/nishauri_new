@@ -27,13 +27,13 @@ class ProgramVerificationScreen extends HookConsumerWidget {
     final loading = useState<bool>(false);
     final sent = useState<bool>(false);
     final submittingRequest = useState<bool>(false);
-    final programNotifier = ref.watch(programProvider.notifier);
+    final programNotifier = ref.watch(userProgramProvider.notifier);
 
     handleSubmit() {
       if (formKey.currentState != null &&
           formKey.currentState!.saveAndValidate()) {
         loading.value = true;
-        final programNotifier = ref.watch(programProvider.notifier);
+        final programNotifier = ref.watch(userProgramProvider.notifier);
         programNotifier.verifyProgramOTP({
           ...formKey.currentState!.value,
           "programCode": verificationDetail.programCode
@@ -41,7 +41,7 @@ class ProgramVerificationScreen extends HookConsumerWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                  "${ProgramCodeNames.getProgramNameByCode(verificationDetail.programCode)} Program Registered successfully"),
+                  "${ProgramCodeNameIds.getProgramNameByCode(verificationDetail.programCode?? '')} Program Registered successfully"),
             ),
           );
           context.go("/");
@@ -106,7 +106,7 @@ class ProgramVerificationScreen extends HookConsumerWidget {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   label: Text(
-                    verificationDetail.message,
+                    verificationDetail.message?? '',
                   ),
                 ),
                 validator: FormBuilderValidators.compose([
