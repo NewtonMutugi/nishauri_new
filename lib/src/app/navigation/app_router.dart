@@ -10,6 +10,8 @@ import 'package:nishauri/src/features/appointments/presentation/pages/Appointmen
 import 'package:nishauri/src/features/art/presentation/FacilityDirectory.dart';
 import 'package:nishauri/src/features/auth/data/models/auth_state.dart';
 import 'package:nishauri/src/features/auth/data/providers/auth_provider.dart';
+import 'package:nishauri/src/features/auth/data/respositories/auth_repository.dart';
+import 'package:nishauri/src/features/auth/data/services/AuthApiService.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/UpdatePassword.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/LoginScreen.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/RegistrationScreen.dart';
@@ -23,8 +25,10 @@ import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorResult
 import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorScreen.dart';
 import 'package:nishauri/src/features/chatbot/presentations/ChatScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/pages/ClinicCardScreen.dart';
+import 'package:nishauri/src/features/common/presentation/pages/FaqPage.dart';
 import 'package:nishauri/src/features/common/presentation/pages/MainScreen.dart';
 import 'package:nishauri/src/features/common/presentation/pages/SettingsScreen.dart';
+import 'package:nishauri/src/features/common/presentation/pages/blog.dart';
 import 'package:nishauri/src/features/confirm_delivery/presentation/pages/ConfirmDeliveryScreen.dart';
 import 'package:nishauri/src/features/dashboard/presentation/pages/Dashboard.dart';
 import 'package:nishauri/src/features/dawa_drop/presentation/pages/dawa_drop_menu.dart';
@@ -92,13 +96,13 @@ class RouterNotifier extends ChangeNotifier {
 
     // Handle with error
     if (loginState_.hasError && areWeInOpenRoutes) return null;
-    if (loginState_.hasError && !areWeInOpenRoutes) return "/auth/login";
+    if (loginState_.hasError && !areWeInOpenRoutes) return "/auth";
     // Handle with value
     final loginState = loginState_.requireValue;
     // Is user not logged in and accessing open route then let them be?
     if (!loginState.isAuthenticated && areWeInOpenRoutes) return null;
     // if not logged in and trying to accept secure root then redirect to login
-    if (!loginState.isAuthenticated && !areWeInOpenRoutes) return "/auth/login";
+    if (!loginState.isAuthenticated && !areWeInOpenRoutes) return "/auth";
     // If user already logged in and moving on open routes then redirect to home
     if (loginState.isAuthenticated == true && areWeInOpenRoutes) return '/';
     // If user is logged in bt not verified account the redirect to verification
@@ -116,6 +120,12 @@ class RouterNotifier extends ChangeNotifier {
   FutureOr<String?> _localRedirectLogic(
       BuildContext context, GoRouterState state) {
     return null;
+  }
+
+  final AuthRepository _repository = AuthRepository(AuthApiService());
+  Future<String> getPhone() async {
+    var phone = await _repository.getUserPhoneNumber();
+    return phone;
   }
 
   List<GoRoute> get routes => [
@@ -140,14 +150,38 @@ class RouterNotifier extends ChangeNotifier {
           builder: (context, state) => const MainScreen(),
           routes: secureRoutes,
         ),
-        GoRoute(
-          name: RouteNames.VERIFY_ACCOUNT,
-          path: '/account-verify',
-          builder: (BuildContext context, GoRouterState state) {
-            return const VerificationScreen();
+        // GoRoute(
+        //   name: RouteNames.VERIFY_ACCOUNT,
+        //   path: '/account-verify',
+        //   builder: (BuildContext context, GoRouterState state) {
+        //     final extras = getPhone() as String;
+        //     print("this is extras $extras");
+        //     return VerificationScreen(username: extras);
+        //   },
+        // ),
+    GoRoute(
+      name: RouteNames.VERIFY_ACCOUNT,
+      path: '/account-verify',
+      builder: (BuildContext context, GoRouterState state) {
+        return FutureBuilder<String>(
+          future: getPhone(),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              final extras = snapshot.data!;
+              return VerificationScreen(username: extras);
+            } else {
+              return const Center(child: Text('No data available'));
+            }
           },
-        ),
-        GoRoute(
+        );
+      },
+    ),
+
+    GoRoute(
           name: RouteNames.PROFILE_EDIT_FORM,
           path: '/profile-edit',
           builder: (BuildContext context, GoRouterState state) {
@@ -169,7 +203,7 @@ final List<RouteBase> secureRoutes = [
     name: RouteNames.Facility_Directory,
     path: 'Facility-directory',
     builder: (BuildContext context, GoRouterState state) {
-      return FacilityDirectoryScreen();
+      return const FacilityDirectoryScreen();
     },
   ),
   GoRoute(
@@ -216,10 +250,24 @@ final List<RouteBase> secureRoutes = [
     },
   ),
   GoRoute(
+    name: RouteNames.FAQs,
+    path: 'faqs',
+    builder: (BuildContext context, GoRouterState state) {
+      return const FAQPage(); 
+    }
+    ),
+  GoRoute(
     name: RouteNames.PROFILE_SETTINGS,
     path: 'profile',
     builder: (BuildContext context, GoRouterState state) {
       return const ProfileScreen();
+    },
+  ),GoRoute(
+    name: RouteNames.BLOG_POST,
+    path: 'blog',
+    builder: (BuildContext context, GoRouterState state) {
+      dynamic ann = state.extra;
+      return BlogPostScreen(announcement: ann,);
     },
   ),
   GoRoute(
@@ -238,7 +286,6 @@ final List<RouteBase> secureRoutes = [
     },
     routes: dawaDropRoutes,
   ),
-
   GoRoute(
     name: RouteNames.DASHBOARD,
     path: 'dashboard',
@@ -261,6 +308,16 @@ final List<RouteBase> secureRoutes = [
 
             return AppointmentRescheduleScreen(
               props: payload,
+            );
+          },
+        ),
+        GoRoute(
+          name: RouteNames.HIV_ART_APPOINTMENT_DETAILS,
+          path: "art-appointment",
+          builder: (BuildContext context, GoRouterState state) {
+            final extras = state.extra as Appointment;
+            return ARTAppointmentDetailScreen(
+              artAppointment: extras,
             );
           },
         ),
@@ -489,16 +546,6 @@ final List<RouteBase> dawaDropRoutes = [
               }
             }),
       ]),
-  GoRoute(
-    name: RouteNames.HIV_ART_APPOINTMENT_DETAILS,
-    path: "art-appointment",
-    builder: (BuildContext context, GoRouterState state) {
-      final extras = state.extra as Appointment;
-      return ARTAppointmentDetailScreen(
-        artAppointment: extras,
-      );
-    },
-  ),
 ];
 
 final List<RouteBase> programMenu = [
@@ -513,9 +560,8 @@ final List<RouteBase> programMenu = [
         name: RouteNames.VERIFY_PROGRAM_OTP,
         path: 'verify',
         builder: (BuildContext context, GoRouterState state) {
-          ProgramVerificationDetail extra =
-          state.extra! as ProgramVerificationDetail;
-          return ProgramVerificationScreen(verificationDetail: extra);
+          final extra = state.extra as Map<String, dynamic>;
+          return ProgramVerificationScreen(payload: extra);
         },
       ),
     ],

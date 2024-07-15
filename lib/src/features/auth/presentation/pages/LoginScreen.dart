@@ -6,6 +6,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nishauri/src/features/auth/data/providers/auth_provider.dart';
 import 'package:nishauri/src/features/user/data/providers/user_provider.dart';
+import 'package:nishauri/src/features/user_preference/data/providers/settings_provider.dart';
 import 'package:nishauri/src/shared/display/LinkedRichText.dart';
 import 'package:nishauri/src/shared/display/Logo.dart';
 import 'package:nishauri/src/shared/display/label_input_container.dart';
@@ -15,6 +16,13 @@ import 'package:nishauri/src/shared/styles/input_styles.dart';
 import 'package:nishauri/src/utils/constants.dart';
 import 'package:nishauri/src/utils/helpers.dart';
 import 'package:nishauri/src/utils/routes.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+Future<String> version() async {
+  final packageInfo = await PackageInfo.fromPlatform();
+  final version = packageInfo.version;
+  return version;
+}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,6 +32,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String _appVersion = "Loading...";
   final _formKey = GlobalKey<FormBuilderState>();
   bool _hidePassword = true;
   bool _loading = false;
@@ -31,6 +40,19 @@ class _LoginScreenState extends State<LoginScreen> {
   void _togglePassword() {
     setState(() {
       _hidePassword = !_hidePassword;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVersion();
+  }
+
+  Future<void> _loadVersion() async {
+    final appVersion = await version();
+    setState(() {
+      _appVersion = appVersion;
     });
   }
 
@@ -105,6 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         placeholder: "Enter your number",
                       ),
                       keyboardType: TextInputType.phone,
+                      maxLength: 10,
                     ),
                   ),
                   const SizedBox(height: Constants.SPACING),
@@ -154,13 +177,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                             final authNotifier =
                                 ref.read(authStateProvider.notifier);
-                            authNotifier
-                                .login(_formKey.currentState!.value)
-                                .then((_) {
+                            final settings =
+                                ref.read(settingsNotifierProvider.notifier);
+                            var version = {"app_version": _appVersion};
+                            var mergedData = {
+                              ..._formKey.currentState!.value,
+                              ...version
+                            };
+                            authNotifier.login(mergedData).then((_) {
                               //     Update user state
                               ref.read(userProvider.notifier).getUser();
                             }).then(
                               (_) {
+                                settings.patchSettings(
+                                  firstTimeInstallation: false,
+                                  // firstNuruAccess: true,
+                                );
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Login successful!'),
@@ -201,6 +233,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             context.goNamed(RouteNames.REGISTER_SCREEN),
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    'App Version: $_appVersion',
+                    style: theme.textTheme.titleSmall!
+                        .copyWith(color: Constants.labResultsColor),
                   ),
                 ],
               ),

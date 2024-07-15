@@ -45,11 +45,21 @@ class MainMenuScreen extends StatelessWidget {
               builder: (context, ref, child) {
                 final userProgram = ref.watch(userProgramProvider);
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: Constants.SPACING),
-                    Center(
-                      child: Text("App modules",
-                          style: theme.textTheme.headlineLarge),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Constants.SPACING,
+                          vertical: Constants.SPACING),
+                      child: Text(
+                        "App Modules📱",
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: Constants.SPACING * 2),
                     Expanded(
@@ -98,7 +108,7 @@ class MainMenuScreen extends StatelessWidget {
                                         item.title ?? "",
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
-                                          color: theme.canvasColor,
+                                          color: Colors.white,
                                           fontWeight: FontWeight.normal,
                                         ),
                                         overflow: TextOverflow.ellipsis,
@@ -122,31 +132,7 @@ class MainMenuScreen extends StatelessWidget {
                             // ),
                             items: [
                               // get generic menu items
-                              ...getGenericMenuItems(context)
-                                ..removeWhere((element) {
-                                  if (data.where((element) => element.isActive).isEmpty &&
-                                      element.title ==
-                                          MenuItemNames.PROGRAM_MENU) {
-                                    return true;
-                                  }
-                                  return false;
-                                }),
-                              if (data.where((element) => element.isActive).isEmpty)
-                                MenuItem(
-                                  icon: Icon(
-                                    Icons.add,
-                                    size: Constants.iconSize,
-                                    color: theme.colorScheme.inversePrimary,
-                                  ),
-                                  shortcutIcon: Icon(
-                                    Icons.add,
-                                    color: theme.colorScheme.inversePrimary,
-                                  ),
-                                  // color: theme.colorScheme.primary,
-                                  title: "Add Programme",
-                                  onPressed: () => context.goNamed(
-                                      RouteNames.PROGRAME_REGISTRATION_SCREEN),
-                                ),
+                              ...getGenericMenuItems(context),
                             ],
                           );
                         },

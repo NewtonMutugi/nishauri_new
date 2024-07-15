@@ -37,8 +37,8 @@ class ClinicCardScreen extends HookConsumerWidget {
         if (activePrograms.isEmpty) {
           return BackgroundImageWidget(
             customAppBar: CustomAppBar(
-              title: "My Clinic Card",
-              icon: Icons.file_present,
+              title: "My Clinic Card 🎫",
+              // icon: Icons.file_present,
               subTitle: "Access medical services using \nyour clinic cards",
               color: Colors.blue[900],
             ),
@@ -46,8 +46,8 @@ class ClinicCardScreen extends HookConsumerWidget {
             notFoundText: "No programs available",
           );
         }
-        final screens =
-            activePrograms.map((program) => ClinicalDetailsTab(program: program));
+        final screens = activePrograms
+            .map((program) => ClinicalDetailsTab(program: program));
 
         return Scaffold(
           body: Column(
