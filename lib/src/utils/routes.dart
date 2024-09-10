@@ -60,6 +60,7 @@ class RouteNames {
 
   static const BLOOD_PRESSURE = "blood-pressure";
   static const SELF_SCREENING = "self-screening";
+  static const MEASURE_BP = "measure-bp";
 
   static const PERIOD_PLANNER = "Period Planner";
   static const PERIOD_PLANNER_SCREEN = "Period Planner Screen";
@@ -72,7 +73,6 @@ class RouteNames {
   static const CHAT_USER = "chat-user";
   static const INSIGHT = "insight";
   static const BP_INSIGHT = "bp-insight";
-
 }
 
 class MenuItemNames {
@@ -108,7 +108,6 @@ class MenuItemNames {
   static const CHAT_HCW = "Chat with HCW";
   static const CHAT_DETAIL = "Chat Detail";
   static const INSIGHT = "Insight";
-
 }
 
 class ProgramCodeNameIds {

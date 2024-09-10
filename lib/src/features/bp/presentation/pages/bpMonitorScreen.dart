@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nishauri/src/features/bp/data/models/blood_pressure.dart';
 import 'package:nishauri/src/features/bp/data/providers/blood_pressure_provider.dart';
 import 'package:nishauri/src/features/bp/presentation/pages/BPLinelistScreen.dart';
@@ -8,6 +9,7 @@ import 'package:nishauri/src/features/bp/presentation/pages/trend_chart_screen.d
 import 'package:nishauri/src/shared/display/CustomeAppBar.dart';
 import 'package:nishauri/src/shared/display/background_image_widget.dart';
 import 'package:nishauri/src/utils/constants.dart';
+import 'package:nishauri/src/utils/routes.dart';
 
 class BPMonitorScreen extends ConsumerStatefulWidget {
   @override
@@ -18,7 +20,8 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
   final _formKey = GlobalKey<FormState>();
   final _notesController = TextEditingController();
 
-  void _clearForm(double systolic, double diastolic, double heartRate, TextEditingController notesController) {
+  void _clearForm(double systolic, double diastolic, double heartRate,
+      TextEditingController notesController) {
     setState(() {
       systolic = 120;
       diastolic = 80;
@@ -27,7 +30,8 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
     });
   }
 
-  void _submitData(BuildContext context, double systolic, double diastolic, double heartRate, TextEditingController notesController) {
+  void _submitData(BuildContext context, double systolic, double diastolic,
+      double heartRate, TextEditingController notesController) {
     final String notes = notesController.text;
     final DateTime measurementTime = DateTime.now();
 
@@ -39,7 +43,10 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
       notes: notes,
     );
 
-    ref.read(bloodPressureRepositoryProvider).saveBloodPressure(bp).then((value) {
+    ref
+        .read(bloodPressureRepositoryProvider)
+        .saveBloodPressure(bp)
+        .then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(value)),
       );
@@ -99,7 +106,8 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                     children: [
                       Text(
                         'Systolic Pressure (mmHg): ${systolic.toInt()}',
-                        style: TextStyle(color: _getSliderColor('Systolic', systolic)),
+                        style: TextStyle(
+                            color: _getSliderColor('Systolic', systolic)),
                       ),
                       Slider(
                         value: systolic,
@@ -116,7 +124,8 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                       Text(_getWarningText('Systolic', systolic)),
                       Text(
                         'Diastolic Pressure (mmHg): ${diastolic.toInt()}',
-                        style: TextStyle(color: _getSliderColor('Diastolic', diastolic)),
+                        style: TextStyle(
+                            color: _getSliderColor('Diastolic', diastolic)),
                       ),
                       Slider(
                         value: diastolic,
@@ -133,7 +142,8 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                       Text(_getWarningText('Diastolic', diastolic)),
                       Text(
                         'Heart Rate (bpm): ${heartRate.toInt()}',
-                        style: TextStyle(color: _getSliderColor('Heart Rate', heartRate)),
+                        style: TextStyle(
+                            color: _getSliderColor('Heart Rate', heartRate)),
                       ),
                       Slider(
                         value: heartRate,
@@ -171,7 +181,8 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    _submitData(context, systolic, diastolic, heartRate, notesController);
+                    _submitData(context, systolic, diastolic, heartRate,
+                        notesController);
                     _reloadData();
                   },
                   child: Text('Submit'),
@@ -194,8 +205,8 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
     final theme = Theme.of(context);
     return bloodPressureListAsync.when(
       data: (data) {
-
-        final displayedData = data.length > 5 ? data.sublist(data.length - 5) : data;
+        final displayedData =
+            data.length > 5 ? data.sublist(data.length - 5) : data;
         return Scaffold(
           body: Column(
             children: [
@@ -237,10 +248,17 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                 onPressed: () {
                   _showDialogForm(context);
                   _reloadData();
-                  },
+                },
                 child: Icon(Icons.add),
                 heroTag: null,
               ),
+              SizedBox(height: 10),
+              FloatingActionButton(
+                onPressed: () {
+                  context.goNamed(RouteNames.MEASURE_BP);
+                },
+                child: Icon(Icons.medical_services_rounded),
+              )
             ],
           ),
         );

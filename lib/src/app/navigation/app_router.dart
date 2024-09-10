@@ -26,6 +26,7 @@ import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorResult
 import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorScreen.dart';
 import 'package:nishauri/src/features/bmi/presentation/pages/BMIHistoryScreen.dart';
 import 'package:nishauri/src/features/bp/presentation/pages/bpMonitorScreen.dart';
+import 'package:nishauri/src/features/bp/presentation/pages/measureBpScreen.dart';
 import 'package:nishauri/src/features/chatbot/presentations/ChatScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/pages/ClinicCardScreen.dart';
 import 'package:nishauri/src/features/common/presentation/pages/FaqPage.dart';
@@ -394,61 +395,56 @@ final List<RouteBase> secureRoutes = [
           },
         )
       ]),
-      //Routes for the Period Planner
-    GoRoute(
-      name: RouteNames.PERIOD_PLANNER,
-      path: 'period-planner',
-      builder: (BuildContext context, GoRouterState state) {
-        return const PeriodPlanner();  
-      },
-      routes: periodPlannerRoutes,
-
-    ),  
+  //Routes for the Period Planner
+  GoRoute(
+    name: RouteNames.PERIOD_PLANNER,
+    path: 'period-planner',
+    builder: (BuildContext context, GoRouterState state) {
+      return const PeriodPlanner();
+    },
+    routes: periodPlannerRoutes,
+  ),
 ];
 
 final List<RouteBase> periodPlannerRoutes = [
   GoRoute(
-    name: RouteNames.PERIOD_PLANNER_MENU,
-    path: 'period-planner-menu',
-    builder: (BuildContext context, GoRouterState state) {
-      return const PeriodPlannerMenu();
-    },
-    routes: [
-      GoRoute(
-        name: RouteNames.PERIOD_PLANNER_SCREEN,
-        path: 'period-planner-screen',
-        builder: (BuildContext context, GoRouterState state) {
-          return const PeriodPlannerScreen();
-        },
-      ),
-
-      GoRoute(
-        name: RouteNames.PERIOD_PLANNER_CALENDAR,
-        path: 'period-planner-calendar',
-        builder: (BuildContext context, GoRouterState state) {
-          return const PeriodCalendar();
-        },
-        routes: [
-          GoRoute(
-            name: RouteNames.PERIOD_PLANNER_EDIT_PERIODS,
-            path: 'period-planner-edit-period-calendar',
+      name: RouteNames.PERIOD_PLANNER_MENU,
+      path: 'period-planner-menu',
+      builder: (BuildContext context, GoRouterState state) {
+        return const PeriodPlannerMenu();
+      },
+      routes: [
+        GoRoute(
+          name: RouteNames.PERIOD_PLANNER_SCREEN,
+          path: 'period-planner-screen',
+          builder: (BuildContext context, GoRouterState state) {
+            return const PeriodPlannerScreen();
+          },
+        ),
+        GoRoute(
+            name: RouteNames.PERIOD_PLANNER_CALENDAR,
+            path: 'period-planner-calendar',
             builder: (BuildContext context, GoRouterState state) {
-              return  EditPeriodsScreen();
+              return const PeriodCalendar();
             },
-          ),
-        ]
-      ),
-      GoRoute(
-        name: RouteNames.PERIOD_PLANNER_LOG_PERIODS,
-        path: 'period-planner-log-period-calendar',
-        builder: (BuildContext context, GoRouterState state) {
-          return LogPeriodScreen();
-        },
-      ),
-    ]),
-  
-
-]; 
+            routes: [
+              GoRoute(
+                name: RouteNames.PERIOD_PLANNER_EDIT_PERIODS,
+                path: 'period-planner-edit-period-calendar',
+                builder: (BuildContext context, GoRouterState state) {
+                  return EditPeriodsScreen();
+                },
+              ),
+            ]),
+        GoRoute(
+          name: RouteNames.PERIOD_PLANNER_LOG_PERIODS,
+          path: 'period-planner-log-period-calendar',
+          builder: (BuildContext context, GoRouterState state) {
+            return LogPeriodScreen();
+          },
+        ),
+      ]),
+];
 
 final List<RouteBase> openRoutes = [
   GoRoute(
@@ -511,12 +507,19 @@ final List<RouteBase> selfScreeningRoutes = [
             }),
       ]),
   GoRoute(
-    name: RouteNames.BLOOD_PRESSURE,
-    path: 'blood-pressure',
-    builder: (BuildContext context, GoRouterState state) {
-      return BPMonitorScreen();
-    },
-  ),
+      name: RouteNames.BLOOD_PRESSURE,
+      path: 'blood-pressure',
+      builder: (BuildContext context, GoRouterState state) {
+        return BPMonitorScreen();
+      },
+      routes: [
+        GoRoute(
+            name: RouteNames.MEASURE_BP,
+            path: "measure-bp",
+            builder: (BuildContext context, GoRouterState state) {
+              return MeasureBpScreen();
+            }),
+      ]),
   GoRoute(
     name: MenuItemNames.BLOOD_SUGAR,
     path: 'blood-sugar',
@@ -525,21 +528,20 @@ final List<RouteBase> selfScreeningRoutes = [
     },
   ),
   GoRoute(
-    name: RouteNames.INSIGHT,
-    path: 'insight',
-    builder: (BuildContext context, GoRouterState state) {
-      return const InsightScreen();
-    },
-    routes:   [
-      GoRoute(
-      name: RouteNames.BP_INSIGHT,
-      path: 'bp-insight',
+      name: RouteNames.INSIGHT,
+      path: 'insight',
       builder: (BuildContext context, GoRouterState state) {
-        return const BpInsightScreen();
+        return const InsightScreen();
       },
-    ),
-    ]
-  ),
+      routes: [
+        GoRoute(
+          name: RouteNames.BP_INSIGHT,
+          path: 'bp-insight',
+          builder: (BuildContext context, GoRouterState state) {
+            return const BpInsightScreen();
+          },
+        ),
+      ]),
 ];
 
 final List<RouteBase> hivProgramRoutes = [
@@ -680,11 +682,11 @@ final List<RouteBase> dawaDropRoutes = [
 
 final List<RouteBase> chatRoutes = [
   GoRoute(
-      name: RouteNames.CHAT_DETAIL,
-      path: 'chat-detail',
-      builder: (BuildContext context, GoRouterState state) {
-        return ChatDetailScreen();
-      },
+    name: RouteNames.CHAT_DETAIL,
+    path: 'chat-detail',
+    builder: (BuildContext context, GoRouterState state) {
+      return ChatDetailScreen();
+    },
   ),
   GoRoute(
     name: RouteNames.CHAT_USER,
