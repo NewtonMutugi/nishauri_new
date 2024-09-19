@@ -11,39 +11,46 @@ import 'package:nishauri/src/utils/constants.dart';
 import 'package:nishauri/src/utils/routes.dart';
 
 List<MenuItem> _menuItems(BuildContext context) => [
-  MenuItem(
-    icon: const Icon(Icons.calculate),
-    shortcutIcon: const Icon(Icons.calculate),
-    color: Constants.bmiCalculatorShortcutBgColor,
-    shortcutBackgroundColor: Constants.bmiCalculatorShortcutBgColor,
-    title: "BMI Calculator",
-    onPressed: () => context.goNamed(RouteNames.BMI_CALCULATOR),
-  ),
-  MenuItem(
-    icon: const Icon(Icons.trending_up),
-    shortcutIcon: const Icon(Icons.trending_up),
-    color: Constants.bpShortCutBgColor,
-    shortcutBackgroundColor: Constants.bpShortCutBgColor,
-    title: "B P Monitor",
-    onPressed: () => context.goNamed(RouteNames.BLOOD_PRESSURE),
-  ),
-  MenuItem(
-    shortcutBackgroundColor: Constants.dawaDropShortcutBgColor,
-    icon: const Icon(Icons.sanitizer),
-    shortcutIcon: const Icon(Icons.sanitizer),
-    title: MenuItemNames.BLOOD_SUGAR,
-    onPressed: () => context.goNamed(MenuItemNames.BLOOD_SUGAR),
-    color: Constants.bloodSugarColor.withOpacity(0.5),
-  ),
-  MenuItem(
-    shortcutBackgroundColor: Constants.periodPlannerShortcutBgColor,
-    icon: const Icon(Icons.calendar_month_outlined),
-    shortcutIcon: const Icon(Icons.calendar_month_outlined),
-    title: MenuItemNames.PERIOD_PLANNER,
-    onPressed: () => context.goNamed(MenuItemNames.PERIOD_PLANNER),
-    color: Constants.periodPlannerShortcutBgColor.withOpacity(0.5),
-  ),
-];
+      MenuItem(
+        icon: const Icon(Icons.calculate),
+        shortcutIcon: const Icon(Icons.calculate),
+        color: Constants.bmiCalculatorShortcutBgColor,
+        shortcutBackgroundColor: Constants.bmiCalculatorShortcutBgColor,
+        title: "BMI Calculator",
+        onPressed: () => context.goNamed(RouteNames.BMI_CALCULATOR),
+      ),
+      MenuItem(
+        icon: const Icon(Icons.trending_up),
+        shortcutIcon: const Icon(Icons.trending_up),
+        color: Constants.bpShortCutBgColor,
+        shortcutBackgroundColor: Constants.bpShortCutBgColor,
+        title: "B P Monitor",
+        onPressed: () => context.goNamed(RouteNames.BLOOD_PRESSURE),
+      ),
+      MenuItem(
+        shortcutBackgroundColor: Constants.dawaDropShortcutBgColor,
+        icon: const Icon(Icons.sanitizer),
+        shortcutIcon: const Icon(Icons.sanitizer),
+        title: MenuItemNames.BLOOD_SUGAR,
+        onPressed: () => context.goNamed(MenuItemNames.BLOOD_SUGAR),
+        color: Constants.bloodSugarColor.withOpacity(0.5),
+      ),
+      MenuItem(
+        shortcutBackgroundColor: Constants.periodPlannerShortcutBgColor,
+        icon: const Icon(Icons.calendar_month_outlined),
+        shortcutIcon: const Icon(Icons.calendar_month_outlined),
+        title: MenuItemNames.PERIOD_PLANNER,
+        onPressed: () => context.goNamed(MenuItemNames.PERIOD_PLANNER),
+        color: Constants.periodPlannerShortcutBgColor.withOpacity(0.5),
+      ),
+      MenuItem(
+        shortcutBackgroundColor: Constants.bpBgColor,
+        icon: Icon(Icons.monitor_heart),
+        shortcutIcon: Icon(Icons.monitor_heart),
+        title: MenuItemNames.HEART_RATE_MONITOR,
+        onPressed: () => context.goNamed(MenuItemNames.HEART_RATE_MONITOR),
+      )
+    ];
 
 class SelfScreening extends HookConsumerWidget {
   const SelfScreening({super.key});
