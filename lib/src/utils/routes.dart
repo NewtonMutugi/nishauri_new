@@ -108,6 +108,7 @@ class MenuItemNames {
   static const CHAT_HCW = "Chat with HCW";
   static const CHAT_DETAIL = "Chat Detail";
   static const INSIGHT = "Insight";
+  static const HEART_RATE_MONITOR = "Heart rate monitor";
 }
 
 class ProgramCodeNameIds {

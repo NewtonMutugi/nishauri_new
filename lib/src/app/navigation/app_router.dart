@@ -26,6 +26,7 @@ import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorResult
 import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorScreen.dart';
 import 'package:nishauri/src/features/bmi/presentation/pages/BMIHistoryScreen.dart';
 import 'package:nishauri/src/features/bp/presentation/pages/bpMonitorScreen.dart';
+import 'package:nishauri/src/features/bp/presentation/pages/heart_rate_monitor_screen.dart';
 import 'package:nishauri/src/features/bp/presentation/pages/measureBpScreen.dart';
 import 'package:nishauri/src/features/chatbot/presentations/ChatScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/pages/ClinicCardScreen.dart';
@@ -525,6 +526,13 @@ final List<RouteBase> selfScreeningRoutes = [
     path: 'blood-sugar',
     builder: (BuildContext context, GoRouterState state) {
       return BloodSugarScreen();
+    },
+  ),
+  GoRoute(
+    name: MenuItemNames.HEART_RATE_MONITOR,
+    path: 'heart-rate-monitor',
+    builder: (BuildContext context, GoRouterState state) {
+      return const HeartRateMonitorScreen();
     },
   ),
   GoRoute(
