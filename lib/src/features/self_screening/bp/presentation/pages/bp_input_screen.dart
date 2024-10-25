@@ -17,6 +17,7 @@ class _BloodPressureInputsState extends ConsumerState<BloodPressureInputs> {
   final TextEditingController _notesController = TextEditingController();
   final TextEditingController _systolicController = TextEditingController(text: '120');
   final TextEditingController _diastolicController = TextEditingController(text: '80');
+  final TextEditingController _pulseRateController = TextEditingController(text: '75');
 
   @override
   void initState() {
@@ -84,7 +85,7 @@ class _BloodPressureInputsState extends ConsumerState<BloodPressureInputs> {
   void _saveData() {
     final systolic = double.parse(_systolicController.text);
     final diastolic = double.parse(_diastolicController.text);
-    final pulseRate = double.parse(_diastolicController.text);
+    final pulseRate = double.parse(_pulseRateController.text);
     _submitData(systolic, diastolic, pulseRate);
     if (systolic != null && diastolic != null && systolic > 0 && diastolic > 0) {
       if (systolic > 140 || diastolic > 90) {
@@ -239,7 +240,30 @@ class _BloodPressureInputsState extends ConsumerState<BloodPressureInputs> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: Constants.SPACING),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Pulse Rate", style: theme.textTheme.bodyLarge,),
+                      Container(
+                        padding: const EdgeInsets.all(Constants.SPACING),
+                        decoration: BoxDecoration(
+                          color: Constants.white,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: Constants.bgColor),
+                        ),
+                        width: 150,
+                        height: 40,
+                        child: TextField(
 
+                          controller: _pulseRateController,
+                          keyboardType: TextInputType.number,
+                          decoration: null,
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: Constants.SPACING),
                   const Divider(),
                   Row(

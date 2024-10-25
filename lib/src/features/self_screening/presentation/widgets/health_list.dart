@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class ItemList extends StatelessWidget {
   final List<String> items;
   final Color backgroundColor;
+  final List<String> path;
   const ItemList({
     Key? key,
     required this.items,
+    required this.path,
     this.backgroundColor = Constants.bgColor,
   }) : super(key: key);
 
@@ -28,13 +31,12 @@ class ItemList extends StatelessWidget {
               return ListTile(
                 title: Text(items[index]),
                 onTap: () {
-                  // Handle item tap
+                  context.goNamed(path[index]);
                 },
                 trailing: const Icon(Icons.chevron_right),
               );
             } else {
-              // This is the separator item
-              return const SizedBox.shrink(); // No content for the separator item
+              return const SizedBox.shrink();
             }
           },
         ),
