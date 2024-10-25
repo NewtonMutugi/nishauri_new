@@ -1,0 +1,40 @@
+{
+"bloodPressureCategories": [
+{
+"status": "Optimal",
+"systolic": "<120",
+"diastolic": "<80",
+"advice": "Maintain a healthy lifestyle with regular exercise, a balanced diet rich in fruits and vegetables, and limit salt intake."
+},
+{
+"status": "Normal",
+"systolic": "120-129",
+"diastolic": "<80",
+"advice": "Continue healthy habits; monitor your blood pressure regularly. Aim for physical activity most days of the week."
+},
+{
+"status": "Elevated",
+"systolic": "130-139",
+"diastolic": "<80",
+"advice": "Adopt a heart-healthy diet, reduce sodium intake, and increase physical activity. Consider stress management techniques."
+},
+{
+"status": "Hypertension Grade 1",
+"systolic": "140-159",
+"diastolic": "80-89",
+"advice": "Consult a healthcare provider for lifestyle changes, such as weight management, and possible medication. Regular monitoring is crucial."
+},
+{
+"status": "Hypertension Grade 2",
+"systolic": "160-179",
+"diastolic": "90-109",
+"advice": "Seek medical advice for more intensive management and treatment options. Focus on a low-sodium diet and consistent exercise."
+},
+{
+"status": "Hypertension Grade 3",
+"systolic": "≥180",
+"diastolic": "≥110",
+"advice": "Immediate medical attention is necessary. Follow a strict treatment plan, including medication adherence and regular follow-ups with your healthcare provider."
+}
+]
+}

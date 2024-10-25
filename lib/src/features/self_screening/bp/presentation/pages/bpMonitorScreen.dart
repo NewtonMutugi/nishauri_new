@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:nishauri/src/features/self_screening/bp/data/models/blood_pressure.dart';
 import 'package:nishauri/src/features/self_screening/bp/data/providers/blood_pressure_provider.dart';
 import 'package:nishauri/src/features/self_screening/bp/presentation/pages/BPLinelistScreen.dart';
@@ -20,174 +21,210 @@ class BPMonitorScreen extends ConsumerStatefulWidget {
 }
 
 class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _notesController = TextEditingController();
+  // final _formKey = GlobalKey<FormState>();
+  // final _notesController = TextEditingController();
+  //
+  // void _clearForm(double systolic, double diastolic, double heartRate, TextEditingController notesController) {
+  //   setState(() {
+  //     systolic = 120;
+  //     diastolic = 80;
+  //     heartRate = 70;
+  //     notesController.clear();
+  //   });
+  // }
 
-  void _clearForm(double systolic, double diastolic, double heartRate, TextEditingController notesController) {
-    setState(() {
-      systolic = 120;
-      diastolic = 80;
-      heartRate = 70;
-      notesController.clear();
-    });
-  }
+  // void _submitData(BuildContext context, double systolic, double diastolic, double heartRate, TextEditingController notesController) {
+  //   final String notes = notesController.text;
+  //   final DateTime measurementTime = DateTime.now();
+  //
+  //   final bp = BloodPressure(
+  //     systolic: systolic,
+  //     diastolic: diastolic,
+  //     pulse_rate: heartRate,
+  //     created_at: measurementTime,
+  //     notes: notes,
+  //   );
+  //
+  //   ref.read(bloodPressureRepositoryProvider).saveBloodPressure(bp).then((value) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text(value)),
+  //     );
+  //     _reloadData();
+  //     _clearForm(systolic, diastolic, heartRate, notesController);
+  //     Navigator.of(context).pop();
+  //   }).catchError((error) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text(error)),
+  //     );
+  //   });
+  // }
 
-  void _submitData(BuildContext context, double systolic, double diastolic, double heartRate, TextEditingController notesController) {
-    final String notes = notesController.text;
-    final DateTime measurementTime = DateTime.now();
+  // String _getWarningText(String label, double value) {
+  //   if (label == 'Systolic') {
+  //     if (value < 90) return 'Systolic pressure is too low';
+  //     if (value > 140) return 'Systolic pressure is too high';
+  //   } else if (label == 'Diastolic') {
+  //     if (value < 60) return 'Diastolic pressure is too low';
+  //     if (value > 90) return 'Diastolic pressure is too high';
+  //   } else if (label == 'Heart Rate') {
+  //     if (value < 60) return 'Heart rate is too low';
+  //     if (value > 100) return 'Heart rate is too high';
+  //   }
+  //   return '';
+  // }
+  //
+  // Color _getSliderColor(String label, double value) {
+  //   if (label == 'Systolic') {
+  //     if (value < 90 || value > 140) return Colors.red;
+  //   } else if (label == 'Diastolic') {
+  //     if (value < 60 || value > 90) return Colors.orange;
+  //   } else if (label == 'Heart Rate') {
+  //     if (value < 60 || value > 100) return Colors.blue;
+  //   }
+  //   return Colors.green;
+  // }
+  //
+  // void _showDialogForm(BuildContext context) {
+  //   double systolic = 120;
+  //   double diastolic = 80;
+  //   double heartRate = 70;
+  //   final notesController = TextEditingController();
+  //
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return StatefulBuilder(
+  //         builder: (context, setState) {
+  //           return AlertDialog(
+  //             title: Text('Enter Blood Pressure Data'),
+  //             content: SingleChildScrollView(
+  //               child: Form(
+  //                 key: _formKey,
+  //                 child: Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: [
+  //                     Text(
+  //                       'Systolic Pressure (mmHg): ${systolic.toInt()}',
+  //                       style: TextStyle(color: _getSliderColor('Systolic', systolic)),
+  //                     ),
+  //                     Slider(
+  //                       value: systolic,
+  //                       min: 50,
+  //                       max: 200,
+  //                       divisions: 150,
+  //                       label: systolic.toInt().toString(),
+  //                       onChanged: (value) {
+  //                         setState(() {
+  //                           systolic = value;
+  //                         });
+  //                       },
+  //                     ),
+  //                     Text(_getWarningText('Systolic', systolic)),
+  //                     Text(
+  //                       'Diastolic Pressure (mmHg): ${diastolic.toInt()}',
+  //                       style: TextStyle(color: _getSliderColor('Diastolic', diastolic)),
+  //                     ),
+  //                     Slider(
+  //                       value: diastolic,
+  //                       min: 30,
+  //                       max: 120,
+  //                       divisions: 90,
+  //                       label: diastolic.toInt().toString(),
+  //                       onChanged: (value) {
+  //                         setState(() {
+  //                           diastolic = value;
+  //                         });
+  //                       },
+  //                     ),
+  //                     Text(_getWarningText('Diastolic', diastolic)),
+  //                     Text(
+  //                       'Heart Rate (bpm): ${heartRate.toInt()}',
+  //                       style: TextStyle(color: _getSliderColor('Heart Rate', heartRate)),
+  //                     ),
+  //                     Slider(
+  //                       value: heartRate,
+  //                       min: 40,
+  //                       max: 180,
+  //                       divisions: 140,
+  //                       label: heartRate.toInt().toString(),
+  //                       onChanged: (value) {
+  //                         setState(() {
+  //                           heartRate = value;
+  //                         });
+  //                       },
+  //                     ),
+  //                     Text(_getWarningText('Heart Rate', heartRate)),
+  //                     TextFormField(
+  //                       controller: notesController,
+  //                       decoration: InputDecoration(
+  //                         labelText: 'Notes',
+  //                         border: OutlineInputBorder(),
+  //                       ),
+  //                       keyboardType: TextInputType.text,
+  //                       maxLines: null,
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //             actions: [
+  //               TextButton(
+  //                 onPressed: () {
+  //                   _clearForm(systolic, diastolic, heartRate, notesController);
+  //                   Navigator.of(context).pop();
+  //                 },
+  //                 child: Text('Cancel'),
+  //               ),
+  //               ElevatedButton(
+  //                 onPressed: () {
+  //                   _submitData(context, systolic, diastolic, heartRate, notesController);
+  //                   _reloadData();
+  //                 },
+  //                 child: Text('Submit'),
+  //               ),
+  //             ],
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
-    final bp = BloodPressure(
-      systolic: systolic,
-      diastolic: diastolic,
-      pulse_rate: heartRate,
-      created_at: measurementTime,
-      notes: notes,
-    );
-
-    ref.read(bloodPressureRepositoryProvider).saveBloodPressure(bp).then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(value)),
-      );
-      _reloadData();
-      _clearForm(systolic, diastolic, heartRate, notesController);
-      Navigator.of(context).pop();
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error)),
-      );
-    });
-  }
-
-  String _getWarningText(String label, double value) {
-    if (label == 'Systolic') {
-      if (value < 90) return 'Systolic pressure is too low';
-      if (value > 140) return 'Systolic pressure is too high';
-    } else if (label == 'Diastolic') {
-      if (value < 60) return 'Diastolic pressure is too low';
-      if (value > 90) return 'Diastolic pressure is too high';
-    } else if (label == 'Heart Rate') {
-      if (value < 60) return 'Heart rate is too low';
-      if (value > 100) return 'Heart rate is too high';
+  String _getBloodPressureStatus(double systolic, double diastolic) {
+    if (systolic < 120 && diastolic < 80) {
+      return 'Optimal';
+    } else if (systolic < 130 && diastolic < 80) {
+      return 'Normal';
+    } else if (systolic < 140 || diastolic < 90) {
+      return 'Elevated';
+    } else if (systolic < 160 || diastolic < 100) {
+      return 'Hypertension Grade 1';
+    } else if (systolic < 180 || diastolic < 110) {
+      return 'Hypertension Grade 2';
+    } else {
+      return 'Hypertension Grade 3';
     }
-    return '';
   }
 
-  Color _getSliderColor(String label, double value) {
-    if (label == 'Systolic') {
-      if (value < 90 || value > 140) return Colors.red;
-    } else if (label == 'Diastolic') {
-      if (value < 60 || value > 90) return Colors.orange;
-    } else if (label == 'Heart Rate') {
-      if (value < 60 || value > 100) return Colors.blue;
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Optimal':
+        return Colors.green;
+      case 'Normal':
+        return Colors.blue;
+      case 'Elevated':
+        return Colors.orange;
+      case 'Hypertension Grade 1':
+        return Colors.yellow;
+      case 'Hypertension Grade 2':
+        return Colors.red;
+      case 'Hypertension Grade 3':
+        return Colors.redAccent;
+      default:
+        return Colors.black;
     }
-    return Colors.green;
   }
 
-  void _showDialogForm(BuildContext context) {
-    double systolic = 120;
-    double diastolic = 80;
-    double heartRate = 70;
-    final notesController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              title: Text('Enter Blood Pressure Data'),
-              content: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Systolic Pressure (mmHg): ${systolic.toInt()}',
-                        style: TextStyle(color: _getSliderColor('Systolic', systolic)),
-                      ),
-                      Slider(
-                        value: systolic,
-                        min: 50,
-                        max: 200,
-                        divisions: 150,
-                        label: systolic.toInt().toString(),
-                        onChanged: (value) {
-                          setState(() {
-                            systolic = value;
-                          });
-                        },
-                      ),
-                      Text(_getWarningText('Systolic', systolic)),
-                      Text(
-                        'Diastolic Pressure (mmHg): ${diastolic.toInt()}',
-                        style: TextStyle(color: _getSliderColor('Diastolic', diastolic)),
-                      ),
-                      Slider(
-                        value: diastolic,
-                        min: 30,
-                        max: 120,
-                        divisions: 90,
-                        label: diastolic.toInt().toString(),
-                        onChanged: (value) {
-                          setState(() {
-                            diastolic = value;
-                          });
-                        },
-                      ),
-                      Text(_getWarningText('Diastolic', diastolic)),
-                      Text(
-                        'Heart Rate (bpm): ${heartRate.toInt()}',
-                        style: TextStyle(color: _getSliderColor('Heart Rate', heartRate)),
-                      ),
-                      Slider(
-                        value: heartRate,
-                        min: 40,
-                        max: 180,
-                        divisions: 140,
-                        label: heartRate.toInt().toString(),
-                        onChanged: (value) {
-                          setState(() {
-                            heartRate = value;
-                          });
-                        },
-                      ),
-                      Text(_getWarningText('Heart Rate', heartRate)),
-                      TextFormField(
-                        controller: notesController,
-                        decoration: InputDecoration(
-                          labelText: 'Notes',
-                          border: OutlineInputBorder(),
-                        ),
-                        keyboardType: TextInputType.text,
-                        maxLines: null,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    _clearForm(systolic, diastolic, heartRate, notesController);
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Cancel'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _submitData(context, systolic, diastolic, heartRate, notesController);
-                    _reloadData();
-                  },
-                  child: Text('Submit'),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
 
   void _reloadData() {
     ref.refresh(bloodPressureListProvider);
@@ -197,10 +234,26 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
   Widget build(BuildContext context) {
     final bloodPressureListAsync = ref.watch(bloodPressureListProvider);
     final theme = Theme.of(context);
+    final adviceAsync = ref.watch(bloodPressureListAdviceProvider);
     return bloodPressureListAsync.when(
       data: (data) {
+        data.sort((a, b) => b.created_at.compareTo(a.created_at));
+        final displayedData = data.isNotEmpty ? data.first : null;
+        final chatData = data.length > 5 ? data.sublist(data.length - 5) : data;
 
-        final displayedData = data.length > 5 ? data.sublist(data.length - 5) : data;
+        final status = _getBloodPressureStatus(displayedData!.systolic, displayedData.diastolic);
+
+        final advice = adviceAsync.when(
+          data: (adviceData) => adviceData.firstWhere(
+                (ad) => ad.status == status,
+            // orElse: () => null,
+          )?.advice ?? 'No advice available',
+          error: (error, _) => 'Error loading advice',
+          loading: () => 'Loading advice...',
+        );
+
+        print(advice);
+
         return Scaffold(
           body: Column(
             children: [
@@ -232,15 +285,23 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: Constants.SPACING,),
-                            Text("18 Oct 2024", style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
-
-                            SizedBox(height: Constants.SPACING,),
+                            const SizedBox(height: Constants.SPACING,),
                             Row(
                               children: [
-                                Text("4.1", style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
+                                Text("Last Record Date:", style: theme.textTheme.bodyLarge),
                                 const SizedBox(width: 4),
-                                Text("mmol/L", style: theme.textTheme.bodyMedium),
+                                Text(DateFormat('dd MMM yyyy').format(displayedData!.created_at), style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+
+                            const SizedBox(height: Constants.SPACING,),
+                            Row(
+                              children: [
+                                Text("${displayedData.systolic}/${displayedData.diastolic}", style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
+                                const SizedBox(width: 4),
+                                Text("mmHG", style: theme.textTheme.bodyMedium),
+                                const SizedBox(width: 4,),
+                                Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: _getStatusColor(status,), ),)
                               ],
                             ),
                             SizedBox(height: Constants.SPACING,),
@@ -248,7 +309,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                               spacing: 1,
                               runSpacing: 16,
                               children: [
-                                TrendChartScreen(data: displayedData,)
+                                TrendChartScreen(data: chatData,)
                               ],
                             ),
                             SizedBox(height: Constants.SPACING,),
@@ -264,8 +325,13 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                             ),
                             SizedBox(height: Constants.SPACING,),
                             Container(
-                              color: Constants.bgColor,
-                              height: 250,
+                              decoration: BoxDecoration(
+                                color: Constants.bgColor,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Constants.bgColor),
+                              ),
+                              // color: Constants.bgColor,
+                              // height: 250,
                               child: Padding(
                                 padding: const EdgeInsets.all(Constants.SPACING),
                                 child: SingleChildScrollView(
@@ -273,13 +339,19 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       ListTile(
-                                        title: Text(
-                                          'What is Blood Pressure',
-                                          style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
+                                        title: Row(
+                                          children: [
+                                            Text(
+                                              'Your Blood Pressure is ',
+                                              style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
+                                            ),
+                                            const SizedBox(width: 4,),
+                                            Text("($status)", style: theme.textTheme.bodyLarge!.copyWith(color: _getStatusColor(status,), ),)
+                                          ],
                                         ),
                                         subtitle: Text(
-                                          "Blood pressure is the force of your blood pushing against the walls of your arteries as your heart pumps it around your body. It’s measured with two numbers: the first (systolic) is the pressure when your heart beats, and the second (diastolic) is the pressure when your heart rests between beats. For most people, a normal reading is around 120/80. Keeping your blood pressure in a healthy range is important because high or low blood pressure can lead to health problems. Regular checks can help you stay on top of it.",
-                                          style: theme.textTheme.bodyMedium,
+                                          advice,
+                                          style: theme.textTheme.bodyLarge,
                                         ),
                                       ),
                                     ],
@@ -287,7 +359,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: Constants.SPACING),
+                            const SizedBox(height: Constants.SPACING),
                             Button(
                               title: "More Insight",
                               onPress: (){
@@ -324,15 +396,6 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                 child: Icon(Icons.refresh),
                 heroTag: null,
               ),
-              SizedBox(height: 10),
-              FloatingActionButton(
-                onPressed: () {
-                  _showDialogForm(context);
-                  _reloadData();
-                  },
-                child: Icon(Icons.add),
-                heroTag: null,
-              ),
             ],
           ),
         );
@@ -346,11 +409,6 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
         notFoundText: "No BP Data Available to display",
         floatingButtonIcon1: Icons.refresh,
         floatingButtonAction1: () {
-          _reloadData();
-        },
-        floatingButtonIcon2: Icons.add,
-        floatingButtonAction2: () {
-          _showDialogForm(context);
           _reloadData();
         },
       ),

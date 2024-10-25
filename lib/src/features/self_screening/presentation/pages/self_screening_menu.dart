@@ -112,7 +112,7 @@ class SelfScreening extends HookConsumerWidget {
                               HealthCard(
                                 svgAsset: "assets/images/boldDuotoneMedicinePulse.svg",
                                 title: "Blood Sugar",
-                                value1: "${currentBsEntries!.level}",
+                                value1: "${currentBsEntries?.level}",
                                 text1: "mmHG",
                                 onPressed: () {
                                   context.goNamed(RouteNames.BLOOD_SUGAR);

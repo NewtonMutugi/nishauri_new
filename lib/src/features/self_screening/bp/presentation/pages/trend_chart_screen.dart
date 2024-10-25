@@ -25,11 +25,11 @@ class TrendChartScreen extends StatelessWidget {
           return FlSpot(index, diastolic);
         }).toList();
 
-        final pulseRateSpots = data.asMap().entries.map((entry) {
-          final index = entry.key.toDouble();
-          final pulse = entry.value.pulse_rate;
-          return FlSpot(index, pulse);
-        }).toList();
+        // final pulseRateSpots = data.asMap().entries.map((entry) {
+        //   final index = entry.key.toDouble();
+        //   final pulse = entry.value.pulse_rate;
+        //   return FlSpot(index, pulse);
+        // }).toList();
 
         final date = data.asMap().entries.map((e) {
           return e.value.created_at.toString();
@@ -70,22 +70,22 @@ class TrendChartScreen extends StatelessWidget {
                     ),
                     dotData: FlDotData(show: true),
                   ),
-                  LineChartBarData(
-                    spots: pulseRateSpots,
-                    isCurved: true,
-                    color: Constants.programsColor,
-                    barWidth: 2,
-                    belowBarData: BarAreaData(
-                      show: false,
-                      gradient: LinearGradient(
-                        colors: [Constants.programsColor.withOpacity(0.3), Constants.programsColor.withOpacity(0)],
-                      ),
-                    ),
-                    dotData: FlDotData(show: true),
-                  ),
+                  // LineChartBarData(
+                  //   spots: pulseRateSpots,
+                  //   isCurved: true,
+                  //   color: Constants.programsColor,
+                  //   barWidth: 2,
+                  //   belowBarData: BarAreaData(
+                  //     show: false,
+                  //     gradient: LinearGradient(
+                  //       colors: [Constants.programsColor.withOpacity(0.3), Constants.programsColor.withOpacity(0)],
+                  //     ),
+                  //   ),
+                  //   dotData: FlDotData(show: true),
+                  // ),
                 ],
                 minX: 0,
-                maxX: pulseRateSpots.length - 1,
+                maxX: systolicSpots.length - 1,
                 minY: 29,
                 dateTimes: date,
                 showLeftTitles: false,
