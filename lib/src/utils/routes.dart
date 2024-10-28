@@ -45,6 +45,7 @@ class RouteNames {
 
   static const LAB_RESULTS = "lab-results";
   static const MY_CLINIC_CARD = "clinic-card";
+  static const HEALTH_RECORD = "health-record";
   static const CHAT_BOT = "chat-bot";
   static const SETTINGS = "settings";
 

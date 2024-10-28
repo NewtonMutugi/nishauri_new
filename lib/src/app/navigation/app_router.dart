@@ -19,6 +19,7 @@ import 'package:nishauri/src/features/auth/presentation/pages/VerificationScreen
 import 'package:nishauri/src/features/auth/presentation/pages/VerifiedResetPassword.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/VerifyResetPasswordScreen.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/WelcomeScreen.dart';
+import 'package:nishauri/src/features/clinic_card/presentation/widgets/health_record.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/BloodSugarScreen.dart';
 import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorResultsScreen.dart';
 import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorScreen.dart';
@@ -358,6 +359,15 @@ final List<RouteBase> secureRoutes = [
     builder: (BuildContext context, GoRouterState state) {
       return const ClinicCardScreen();
     },
+    routes: [
+      GoRoute(
+        name: RouteNames.HEALTH_RECORD,
+        path: 'health-record',
+        builder: (BuildContext context, GoRouterState state) {
+          return const HealthRecord();
+        },
+      ),
+    ]
   ),
   GoRoute(
     name: RouteNames.DAWA_DROP,
