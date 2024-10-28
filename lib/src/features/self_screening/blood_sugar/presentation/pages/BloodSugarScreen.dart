@@ -5,15 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nishauri/src/features/self_screening/blood_sugar/data/models/blood_sugar.dart';
+import 'package:intl/intl.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/providers/blood_sugar_provider.dart';
-import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/AddBloodSugarScreen.dart';
-import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/widgets/blood_sugar_entry_card.dart';
-import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/widgets/blood_suger_trend_chart.dart';
-import 'package:nishauri/src/features/self_screening/presentation/widgets/image_card.dart';
-import 'package:nishauri/src/shared/charts/CustomLineChart.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
-import 'package:nishauri/src/shared/display/background_image_widget.dart';
 import 'package:nishauri/src/shared/display/custome_filter_chart.dart';
 import 'package:nishauri/src/shared/display/daily_card.dart';
 import 'package:nishauri/src/shared/input/Button.dart';
@@ -36,13 +30,57 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
     });
   }
 
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Normal':
+        return Colors.green;
+      case 'Impaired fasting':
+        return Colors.yellow;
+      case 'Impaired Glucose Tolerance':
+        return Colors.orange;
+      case 'Diabetes':
+        return Colors.red;
+      default:
+        return Colors.white24;
+    }
+  }
+
+  String _getBloodSugarStatus(double level, String condition) {
+    if (condition == 'Fasting (before meals)'){
+      if (level < 100) {
+        return 'Normal';
+      } else if (100 <= level && level < 126) {
+        return 'Impaired Fasting';
+      }
+      else {
+        return 'Diabetes';
+      }
+    }
+    else if (condition == 'Postprandial (after meals)'){
+      if (level < 140) {
+        return 'Normal';
+      } else if (140 <= level && level < 200) {
+        return 'Impaired Glucose Tolerance';
+      }
+      else {
+        return 'Diabetes';
+      }
+    } else {
+      return 'Invalid condition';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final bloodSugarListProvider = ref.watch(bloodSugarEntriesProvider);
+    final adviceAsync = ref.watch(bloodSugarListAdviceProvider);
     final theme = Theme.of(context);
+
+
 
     final data = bloodSugarListProvider.when(
       data: (data) {
+        data.sort((a, b) => b.created_at.compareTo(a.created_at));
         return data ?? [];
       },
       error: (error, _) {
@@ -51,6 +89,19 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
       loading: () {
         return [];
       },
+    );
+
+    final displayedData = data.isNotEmpty ? data.first : null;
+
+    final status = _getBloodSugarStatus(displayedData.level, displayedData.condition);
+
+    final advice = adviceAsync.when(
+      data: (adviceData) => adviceData.firstWhere(
+            (ad) => ad.label == status,
+        // orElse: () => null,
+      ).advice ?? 'No advice available',
+      error: (error, _) => 'Error loading advice',
+      loading: () => 'Loading advice...',
     );
 
     final dataPoints = data.asMap().entries.map((entry) {
@@ -92,16 +143,26 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
                           ],
                         ),
                         const SizedBox(height: Constants.SPACING,),
-                        Text("18 Oct 2024", style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
+                        Row(
+                          children: [
+                            Text("Last Record Date:", style: theme.textTheme.bodyLarge),
+                            const SizedBox(width: 4),
+                            Text(DateFormat('dd MMM yyyy').format(displayedData!.created_at), style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
 
                         const SizedBox(height: Constants.SPACING,),
                         Row(
                           children: [
-                            Text("4.1", style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
+                            Text("${displayedData.level}", style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
                             const SizedBox(width: 4),
-                            Text("mmol/L", style: theme.textTheme.bodyMedium),
+                            Text("MM/GH", style: theme.textTheme.bodyMedium),
+                            const SizedBox(width: 4,),
+                            Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: _getStatusColor(status,), ),)
                           ],
                         ),
+                        const SizedBox(height: Constants.SPACING),
+                        Text(displayedData.condition, style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold, color: Colors.blueGrey),),
                         const SizedBox(height: Constants.SPACING,),
                         Wrap(
                           spacing: 1,
@@ -141,7 +202,7 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
                         const SizedBox(height: Constants.SPACING,),
                         Container(
                           color: Constants.bgColor,
-                          height: 250,
+                          // height: 250,
                           child: Padding(
                             padding: const EdgeInsets.all(Constants.SPACING),
                             child: SingleChildScrollView(
@@ -149,12 +210,19 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ListTile(
-                                    title: Text(
-                                      'What is Blood Sugar',
-                                      style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
+                                    title: Row(
+                                      children: [
+                                        Text(
+                                          'Your Blood Sugar Levels are ',
+                                          style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
+                                        ),
+                                        const SizedBox(width: 4,),
+                                        Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: Colors.green),),
+                                        const SizedBox(height: Constants.SPACING,),
+                                      ],
                                     ),
                                     subtitle: Text(
-                                      "Blood sugar, or glucose, is the main type of sugar found in your blood. It’s your body’s primary source of energy, coming from the food you eat, especially carbohydrates. When you eat, your body breaks down the food into glucose, which then enters your bloodstream. Your pancreas releases a hormone called insulin to help move this glucose into your cells, where it’s used for energy. Maintaining balanced blood sugar levels is crucial because too much or too little can lead to health issues like diabetes or hypoglycemia. Think of it as the fuel that keeps your body running smoothly!",
+                                      advice,
                                       style: theme.textTheme.bodyMedium,
                                     ),
                                   ),

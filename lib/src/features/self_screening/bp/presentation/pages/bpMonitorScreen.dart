@@ -251,9 +251,6 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
           error: (error, _) => 'Error loading advice',
           loading: () => 'Loading advice...',
         );
-
-        print(advice);
-
         return Scaffold(
           body: Column(
             children: [
@@ -293,7 +290,6 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                                 Text(DateFormat('dd MMM yyyy').format(displayedData!.created_at), style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
                               ],
                             ),
-
                             const SizedBox(height: Constants.SPACING,),
                             Row(
                               children: [
@@ -304,7 +300,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                                 Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: _getStatusColor(status,), ),)
                               ],
                             ),
-                            SizedBox(height: Constants.SPACING,),
+                            const SizedBox(height: Constants.SPACING,),
                             Wrap(
                               spacing: 1,
                               runSpacing: 16,
@@ -312,7 +308,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                                 TrendChartScreen(data: chatData,)
                               ],
                             ),
-                            SizedBox(height: Constants.SPACING,),
+                            const SizedBox(height: Constants.SPACING,),
                             Card(
                               color: Constants.bgColor,
                               child: ListTile(
@@ -323,7 +319,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                                 },
                               ),
                             ),
-                            SizedBox(height: Constants.SPACING,),
+                            const SizedBox(height: Constants.SPACING,),
                             Container(
                               decoration: BoxDecoration(
                                 color: Constants.bgColor,
