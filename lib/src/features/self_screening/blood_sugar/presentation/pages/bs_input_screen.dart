@@ -18,7 +18,7 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
-  final TextEditingController _bloodGlucoseController = TextEditingController(text: "100");
+  final TextEditingController _bloodGlucoseController = TextEditingController(text: "5.0");
   final TextEditingController _conditionController = TextEditingController();
 
   final List<String> _dropdownOptions = [
@@ -66,13 +66,13 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
     ref.refresh(bloodSugarProvider);
   }
 
-  void _submitData(double level){
+  void _submitData(double level) {
     final String notes = _notesController.text;
     final condition = _conditionController.text;
     final DateTime measurementTime = DateTime.now();
     final bs = BloodSugar(
       level: level,
-      condition: condition??'',
+      condition: condition,
       created_at: measurementTime,
       notes: notes,
     );
@@ -82,7 +82,6 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
         SnackBar(content: Text(value)),
       );
       _reloadData();
-      // _clearForm(systolic, diastolic, heartRate, notesController);
       Navigator.of(context).pop();
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -95,53 +94,68 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
     final level = double.tryParse(_bloodGlucoseController.text);
     final condition = _conditionController.text;
 
-    if (level != null && level > 0) {
-      _submitData(level);
-
-      bool isHigh = false;
-      bool isLow = false;
-
-      if (condition == "Fasting (before meals)") {
-        if (level > 100) {
-          isHigh = true;
-        } else if (level < 70) {
-          isLow = true;
-        }
-      } else if (condition == "Postprandial (after meals)") {
-        if (level > 140) {
-          isHigh = true;
-        } else if (level < 90) {
-          isLow = true;
-        }
-      }
-      if (isHigh) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Warning: High blood sugar detected!'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      } else if (isLow) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Warning: Low blood sugar detected!'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-
+    if (_dateController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Data saved: $level mg/dL with condition ${_conditionController.text} on ${_dateController.text} at ${_timeController.text}'),
+        const SnackBar(content: Text('Please select a date.')),
+      );
+      return;
+    }
+
+    if (_timeController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a time.')),
+      );
+      return;
+    }
+
+    if (level == null || level <= 0 || level > 30) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter valid blood sugar readings (0 < level ≤ 30).')),
+      );
+      return;
+    }
+
+    _submitData(level);
+
+    bool isHigh = false;
+    bool isLow = false;
+
+    if (condition == "Fasting (before meals)") {
+      if (level > 5.6) {
+        isHigh = true;
+      } else if (level < 3.9) {
+        isLow = true;
+      }
+    } else if (condition == "Postprandial (after meals)") {
+      if (level > 7.8) {
+        isHigh = true;
+      } else if (level < 5.0) {
+        isLow = true;
+      }
+    }
+
+    if (isHigh) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Warning: High blood sugar detected!'),
+          backgroundColor: Colors.red,
         ),
       );
-    } else {
+    } else if (isLow) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter valid blood sugar readings.')),
+        const SnackBar(
+          content: Text('Warning: Low blood sugar detected!'),
+          backgroundColor: Colors.red,
+        ),
       );
     }
-  }
 
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Data saved: $level mg/dL with condition $condition on ${_dateController.text} at ${_timeController.text}'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +166,11 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
           const CustomAppBar(
             color: Constants.selfScreeningBgColor,
             height: 120,
-            smallTitle: "Blood Pressure Input",
+            smallTitle: "Blood Sugar Input",
             rightBtTitle: "Add Data",
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            // main container
             child: Container(
               padding: const EdgeInsets.all(Constants.SPACING),
               decoration: BoxDecoration(
@@ -171,13 +184,13 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width *0.9,
+                        width: MediaQuery.of(context).size.width * 0.9,
                         decoration: BoxDecoration(
                           color: Constants.white,
                           borderRadius: BorderRadius.circular(1),
                           border: Border.all(color: Constants.bgColor),
                         ),
-                        child: Text("mg/dL", style: theme.textTheme.bodyLarge,),
+                        child: Text("mmol/L", style: theme.textTheme.bodyLarge),
                       ),
                     ],
                   ),
@@ -186,7 +199,7 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Date:", style:  theme.textTheme.bodyLarge,),
+                      Text("Date:", style: theme.textTheme.bodyLarge),
                       GestureDetector(
                         onTap: () => _selectDate(context),
                         child: AbsorbPointer(
@@ -213,7 +226,7 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Time:", style:  theme.textTheme.bodyLarge),
+                      Text("Time:", style: theme.textTheme.bodyLarge),
                       GestureDetector(
                         onTap: () => _selectTime(context),
                         child: AbsorbPointer(
@@ -240,7 +253,7 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Blood Sugar Level", style:  theme.textTheme.bodyLarge),
+                      Text("Blood Sugar Level", style: theme.textTheme.bodyLarge),
                       Container(
                         padding: const EdgeInsets.all(Constants.SPACING),
                         decoration: BoxDecoration(
@@ -263,7 +276,7 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Meal Time", style: theme.textTheme.bodyLarge,),
+                      Text("Meal Time", style: theme.textTheme.bodyLarge),
                       Container(
                         padding: const EdgeInsets.all(Constants.SPACING),
                         decoration: BoxDecoration(
@@ -285,7 +298,6 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                             ),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Constants.white),
-                              // borderRadius: BorderRadius.all(Radius.circular(15)),
                             ),
                             focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Constants.white),
@@ -308,7 +320,6 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                                 }).toList();
                               },
                             ),
-                            // FormBuilderDropdown(
                           ),
                         ),
                       ),
@@ -318,7 +329,6 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-
                     children: [
                       Container(
                         padding: const EdgeInsets.all(Constants.SPACING),
@@ -327,7 +337,7 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                           borderRadius: BorderRadius.circular(15),
                           border: Border.all(color: Constants.bgColor),
                         ),
-                        width: MediaQuery.of(context).size.width *0.9,
+                        width: MediaQuery.of(context).size.width * 0.9,
                         child: TextFormField(
                           style: theme.textTheme.bodyMedium!.copyWith(decoration: null),
                           controller: _notesController,
@@ -351,7 +361,6 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                           keyboardType: TextInputType.text,
                           maxLines: null,
                         ),
-
                       ),
                     ],
                   ),
@@ -359,7 +368,7 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
                   const Divider(),
                   ElevatedButton(
                     onPressed: _saveData,
-                    child: const Text('Save Data', style: TextStyle(color: Constants.selfScreeningBgColor),),
+                    child: const Text('Save Data', style: TextStyle(color: Constants.selfScreeningBgColor)),
                   ),
                 ],
               ),

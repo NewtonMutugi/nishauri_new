@@ -45,10 +45,8 @@ class SelfScreening extends HookConsumerWidget {
 
     final currentBsEntries = bsAsync.when(
       data: (data) {
-        // Sort the list by date in descending order
         data.sort((a, b) => b.created_at.compareTo(a.created_at));
-        // Return the most current object
-        return data.isNotEmpty ? data.first : null;
+        return data.first;
       },
       error: (error, _) {
         return null;
@@ -68,6 +66,13 @@ class SelfScreening extends HookConsumerWidget {
     if (currentBsEntries != null) {
       items.remove("Blood Sugar");
       paths.remove(RouteNames.BLOOD_SUGAR);
+    }
+
+    double _convertToMMOL(double level) {
+      if (level > 30) {
+        level = level / 18.0;
+      }
+      return double.parse(level.toStringAsFixed(1));
     }
 
     return Scaffold(
@@ -112,8 +117,8 @@ class SelfScreening extends HookConsumerWidget {
                               HealthCard(
                                 svgAsset: "assets/images/boldDuotoneMedicinePulse.svg",
                                 title: "Blood Sugar",
-                                value1: "${currentBsEntries?.level}",
-                                text1: "mmHG",
+                                value1: "${currentBsEntries != null ? _convertToMMOL(currentBsEntries.level) : 'N/A'}",
+                                text1: "mmol/L",
                                 onPressed: () {
                                   context.goNamed(RouteNames.BLOOD_SUGAR);
                                 },

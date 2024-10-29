@@ -47,7 +47,7 @@ class TrendChartScreen extends StatelessWidget {
                   LineChartBarData(
                     spots: systolicSpots,
                     isCurved: true,
-                    color: Colors.red,
+                    color: Constants.barColor,
                     barWidth: 2,
                     belowBarData: BarAreaData(
                       show: false,
@@ -60,7 +60,7 @@ class TrendChartScreen extends StatelessWidget {
                   LineChartBarData(
                     spots: diastolicSpots,
                     isCurved: true,
-                    color: Colors.orange,
+                    color: Constants.facilityDirectoryColor,
                     barWidth: 2,
                     belowBarData: BarAreaData(
                       show: false,

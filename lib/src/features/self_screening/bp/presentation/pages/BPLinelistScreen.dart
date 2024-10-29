@@ -5,6 +5,7 @@ import 'package:nishauri/src/features/self_screening/bp/data/models/blood_pressu
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
 import 'package:nishauri/src/shared/display/background_image_widget.dart';
 import 'package:nishauri/src/utils/constants.dart';
+import 'package:nishauri/src/utils/routes.dart';
 
 class BloodPressureRecords extends StatelessWidget {
   final List<BloodPressure> data;
@@ -38,7 +39,8 @@ class BloodPressureRecords extends StatelessWidget {
             color: Constants.selfScreeningBgColor,
             height: 120,
             smallTitle: "All Record Data",
-            rightBtTitle: "Edit",
+            rightBtTitle: "Add Data",
+            path: RouteNames.BLOOD_PRESSURE_INPUT,
           ),
           Expanded(
             child: Padding(
