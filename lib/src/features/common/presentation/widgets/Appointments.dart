@@ -9,6 +9,7 @@ import 'package:nishauri/src/features/appointments/data/models/appointment.dart'
 import 'package:nishauri/src/features/appointments/data/providers/appointment_provider.dart';
 import 'package:nishauri/src/features/appointments/presentation/pages/AppointmentRescheduleScreen.dart';
 import 'package:nishauri/src/features/common/presentation/widgets/AppointmentCard.dart';
+import 'package:nishauri/src/features/dawa_drop/data/models/order_request/drug_order.dart';
 import 'package:nishauri/src/local_storage/LocalStorage.dart';
 import 'package:nishauri/src/shared/interfaces/notification_service.dart';
 import 'package:nishauri/src/utils/helpers.dart';
@@ -24,19 +25,35 @@ class Appointments extends HookConsumerWidget {
     final appointmentsAsync = ref.watch(appointmentProvider(false));
     final appointmentsNotifier = ref.watch(appointmentProvider(false).notifier);
     final screenSize = getOrientationAwareScreenSize(context);
-    final pendingOrders = ref
-            .watch(drugOrderProvider)
-            .valueOrNull
-            ?.where((order) => order.status != 'Fullfilled')
-            .toList() ??
-        [];
-    final fullFilledOrders = ref
-        .watch(drugOrderProvider)
-        .valueOrNull
-        ?.where((order) => order.status == 'Fullfilled')
-        .toList() ??
-        [];
+    // final pendingOrders = ref
+    //         .watch(drugOrderProvider)
+    //         .valueOrNull
+    //         ?.where((order) => order.status != 'Fullfilled')
+    //         .toList() ??
+    //     [];
+    List<DrugOrder> _pendingOrders(String appId){
+      return ref
+          .watch(drugOrderProvider)
+          .valueOrNull
+          ?.where((order) => order.status != 'Fullfilled' && order.appointment?.id == appId)
+          .toList() ??
+          [];
+    }
+    // final fullFilledOrders = ref
+    //     .watch(drugOrderProvider)
+    //     .valueOrNull
+    //     ?.where((order) => order.status == 'Fullfilled')
+    //     .toList() ??
+    //     [];
 
+    List<DrugOrder> _fullFilledOrders(String appId){
+      return ref
+          .watch(drugOrderProvider)
+          .valueOrNull
+          ?.where((order) => order.status == 'Fullfilled' && order.appointment?.id == appId)
+          .toList() ??
+          [];
+    }
     final theme = Theme.of(context);
     return appointmentsAsync.when(
       data: (data) {
@@ -116,9 +133,9 @@ class Appointments extends HookConsumerWidget {
                               child: SizedBox(
                                 width: size.width * 0.99,
                                 child: AppointmentCard(
-                                  rescheduleButtonText: pendingOrders.isNotEmpty
+                                  rescheduleButtonText: _pendingOrders(artAppointment.id??'').isNotEmpty
                                       ? "Has active order"
-                                  :fullFilledOrders.isNotEmpty ? "Appointment order has already been fulfilled"
+                                  :_fullFilledOrders(artAppointment.id??'').isNotEmpty ? "Appointment order has already been fulfilled"
                                       : (artAppointment.reschedule_status
                                                   .toString() ==
                                               "0"
@@ -141,7 +158,7 @@ class Appointments extends HookConsumerWidget {
                                               null ||
                                           artAppointment.reschedule_status
                                                   .toString() ==
-                                              "2" && !fullFilledOrders.isNotEmpty
+                                              "2" && !_fullFilledOrders(artAppointment.id??'').isNotEmpty
                                       ? () => context.goNamed(
                                             RouteNames.APPOINTMENTS_RESCHEDULE,
                                             extra:

@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nishauri/src/features/common/presentation/pages/chat_feeback_form.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/providers/blood_sugar_provider.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_log_provider.dart';
 import 'package:nishauri/src/features/self_screening/bp/data/providers/blood_pressure_provider.dart';
 import 'package:nishauri/src/features/self_screening/presentation/widgets/health_card.dart';
 import 'package:nishauri/src/features/self_screening/presentation/widgets/health_list.dart';
@@ -25,6 +26,7 @@ class SelfScreening extends HookConsumerWidget {
     int _messagesCount = 0;
 
     final bpAsync = ref.watch(bloodPressureListProvider);
+    final bmiListAsync = ref.watch(bmiListProvider);
 
     final currentBpEntries = bpAsync.when(
       data: (data) {
@@ -56,16 +58,32 @@ class SelfScreening extends HookConsumerWidget {
       },
     );
 
+    final currentBMIEntries = bmiListAsync.when(
+      data: (data) {
+        data.sort((a, b) => b.created_at.compareTo(a.created_at));
+        return data.first;
+      },
+      error: (error, _) {
+        return null;
+      },
+      loading: () {
+        return null;
+      },
+    );
+
     // Create a list of items and remove "Blood Pressure" if currentBpEntries is not null
     final List<String> items = ["Blood Sugar", "Blood Pressure", "BMI", "Period Calendar"];
-    final List<String> paths = [RouteNames.BLOOD_PRESSURE, RouteNames.BLOOD_SUGAR,];
+    final List<String> paths = [RouteNames.BLOOD_PRESSURE, RouteNames.BLOOD_SUGAR, RouteNames.BMI_CALCULATOR_RESULTS,];
+    // final List<String> extra = ['', '', '24'];
     if (currentBpEntries != null) {
       items.remove("Blood Pressure");
-      paths.remove(RouteNames.BLOOD_PRESSURE);
     }
     if (currentBsEntries != null) {
       items.remove("Blood Sugar");
-      paths.remove(RouteNames.BLOOD_SUGAR);
+    }
+
+    if (currentBMIEntries != null) {
+      items.remove("BMI");
     }
 
     double _convertToMMOL(double level) {
@@ -74,6 +92,8 @@ class SelfScreening extends HookConsumerWidget {
       }
       return double.parse(level.toStringAsFixed(1));
     }
+
+    print(currentBMIEntries);
 
     return Scaffold(
       body: Column(
@@ -113,8 +133,8 @@ class SelfScreening extends HookConsumerWidget {
                                 onPressed: () {
                                   context.goNamed(RouteNames.BLOOD_PRESSURE);
                                 },
-                              ) : SizedBox(),
-                              HealthCard(
+                              ) : const SizedBox(),
+                              currentBsEntries != null ? HealthCard(
                                 svgAsset: "assets/images/boldDuotoneMedicinePulse.svg",
                                 title: "Blood Sugar",
                                 value1: "${currentBsEntries != null ? _convertToMMOL(currentBsEntries.level) : 'N/A'}",
@@ -122,11 +142,27 @@ class SelfScreening extends HookConsumerWidget {
                                 onPressed: () {
                                   context.goNamed(RouteNames.BLOOD_SUGAR);
                                 },
+                              ) : const SizedBox(),
+                              HealthCard(
+                                svgAsset: "assets/images/boldDuotoneMedicinePulse.svg",
+                                title: "Body Measurements",
+                                value1: "${currentBMIEntries?.weight}",
+                                text1: "KGS",
+                                vName1: "Weight",
+                                value2: "${currentBMIEntries?.height}",
+                                text2: "Centimetres",
+                                vName2: "Height",
+                                value3: "${currentBMIEntries?.results}",
+                                text3: "",
+                                vName3: "BMI",
+                                onPressed: () {
+                                  context.goNamed(RouteNames.BMI_CALCULATOR_RESULTS);
+                                },
                               ),
                             ],
                           ),
                           const SizedBox(height: 10),
-                          ItemList(items: items, path: paths,),
+                          ItemList(items: items, path: paths),
                           const SizedBox(height: 20),
                           // Title for the next section
                           Text(
@@ -134,7 +170,7 @@ class SelfScreening extends HookConsumerWidget {
                             style: theme.textTheme.titleMedium,
                           ),
                           const SizedBox(height: 10),
-                          Wrap(
+                          const Wrap(
                             alignment: WrapAlignment.center,
                             spacing: 1,
                             runSpacing: 16,

@@ -23,7 +23,7 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
         const CustomAppBar(
             title: "BMI Calculator ⚖️",
             // icon: Icons.calculate,
-            color: Constants.bmiCalculatorColor),
+            color: Constants.selfScreeningBgColor),
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
