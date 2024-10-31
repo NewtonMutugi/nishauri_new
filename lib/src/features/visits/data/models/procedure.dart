@@ -4,13 +4,13 @@ part 'diagnosis.freezed.dart';
 part 'diagnosis.g.dart';
 
 @Freezed()
-class Diagnosis with _$Diagnosis {
-  const factory Diagnosis({
+class Procedure with _$Diagnosis {
+  const factory Procedure({
     required String uuid,
     required String name,
     required String dateRecorded,
     required String value,
   }) = _Diagnosis;
 
-  factory Diagnosis.fromJson(Map<String, dynamic> json)=> _$DiagnosisFromJson(json);
+  factory Procedure.fromJson(Map<String, dynamic> json)=> _$DiagnosisFromJson(json);
 }

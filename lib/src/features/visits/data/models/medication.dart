@@ -4,8 +4,8 @@ part 'complaint.freezed.dart';
 part 'complaint.g.dart';
 
 @Freezed()
-class Complaint with _$Complaint {
-  const factory Complaint({
+class Medication with _$Complaint {
+  const factory Medication({
     required String uuid,
     required String name,
     String? onsetDate,
@@ -13,5 +13,5 @@ class Complaint with _$Complaint {
     required String value,
   }) = _Complaint;
 
-  factory Complaint.fromJson(Map<String, dynamic> json)=> _$ComplaintFromJson(json);
+  factory Medication.fromJson(Map<String, dynamic> json)=> _$ComplaintFromJson(json);
 }

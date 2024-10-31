@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nishauri/src/utils/constants.dart';
-import 'package:nishauri/src/utils/constants.dart';
-import '../../../../utils/helpers.dart';
+import 'package:nishauri/src/utils/helpers.dart';
 
 enum GenderPickerChoices { male, female }
 

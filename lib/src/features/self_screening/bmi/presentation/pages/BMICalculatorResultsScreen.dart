@@ -3,13 +3,11 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nishauri/src/features/bmi/data/providers/bmi_status_nutrition_provider.dart';
-import 'package:nishauri/src/shared/display/AppCard.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_status_nutrition_provider.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
+import 'package:nishauri/src/shared/input/Button.dart';
 import 'package:nishauri/src/utils/constants.dart';
 import 'package:nishauri/src/utils/helpers.dart';
-
-import '../../../../shared/input/Button.dart';
 
 class BMICalculatorResultsScreen extends HookConsumerWidget {
   final double bmi;

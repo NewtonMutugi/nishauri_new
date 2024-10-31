@@ -21,9 +21,9 @@ import 'package:nishauri/src/features/auth/presentation/pages/VerifyResetPasswor
 import 'package:nishauri/src/features/auth/presentation/pages/WelcomeScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/health_record.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/BloodSugarScreen.dart';
-import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorResultsScreen.dart';
-import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorScreen.dart';
-import 'package:nishauri/src/features/bmi/presentation/pages/BMIHistoryScreen.dart';
+import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMICalculatorResultsScreen.dart';
+import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMICalculatorScreen.dart';
+import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMIHistoryScreen.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/bs_input_screen.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/bs_line_list_Screen.dart';
 import 'package:nishauri/src/features/self_screening/bp/presentation/pages/BPLinelistScreen.dart';

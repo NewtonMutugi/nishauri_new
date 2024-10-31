@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nishauri/src/features/bmi/data/model/bmi_log.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/model/bmi_log.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class BMILinelist extends StatelessWidget {

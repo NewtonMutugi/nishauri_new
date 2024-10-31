@@ -2,11 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart';
-import 'package:nishauri/src/features/bmi/data/model/bmi_nutrition_maping.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/model/bmi_nutrition_maping.dart';
 import 'package:nishauri/src/shared/exeptions/http_exceptions.dart';
 import 'package:nishauri/src/shared/interfaces/HTTPService.dart';
-
-import '../../../../utils/constants.dart';
+import 'package:nishauri/src/utils/constants.dart';
 
 class BMICalculatorService extends HTTPService {
   Future<StreamedResponse> getBMIStatusNutrition_(dynamic args) async {

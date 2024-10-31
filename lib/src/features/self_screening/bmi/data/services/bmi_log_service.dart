@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:nishauri/src/features/auth/data/respositories/auth_repository.dart';
 import 'package:nishauri/src/features/auth/data/services/AuthApiService.dart';
-import 'package:nishauri/src/features/bmi/data/model/bmi_log.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/model/bmi_log.dart';
 import 'package:nishauri/src/shared/interfaces/HTTPService.dart';
 import 'package:nishauri/src/utils/constants.dart';
 

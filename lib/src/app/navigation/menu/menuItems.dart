@@ -204,39 +204,39 @@ List<MenuItem> getPatientModules(BuildContext context) {
       color: Constants.labResultsColor,
     ),
     MenuItem(
-      icon: FaIcon(
+      icon: const FaIcon(
         FontAwesomeIcons.addressCard,
         size: 50.0,
-        color: Colors.blue[400],
+        color: Constants.clinicCardBgColor,
       ),
-      shortcutIcon: FaIcon(
+      shortcutIcon: const FaIcon(
         FontAwesomeIcons.addressCard,
-        color: Colors.blue[400],
+        color: Constants.clinicCardBgColor,
       ),
       title: MenuItemNames.MY_CLINIC_CARD,
       onPressed: () => context.goNamed(RouteNames.MY_CLINIC_CARD),
-      color: Colors.blue[900],
+      color: Constants.clinicCardBgColor,
     ),
 
-    MenuItem(
-      icon: SvgPicture.asset(
-        "assets/images/Hospital building-bro.svg",
-        semanticsLabel: "Doctors",
-        fit: BoxFit.contain,
-        height: 80,
-        width: 80,
-      ),
-      shortcutIcon: SvgPicture.asset(
-        "assets/images/Hospital building-bro.svg",
-        semanticsLabel: "Doctors",
-        fit: BoxFit.contain,
-        width: Constants.shortcutIconSize,
-        height: Constants.shortcutIconSize,
-      ),
-      title: "FACILITY VISITS",
-      onPressed: () => context.goNamed(RouteNames.FACILITY_VISITS),
-      color: Colors.blueGrey,
-    ),
+    // MenuItem(
+    //   icon: SvgPicture.asset(
+    //     "assets/images/Hospital building-bro.svg",
+    //     semanticsLabel: "Doctors",
+    //     fit: BoxFit.contain,
+    //     height: 80,
+    //     width: 80,
+    //   ),
+    //   shortcutIcon: SvgPicture.asset(
+    //     "assets/images/Hospital building-bro.svg",
+    //     semanticsLabel: "Doctors",
+    //     fit: BoxFit.contain,
+    //     width: Constants.shortcutIconSize,
+    //     height: Constants.shortcutIconSize,
+    //   ),
+    //   title: "FACILITY VISITS",
+    //   onPressed: () => context.goNamed(RouteNames.FACILITY_VISITS),
+    //   color: Colors.blueGrey,
+    // ),
 
     MenuItem(
       icon: SvgPicture.asset(
@@ -258,7 +258,7 @@ List<MenuItem> getPatientModules(BuildContext context) {
       color: Constants.facilityDirectoryColor,
     ),
     MenuItem(
-      shortcutBackgroundColor: Constants.bmiCalculatorShortcutBgColor,
+      shortcutBackgroundColor: Constants.selfScreeningBgColor,
       icon: SvgPicture.asset(
         "assets/images/selfscreeningImage.svg",
         semanticsLabel: "Doctors",
@@ -275,7 +275,7 @@ List<MenuItem> getPatientModules(BuildContext context) {
       ),
       title: MenuItemNames.SELF_SCREENING,
       onPressed: () => context.goNamed(RouteNames.SELF_SCREENING),
-      color: Constants.bmiCalculatorColor,
+      color: Constants.selfScreeningBgColor,
     ),
     MenuItem(
       shortcutBackgroundColor: Constants.dawaDropShortcutBgColor,

@@ -19,7 +19,6 @@ class ItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = 100 + (items.length - 1) * 70 + 5;
-    print(svgAsset);
 
     return Container(
       color: backgroundColor,

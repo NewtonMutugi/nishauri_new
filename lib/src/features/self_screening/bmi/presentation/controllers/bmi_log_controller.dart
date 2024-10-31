@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nishauri/src/features/bmi/data/model/bmi_log.dart';
-import 'package:nishauri/src/features/bmi/data/repositories/bmi_log_repository.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/repositories/bmi_log_repository.dart';
 
 class BMILogController extends StateNotifier<AsyncValue<String>> {
   final BMILogRepository _repository;

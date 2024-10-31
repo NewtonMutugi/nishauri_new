@@ -1,8 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nishauri/src/features/bmi/data/model/bmi_log.dart';
-import 'package:nishauri/src/features/bmi/data/providers/bmi_log_provider.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/model/bmi_log.dart';
 import 'package:nishauri/src/shared/charts/CustomLineChart.dart';
 import 'package:nishauri/src/utils/constants.dart';
 

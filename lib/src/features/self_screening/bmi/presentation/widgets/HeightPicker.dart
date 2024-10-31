@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nishauri/src/features/bmi/presentation/widgets/HeightUnitsPicker.dart';
-import 'package:nishauri/src/shared/display/AppCard.dart';
+import 'package:nishauri/src/features/self_screening/bmi/presentation/widgets/HeightUnitsPicker.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class HeightPicker extends StatelessWidget {
