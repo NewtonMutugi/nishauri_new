@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/model/bmi_log.dart';
 import 'package:nishauri/src/shared/charts/CustomLineChart.dart';
+import 'package:nishauri/src/shared/display/custome_filter_chart.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class BMILineGraph extends StatelessWidget {
@@ -15,6 +16,7 @@ const BMILineGraph({required this.data, Key? key}): super(key: key);
       Constants.bmiCalculatorShortcutBgColor.withOpacity(0),
     ];
 
+        data.sort((a, b) => b.created_at.compareTo(a.created_at));
         final dataPoints = data.asMap().entries.map((entry) {
           final index = entry.key.toDouble();
           final bmi = entry.value.results;
@@ -28,7 +30,7 @@ const BMILineGraph({required this.data, Key? key}): super(key: key);
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: CustomLineChart(
+            child: CustomFilterLineChart(
               dataPoints: dataPoints,
               dateTimes: date,
               minX: 0,
@@ -38,7 +40,8 @@ const BMILineGraph({required this.data, Key? key}): super(key: key);
               barColor: Constants.bmiCalculatorColor,
               gradientColors: gradientColors,
               bottomTile: true,
-              dateFormat: "dd/MM/yy",
+              // dateFormat: "dd/MM/yy",
+              filter: "Daily",
             ),
           ),
         );

@@ -463,26 +463,43 @@ final List<RouteBase> openRoutes = [
 
 final List<RouteBase> selfScreeningRoutes = [
   GoRoute(
-      name: RouteNames.BMI_CALCULATOR,
-      path: 'bmi-calculator',
+      name: RouteNames.BMI_CALCULATOR_RESULTS,
+      path: "bmi-calculator-results",
       builder: (BuildContext context, GoRouterState state) {
-        return const BMICalculatorScreen();
+        // Ensure that state.extra is of the expected type
+        final extra = state.extra;
+
+        if (extra is Map<String, dynamic>) {
+          double? bmi = extra['bmi'] as double?;
+          bool? isForSelf = extra['isForSelf'] as bool?;
+          return BMICalculatorResultsScreen(
+            otherBMI: bmi,
+            isForSelf: isForSelf,
+          );
+        } else {
+          return BMICalculatorResultsScreen(
+            otherBMI: null,
+            isForSelf: true,
+          );
+        }
       },
-      routes: [
-        GoRoute(
-            name: RouteNames.BMI_CALCULATOR_RESULTS,
-            path: "bmi-calculator-results",
-            builder: (BuildContext context, GoRouterState state) {
-              double extra = state.extra! as double;
-              return BMICalculatorResultsScreen(bmi: extra);
-            }),
-        GoRoute(
-            name: RouteNames.BMI_HISTORY,
-            path: "bmi-history",
-            builder: (BuildContext context, GoRouterState state) {
-              return BMIHistoryScreen();
-            }),
-      ]),
+          routes: [
+            GoRoute(
+                name: RouteNames.BMI_CALCULATOR,
+                path: 'bmi-calculator',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const BMICalculatorScreen();
+                },
+            ),
+            GoRoute(
+                name: RouteNames.BMI_HISTORY,
+                path: "bmi-history",
+                builder: (BuildContext context, GoRouterState state) {
+                  return BMIHistoryScreen();
+                }
+            ),
+          ]
+        ),
   GoRoute(
     name: RouteNames.BLOOD_PRESSURE,
     path: 'blood-pressure',

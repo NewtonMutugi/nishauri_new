@@ -50,7 +50,7 @@ class BMICalculatorScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    const activeColor = Constants.activeSelectionColor;
+    const activeColor = Constants.selfScreeningBgColor;
     final gender = useState<GenderPickerChoices>(GenderPickerChoices.male);
     final isPregnant = useState(false);
     final height = useState<double>(180);
@@ -61,7 +61,6 @@ class BMICalculatorScreen extends HookConsumerWidget {
 
     useEffect(() {
       _fetchAge(ref).then((fetchedAge) {
-        print("Age fetched: $fetchedAge");
         userAge.value = fetchedAge!;
       });
       return null;
@@ -73,7 +72,7 @@ class BMICalculatorScreen extends HookConsumerWidget {
           const CustomAppBar(
             title: "BMI Calculator ⚖️",
             subTitle: "Empower Your Health Journey \nWith BMI Insights",
-            color: Constants.bmiCalculatorColor,
+            color: Constants.selfScreeningBgColor,
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -99,6 +98,7 @@ class BMICalculatorScreen extends HookConsumerWidget {
                                     isSelected: [isForSelf.value, !isForSelf.value],
                                     onPressed: (index) {
                                       isForSelf.value = index == 0;
+                                      print(isForSelf.value);
                                       if (isForSelf.value) {
                                         _fetchAge(ref).then((fetchedAge) {
                                           userAge.value = fetchedAge!;
@@ -151,12 +151,12 @@ class BMICalculatorScreen extends HookConsumerWidget {
                                           },
                                           items: [
                                             RadioGroupItem(
-                                              value: "yes",
+                                              value: "no",
                                               title: "Not Pregnant",
                                               icon: Icons.woman_rounded,
                                             ),
                                             RadioGroupItem(
-                                              value: "no",
+                                              value: "yes",
                                               title: "Pregnant",
                                               icon: Icons.pregnant_woman,
                                             ),
@@ -170,7 +170,7 @@ class BMICalculatorScreen extends HookConsumerWidget {
                                 if (isPregnant_ != null) {
                                   isPregnant.value = !isPregnant_;
                                   gender.value = gender_;
-                                  if (isPregnant_) {
+                                  if (!isPregnant_) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text(
@@ -246,24 +246,25 @@ class BMICalculatorScreen extends HookConsumerWidget {
                             ref.read(bmiLogProvider.notifier)
                                 .logBMI(height.value.toString(), weight.value.toString(), bmi.toString())
                                 .then((_) {
-                              context.goNamed(RouteNames.BMI_CALCULATOR_RESULTS, extra: bmi);
+                              context.goNamed(RouteNames.BMI_CALCULATOR_RESULTS, extra: {"bmi" : bmi, "others" : isForSelf.value});
+                              print("I am printing ${isForSelf.value}");
                             });
                             ref.refresh(bmiListProvider);
                           } else {
-                            context.goNamed(RouteNames.BMI_CALCULATOR_RESULTS, extra: bmi);
+                            context.goNamed(RouteNames.BMI_CALCULATOR_RESULTS, extra: {"bmi" : bmi, "others" : isForSelf.value});
                           }
                         },
                       ),
-                      const SizedBox(height: Constants.SPACING),
-                      Button(
-                        title: "BMI History",
-                        backgroundColor: activeColor,
-                        textColor: theme.canvasColor,
-                        onPress: () {
-                          ref.refresh(bmiListProvider);
-                          context.goNamed(RouteNames.BMI_HISTORY);
-                        },
-                      ),
+                      // const SizedBox(height: Constants.SPACING),
+                      // Button(
+                      //   title: "BMI History",
+                      //   backgroundColor: activeColor,
+                      //   textColor: theme.canvasColor,
+                      //   onPress: () {
+                      //     ref.refresh(bmiListProvider);
+                      //     context.goNamed(RouteNames.BMI_HISTORY);
+                      //   },
+                      // ),
                     ],
                   ),
                 ),

@@ -8,6 +8,7 @@ class BMILinelist extends StatelessWidget {
   const BMILinelist({required this.data, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    data.sort((a, b) => a.created_at.compareTo(b.created_at));
         return ListView.builder(
           itemCount: data.length + 1, // +1 for the header row
           itemBuilder: (context, index) {

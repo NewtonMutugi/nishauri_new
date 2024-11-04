@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'diagnosis.dart';
+part of 'medication.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,35 +14,42 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Diagnosis _$DiagnosisFromJson(Map<String, dynamic> json) {
-  return _Diagnosis.fromJson(json);
+Medication _$MedicationFromJson(Map<String, dynamic> json) {
+  return _Medication.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Diagnosis {
+mixin _$Medication {
   String get uuid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get onsetDate => throw _privateConstructorUsedError;
   String get dateRecorded => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DiagnosisCopyWith<Diagnosis> get copyWith =>
+  $MedicationCopyWith<Medication> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DiagnosisCopyWith<$Res> {
-  factory $DiagnosisCopyWith(Diagnosis value, $Res Function(Diagnosis) then) =
-      _$DiagnosisCopyWithImpl<$Res, Diagnosis>;
+abstract class $MedicationCopyWith<$Res> {
+  factory $MedicationCopyWith(
+          Medication value, $Res Function(Medication) then) =
+      _$MedicationCopyWithImpl<$Res, Medication>;
   @useResult
-  $Res call({String uuid, String name, String dateRecorded, String value});
+  $Res call(
+      {String uuid,
+      String name,
+      String? onsetDate,
+      String dateRecorded,
+      String value});
 }
 
 /// @nodoc
-class _$DiagnosisCopyWithImpl<$Res, $Val extends Diagnosis>
-    implements $DiagnosisCopyWith<$Res> {
-  _$DiagnosisCopyWithImpl(this._value, this._then);
+class _$MedicationCopyWithImpl<$Res, $Val extends Medication>
+    implements $MedicationCopyWith<$Res> {
+  _$MedicationCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -54,6 +61,7 @@ class _$DiagnosisCopyWithImpl<$Res, $Val extends Diagnosis>
   $Res call({
     Object? uuid = null,
     Object? name = null,
+    Object? onsetDate = freezed,
     Object? dateRecorded = null,
     Object? value = null,
   }) {
@@ -66,6 +74,10 @@ class _$DiagnosisCopyWithImpl<$Res, $Val extends Diagnosis>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      onsetDate: freezed == onsetDate
+          ? _value.onsetDate
+          : onsetDate // ignore: cast_nullable_to_non_nullable
+              as String?,
       dateRecorded: null == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
@@ -79,22 +91,27 @@ class _$DiagnosisCopyWithImpl<$Res, $Val extends Diagnosis>
 }
 
 /// @nodoc
-abstract class _$$DiagnosisImplCopyWith<$Res>
-    implements $DiagnosisCopyWith<$Res> {
-  factory _$$DiagnosisImplCopyWith(
-          _$DiagnosisImpl value, $Res Function(_$DiagnosisImpl) then) =
-      __$$DiagnosisImplCopyWithImpl<$Res>;
+abstract class _$$MedicationImplCopyWith<$Res>
+    implements $MedicationCopyWith<$Res> {
+  factory _$$MedicationImplCopyWith(
+          _$MedicationImpl value, $Res Function(_$MedicationImpl) then) =
+      __$$MedicationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, String name, String dateRecorded, String value});
+  $Res call(
+      {String uuid,
+      String name,
+      String? onsetDate,
+      String dateRecorded,
+      String value});
 }
 
 /// @nodoc
-class __$$DiagnosisImplCopyWithImpl<$Res>
-    extends _$DiagnosisCopyWithImpl<$Res, _$DiagnosisImpl>
-    implements _$$DiagnosisImplCopyWith<$Res> {
-  __$$DiagnosisImplCopyWithImpl(
-      _$DiagnosisImpl _value, $Res Function(_$DiagnosisImpl) _then)
+class __$$MedicationImplCopyWithImpl<$Res>
+    extends _$MedicationCopyWithImpl<$Res, _$MedicationImpl>
+    implements _$$MedicationImplCopyWith<$Res> {
+  __$$MedicationImplCopyWithImpl(
+      _$MedicationImpl _value, $Res Function(_$MedicationImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -102,10 +119,11 @@ class __$$DiagnosisImplCopyWithImpl<$Res>
   $Res call({
     Object? uuid = null,
     Object? name = null,
+    Object? onsetDate = freezed,
     Object? dateRecorded = null,
     Object? value = null,
   }) {
-    return _then(_$DiagnosisImpl(
+    return _then(_$MedicationImpl(
       uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -114,6 +132,10 @@ class __$$DiagnosisImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      onsetDate: freezed == onsetDate
+          ? _value.onsetDate
+          : onsetDate // ignore: cast_nullable_to_non_nullable
+              as String?,
       dateRecorded: null == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
@@ -128,20 +150,23 @@ class __$$DiagnosisImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DiagnosisImpl with DiagnosticableTreeMixin implements _Diagnosis {
-  const _$DiagnosisImpl(
+class _$MedicationImpl with DiagnosticableTreeMixin implements _Medication {
+  const _$MedicationImpl(
       {required this.uuid,
       required this.name,
+      this.onsetDate,
       required this.dateRecorded,
       required this.value});
 
-  factory _$DiagnosisImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DiagnosisImplFromJson(json);
+  factory _$MedicationImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MedicationImplFromJson(json);
 
   @override
   final String uuid;
   @override
   final String name;
+  @override
+  final String? onsetDate;
   @override
   final String dateRecorded;
   @override
@@ -149,16 +174,17 @@ class _$DiagnosisImpl with DiagnosticableTreeMixin implements _Diagnosis {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Diagnosis(uuid: $uuid, name: $name, dateRecorded: $dateRecorded, value: $value)';
+    return 'Medication(uuid: $uuid, name: $name, onsetDate: $onsetDate, dateRecorded: $dateRecorded, value: $value)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'Diagnosis'))
+      ..add(DiagnosticsProperty('type', 'Medication'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('onsetDate', onsetDate))
       ..add(DiagnosticsProperty('dateRecorded', dateRecorded))
       ..add(DiagnosticsProperty('value', value));
   }
@@ -167,9 +193,11 @@ class _$DiagnosisImpl with DiagnosticableTreeMixin implements _Diagnosis {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DiagnosisImpl &&
+            other is _$MedicationImpl &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.onsetDate, onsetDate) ||
+                other.onsetDate == onsetDate) &&
             (identical(other.dateRecorded, dateRecorded) ||
                 other.dateRecorded == dateRecorded) &&
             (identical(other.value, value) || other.value == value));
@@ -177,42 +205,46 @@ class _$DiagnosisImpl with DiagnosticableTreeMixin implements _Diagnosis {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, name, dateRecorded, value);
+  int get hashCode =>
+      Object.hash(runtimeType, uuid, name, onsetDate, dateRecorded, value);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DiagnosisImplCopyWith<_$DiagnosisImpl> get copyWith =>
-      __$$DiagnosisImplCopyWithImpl<_$DiagnosisImpl>(this, _$identity);
+  _$$MedicationImplCopyWith<_$MedicationImpl> get copyWith =>
+      __$$MedicationImplCopyWithImpl<_$MedicationImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$DiagnosisImplToJson(
+    return _$$MedicationImplToJson(
       this,
     );
   }
 }
 
-abstract class _Diagnosis implements Diagnosis {
-  const factory _Diagnosis(
+abstract class _Medication implements Medication {
+  const factory _Medication(
       {required final String uuid,
       required final String name,
+      final String? onsetDate,
       required final String dateRecorded,
-      required final String value}) = _$DiagnosisImpl;
+      required final String value}) = _$MedicationImpl;
 
-  factory _Diagnosis.fromJson(Map<String, dynamic> json) =
-      _$DiagnosisImpl.fromJson;
+  factory _Medication.fromJson(Map<String, dynamic> json) =
+      _$MedicationImpl.fromJson;
 
   @override
   String get uuid;
   @override
   String get name;
   @override
+  String? get onsetDate;
+  @override
   String get dateRecorded;
   @override
   String get value;
   @override
   @JsonKey(ignore: true)
-  _$$DiagnosisImplCopyWith<_$DiagnosisImpl> get copyWith =>
+  _$$MedicationImplCopyWith<_$MedicationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

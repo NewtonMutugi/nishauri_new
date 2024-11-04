@@ -56,12 +56,12 @@ class FacilityVisitDetailScreen extends HookConsumerWidget {
                 notFoundText: "No Allergies records"),
           ):
           AllergiesTab(allergies: visitDetail.allergies),
-          visitDetail.complaints.isEmpty ? const Center(
-            child: BackgroundImageWidget(
-                svgImage: 'assets/images/lab-empty-state.svg',
-                notFoundText: "No complaints records"),
-          ):
-          ComplaintsTab(complaints: visitDetail.complaints),
+          // visitDetail.complaints.isEmpty ? const Center(
+          //   child: BackgroundImageWidget(
+          //       svgImage: 'assets/images/lab-empty-state.svg',
+          //       notFoundText: "No complaints records"),
+          // ):
+          // ComplaintsTab(complaints: visitDetail.complaints),
           visitDetail.conditions.isEmpty ? const Center(
             child: BackgroundImageWidget(
                 svgImage: 'assets/images/lab-empty-state.svg',
@@ -74,12 +74,12 @@ class FacilityVisitDetailScreen extends HookConsumerWidget {
                 notFoundText: "No Lab result records."),
           ):
           LabResultsTab(labResult: visitDetail.labResults),
-          visitDetail.diagnosis.isEmpty ? const Center(
-            child: BackgroundImageWidget(
-                svgImage: 'assets/images/lab-empty-state.svg',
-                notFoundText: "No Diagnosis records."),
-          ):
-          DiagnosisTab(diagnosis: visitDetail.diagnosis),
+          // visitDetail.diagnosis.isEmpty ? const Center(
+          //   child: BackgroundImageWidget(
+          //       svgImage: 'assets/images/lab-empty-state.svg',
+          //       notFoundText: "No Diagnosis records."),
+          // ):
+          // DiagnosisTab(diagnosis: visitDetail.diagnosis),
         ];
 
         return Scaffold(

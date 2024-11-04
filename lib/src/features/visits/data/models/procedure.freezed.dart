@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'complaint.dart';
+part of 'procedure.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,41 +14,35 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Complaint _$ComplaintFromJson(Map<String, dynamic> json) {
-  return _Complaint.fromJson(json);
+Procedure _$ProcedureFromJson(Map<String, dynamic> json) {
+  return _Procedure.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Complaint {
+mixin _$Procedure {
   String get uuid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String? get onsetDate => throw _privateConstructorUsedError;
   String get dateRecorded => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ComplaintCopyWith<Complaint> get copyWith =>
+  $ProcedureCopyWith<Procedure> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ComplaintCopyWith<$Res> {
-  factory $ComplaintCopyWith(Complaint value, $Res Function(Complaint) then) =
-      _$ComplaintCopyWithImpl<$Res, Complaint>;
+abstract class $ProcedureCopyWith<$Res> {
+  factory $ProcedureCopyWith(Procedure value, $Res Function(Procedure) then) =
+      _$ProcedureCopyWithImpl<$Res, Procedure>;
   @useResult
-  $Res call(
-      {String uuid,
-      String name,
-      String? onsetDate,
-      String dateRecorded,
-      String value});
+  $Res call({String uuid, String name, String dateRecorded, String value});
 }
 
 /// @nodoc
-class _$ComplaintCopyWithImpl<$Res, $Val extends Complaint>
-    implements $ComplaintCopyWith<$Res> {
-  _$ComplaintCopyWithImpl(this._value, this._then);
+class _$ProcedureCopyWithImpl<$Res, $Val extends Procedure>
+    implements $ProcedureCopyWith<$Res> {
+  _$ProcedureCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -60,7 +54,6 @@ class _$ComplaintCopyWithImpl<$Res, $Val extends Complaint>
   $Res call({
     Object? uuid = null,
     Object? name = null,
-    Object? onsetDate = freezed,
     Object? dateRecorded = null,
     Object? value = null,
   }) {
@@ -73,10 +66,6 @@ class _$ComplaintCopyWithImpl<$Res, $Val extends Complaint>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      onsetDate: freezed == onsetDate
-          ? _value.onsetDate
-          : onsetDate // ignore: cast_nullable_to_non_nullable
-              as String?,
       dateRecorded: null == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
@@ -90,27 +79,22 @@ class _$ComplaintCopyWithImpl<$Res, $Val extends Complaint>
 }
 
 /// @nodoc
-abstract class _$$ComplaintImplCopyWith<$Res>
-    implements $ComplaintCopyWith<$Res> {
-  factory _$$ComplaintImplCopyWith(
-          _$ComplaintImpl value, $Res Function(_$ComplaintImpl) then) =
-      __$$ComplaintImplCopyWithImpl<$Res>;
+abstract class _$$ProcedureImplCopyWith<$Res>
+    implements $ProcedureCopyWith<$Res> {
+  factory _$$ProcedureImplCopyWith(
+          _$ProcedureImpl value, $Res Function(_$ProcedureImpl) then) =
+      __$$ProcedureImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String uuid,
-      String name,
-      String? onsetDate,
-      String dateRecorded,
-      String value});
+  $Res call({String uuid, String name, String dateRecorded, String value});
 }
 
 /// @nodoc
-class __$$ComplaintImplCopyWithImpl<$Res>
-    extends _$ComplaintCopyWithImpl<$Res, _$ComplaintImpl>
-    implements _$$ComplaintImplCopyWith<$Res> {
-  __$$ComplaintImplCopyWithImpl(
-      _$ComplaintImpl _value, $Res Function(_$ComplaintImpl) _then)
+class __$$ProcedureImplCopyWithImpl<$Res>
+    extends _$ProcedureCopyWithImpl<$Res, _$ProcedureImpl>
+    implements _$$ProcedureImplCopyWith<$Res> {
+  __$$ProcedureImplCopyWithImpl(
+      _$ProcedureImpl _value, $Res Function(_$ProcedureImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -118,11 +102,10 @@ class __$$ComplaintImplCopyWithImpl<$Res>
   $Res call({
     Object? uuid = null,
     Object? name = null,
-    Object? onsetDate = freezed,
     Object? dateRecorded = null,
     Object? value = null,
   }) {
-    return _then(_$ComplaintImpl(
+    return _then(_$ProcedureImpl(
       uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -131,10 +114,6 @@ class __$$ComplaintImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      onsetDate: freezed == onsetDate
-          ? _value.onsetDate
-          : onsetDate // ignore: cast_nullable_to_non_nullable
-              as String?,
       dateRecorded: null == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
@@ -149,23 +128,20 @@ class __$$ComplaintImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ComplaintImpl with DiagnosticableTreeMixin implements _Complaint {
-  const _$ComplaintImpl(
+class _$ProcedureImpl with DiagnosticableTreeMixin implements _Procedure {
+  const _$ProcedureImpl(
       {required this.uuid,
       required this.name,
-      this.onsetDate,
       required this.dateRecorded,
       required this.value});
 
-  factory _$ComplaintImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ComplaintImplFromJson(json);
+  factory _$ProcedureImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProcedureImplFromJson(json);
 
   @override
   final String uuid;
   @override
   final String name;
-  @override
-  final String? onsetDate;
   @override
   final String dateRecorded;
   @override
@@ -173,17 +149,16 @@ class _$ComplaintImpl with DiagnosticableTreeMixin implements _Complaint {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Complaint(uuid: $uuid, name: $name, onsetDate: $onsetDate, dateRecorded: $dateRecorded, value: $value)';
+    return 'Procedure(uuid: $uuid, name: $name, dateRecorded: $dateRecorded, value: $value)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'Complaint'))
+      ..add(DiagnosticsProperty('type', 'Procedure'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('onsetDate', onsetDate))
       ..add(DiagnosticsProperty('dateRecorded', dateRecorded))
       ..add(DiagnosticsProperty('value', value));
   }
@@ -192,11 +167,9 @@ class _$ComplaintImpl with DiagnosticableTreeMixin implements _Complaint {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ComplaintImpl &&
+            other is _$ProcedureImpl &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.onsetDate, onsetDate) ||
-                other.onsetDate == onsetDate) &&
             (identical(other.dateRecorded, dateRecorded) ||
                 other.dateRecorded == dateRecorded) &&
             (identical(other.value, value) || other.value == value));
@@ -204,46 +177,42 @@ class _$ComplaintImpl with DiagnosticableTreeMixin implements _Complaint {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, uuid, name, onsetDate, dateRecorded, value);
+  int get hashCode => Object.hash(runtimeType, uuid, name, dateRecorded, value);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ComplaintImplCopyWith<_$ComplaintImpl> get copyWith =>
-      __$$ComplaintImplCopyWithImpl<_$ComplaintImpl>(this, _$identity);
+  _$$ProcedureImplCopyWith<_$ProcedureImpl> get copyWith =>
+      __$$ProcedureImplCopyWithImpl<_$ProcedureImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ComplaintImplToJson(
+    return _$$ProcedureImplToJson(
       this,
     );
   }
 }
 
-abstract class _Complaint implements Complaint {
-  const factory _Complaint(
+abstract class _Procedure implements Procedure {
+  const factory _Procedure(
       {required final String uuid,
       required final String name,
-      final String? onsetDate,
       required final String dateRecorded,
-      required final String value}) = _$ComplaintImpl;
+      required final String value}) = _$ProcedureImpl;
 
-  factory _Complaint.fromJson(Map<String, dynamic> json) =
-      _$ComplaintImpl.fromJson;
+  factory _Procedure.fromJson(Map<String, dynamic> json) =
+      _$ProcedureImpl.fromJson;
 
   @override
   String get uuid;
   @override
   String get name;
   @override
-  String? get onsetDate;
-  @override
   String get dateRecorded;
   @override
   String get value;
   @override
   @JsonKey(ignore: true)
-  _$$ComplaintImplCopyWith<_$ComplaintImpl> get copyWith =>
+  _$$ProcedureImplCopyWith<_$ProcedureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

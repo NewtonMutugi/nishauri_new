@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nishauri/src/features/visits/data/models/diagnosis.dart';
+import 'package:nishauri/src/features/visits/data/models/procedure.dart';
 import 'package:nishauri/src/shared/display/AppCard.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class DiagnosisTab extends StatelessWidget {
-  final List<Diagnosis> diagnosis;
+  final List<Procedure> diagnosis;
   const DiagnosisTab({super.key, this.diagnosis =const[]});
 
   @override

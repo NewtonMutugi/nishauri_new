@@ -23,7 +23,7 @@ class GenderPicker extends StatelessWidget {
     final screenSize = getOrientationAwareScreenSize(context);
     final theme = Theme.of(context);
     final color = theme.canvasColor;
-    final bgColor = activeColor ?? Constants.activeSelectionColor;
+    final bgColor = activeColor ?? Constants.selfScreeningBgColor;
     final disabledColor = Colors.grey;
 
     return Row(

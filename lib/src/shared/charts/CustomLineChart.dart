@@ -56,7 +56,7 @@ class CustomLineChart extends StatelessWidget {
                       spots: dataPoints,
                       isCurved: true,
                       color: barColor,
-                      barWidth: 6,
+                      barWidth: 2,
                       belowBarData: BarAreaData(
                         show: true,
                         gradient: LinearGradient(

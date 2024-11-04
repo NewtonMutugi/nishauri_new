@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nishauri/src/features/clinic_card/data/providers/programProvider.dart';
 import 'package:nishauri/src/features/self_screening/presentation/widgets/health_list.dart';
+import 'package:nishauri/src/features/visits/data/providers/visits_provider.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
 import 'package:nishauri/src/shared/display/background_image_widget.dart';
 import 'package:nishauri/src/utils/constants.dart';
@@ -19,9 +20,46 @@ class ClinicCardScreen extends HookConsumerWidget {
     final theme = Theme.of(context);
     final programAsync = ref.watch(programProvider);
     final userPrograms = ref.watch(userProgramProvider);
+    final visitAsync = ref.watch(visitProvider);
+
+    final visits = visitAsync.when(
+      data: (data) {
+        return data; // This is a List<Visit>
+      },
+      error: (error, _) {
+        print("Error occurred: $error");
+        return [];
+      },
+      loading: () {
+        return [];
+      },
+    );
+
+// Check if visits is not empty before accessing properties
+    if (visits.isNotEmpty) {
+      // Print labResults for each visit
+      for (var visit in visits) {
+        print(visit.labResults);
+      }
+
+      // Alternatively, if you only want the labResults from the first visit:
+      print(visits.first.labResults);
+    } else {
+      print("No visit data available.");
+    }
+
+
+    final Map<String, String> svgMapping = {
+      "allergies": "assets/images/boldDuotoneMedicineVirus.svg",
+      "conditions": "assets/images/boldDuotoneMedicineStethoscope.svg",
+      "immunization":  "assets/images/boldDuotoneMedicineSyringe.svg",
+      "labResults": "assets/images/boldDuotoneMedicineTestTube.svg",
+      "medications": "assets/images/boldDuotoneMedicineJarOfPills2.svg",
+      "procedures": "assets/images/boldDuotoneMedicineBone.svg",
+      "vitals": "assets/images/boldDuotoneMedicineHeartPulse2.svg"
+    };
 
     final List<String> items = [
-      "All Records",
       "Allergies",
       "Conditions",
       "Immunizations",

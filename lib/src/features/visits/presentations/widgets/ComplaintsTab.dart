@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nishauri/src/features/visits/data/models/complaint.dart';
+import 'package:nishauri/src/features/visits/data/models/medication.dart';
 import 'package:nishauri/src/shared/display/AppCard.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class ComplaintsTab extends StatelessWidget {
-  final List<Complaint> complaints;
+  final List<Medication> complaints;
   const ComplaintsTab({super.key, this.complaints=const[]});
 
   @override
