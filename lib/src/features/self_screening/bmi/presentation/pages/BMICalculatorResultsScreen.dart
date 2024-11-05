@@ -119,11 +119,11 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                                     decoration: BoxDecoration(
                                       gradient: const LinearGradient(
                                         colors: [
-                                          Colors.blue, // Malnutrition
+                                          Colors.blue,
                                           Colors.green,
-                                          Colors.red, // Obese
+                                          Colors.red,
                                         ],
-                                        stops: [0.0, 0.5, 0.75],
+                                        stops: [0.0, 0.80, 1.0],
                                         begin: Alignment.centerLeft,
                                         end: Alignment.centerRight,
                                       ),
@@ -136,7 +136,7 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                                   value: bmi,
                                   onChanged: (value) {},
                                   min: 0,
-                                  max: 60,
+                                  max: 30,
                                   activeColor: Colors.transparent,
                                   inactiveColor: Colors.transparent,
                                 ),

@@ -60,26 +60,37 @@ class HealthCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: onPressed,
-                  child: const Icon(Icons.chevron_right),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: onPressed,
+                      child: const Icon(Icons.chevron_right),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(child: _buildColumn(value1, text1, vName1, context)),
-                const VerticalDivider(thickness: 3, color: Colors.grey),
-                Expanded(child: _buildColumn(value2, text2, vName2, context)),
-                const VerticalDivider(thickness: 3, color: Colors.grey),
-                Expanded(child: _buildColumn(value3, text3, vName3, context)),
-              ],
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     TextButton(
+            //       onPressed: onPressed,
+            //       child: const Icon(Icons.chevron_right),
+            //     ),
+            //   ],
+            // ),
+            IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(child: _buildColumn(value1, text1, vName1, context)),
+                  if (value2 != null) const VerticalDivider(),
+                  Expanded(child: _buildColumn(value2, text2, vName2, context)),
+                  if (value3 != null) const VerticalDivider(),
+                  Expanded(child: _buildColumn(value3, text3, vName3, context)),
+                ],
+              ),
             ),
           ],
         ),

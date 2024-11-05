@@ -132,16 +132,16 @@ class _SelfScreeningState extends ConsumerState<SelfScreening> {
                             context.goNamed(RouteNames.BLOOD_SUGAR);
                           },
                         ),
-                        HealthCard(
-                          svgAsset: "assets/images/boldDuotoneMedicinePulse.svg",
+                        if (currentBMIEntries != null) HealthCard(
+                          svgAsset: "assets/images/bmi.svg",
                           title: "Body Measurements",
-                          value1: "${currentBMIEntries?.weight ?? 'N/A'}",
+                          value1: "${currentBMIEntries.weight}",
                           text1: "KGS",
                           vName1: "Weight",
-                          value2: "${currentBMIEntries?.height ?? 'N/A'}",
+                          value2: "${currentBMIEntries.height}",
                           text2: "Centimetres",
                           vName2: "Height",
-                          value3: "${currentBMIEntries?.results ?? 'N/A'}",
+                          value3: "${currentBMIEntries.results}",
                           text3: "",
                           vName3: "BMI",
                           onPressed: () {

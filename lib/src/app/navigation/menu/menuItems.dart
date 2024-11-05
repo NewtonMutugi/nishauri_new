@@ -204,14 +204,20 @@ List<MenuItem> getPatientModules(BuildContext context) {
       color: Constants.labResultsColor,
     ),
     MenuItem(
-      icon: const FaIcon(
-        FontAwesomeIcons.addressCard,
-        size: 50.0,
-        color: Constants.clinicCardBgColor,
+      shortcutBackgroundColor: Constants.clinicCardBgColor.withOpacity(0.5),
+      icon: SvgPicture.asset(
+        "assets/images/clinicCardCard.svg",
+        semanticsLabel: "Doctors",
+        fit: BoxFit.contain,
+        height: 80,
+        width: 80,
       ),
-      shortcutIcon: const FaIcon(
-        FontAwesomeIcons.addressCard,
-        color: Constants.clinicCardBgColor,
+      shortcutIcon: SvgPicture.asset(
+        "assets/images/clinicCardCard.svg",
+        semanticsLabel: "Doctors",
+        fit: BoxFit.contain,
+        width: Constants.shortcutIconSize,
+        height: Constants.shortcutIconSize,
       ),
       title: MenuItemNames.MY_CLINIC_CARD,
       onPressed: () => context.goNamed(RouteNames.MY_CLINIC_CARD),
