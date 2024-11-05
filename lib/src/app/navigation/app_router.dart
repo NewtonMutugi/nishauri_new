@@ -19,11 +19,15 @@ import 'package:nishauri/src/features/auth/presentation/pages/VerificationScreen
 import 'package:nishauri/src/features/auth/presentation/pages/VerifiedResetPassword.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/VerifyResetPasswordScreen.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/WelcomeScreen.dart';
-import 'package:nishauri/src/features/blood_sugar/presentation/pages/BloodSugarScreen.dart';
-import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorResultsScreen.dart';
-import 'package:nishauri/src/features/bmi/presentation/pages/BMICalculatorScreen.dart';
-import 'package:nishauri/src/features/bmi/presentation/pages/BMIHistoryScreen.dart';
-import 'package:nishauri/src/features/bp/presentation/pages/bpMonitorScreen.dart';
+import 'package:nishauri/src/features/clinic_card/presentation/widgets/health_record.dart';
+import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/BloodSugarScreen.dart';
+import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMICalculatorResultsScreen.dart';
+import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMICalculatorScreen.dart';
+import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMIHistoryScreen.dart';
+import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/bs_input_screen.dart';
+import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/bs_line_list_Screen.dart';
+import 'package:nishauri/src/features/self_screening/bp/presentation/pages/BPLinelistScreen.dart';
+import 'package:nishauri/src/features/self_screening/bp/presentation/pages/bpMonitorScreen.dart';
 import 'package:nishauri/src/features/chatbot/presentations/ChatScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/pages/ClinicCardScreen.dart';
 import 'package:nishauri/src/features/common/presentation/pages/FaqPage.dart';
@@ -66,7 +70,11 @@ import 'package:nishauri/src/features/provider/dawa_drop_management/presentation
 import 'package:nishauri/src/features/provider/presentation/pages/provider_main_Screen.dart';
 import 'package:nishauri/src/features/provider/provider_registry/presentaion/pages/location_selection_screen.dart';
 import 'package:nishauri/src/features/provider/provider_registry/presentaion/pages/provider_details.dart';
+import 'package:nishauri/src/features/self_screening/bp/presentation/pages/bp_input_screen.dart';
+import 'package:nishauri/src/features/self_screening/presentation/pages/blood_pressure_posts.dart';
+import 'package:nishauri/src/features/self_screening/presentation/pages/blood_sugar_posts.dart';
 import 'package:nishauri/src/features/self_screening/presentation/pages/bpInsightScreen.dart';
+import 'package:nishauri/src/features/self_screening/presentation/pages/bsInsightScreen.dart';
 import 'package:nishauri/src/features/self_screening/presentation/pages/insight_screen.dart';
 import 'package:nishauri/src/features/self_screening/presentation/pages/self_screening_menu.dart';
 import 'package:nishauri/src/features/treatment_support/presentation/pages/TreatmentSupport.dart';
@@ -351,6 +359,15 @@ final List<RouteBase> secureRoutes = [
     builder: (BuildContext context, GoRouterState state) {
       return const ClinicCardScreen();
     },
+    routes: [
+      GoRoute(
+        name: RouteNames.HEALTH_RECORD,
+        path: 'health-record',
+        builder: (BuildContext context, GoRouterState state) {
+          return const HealthRecord();
+        },
+      ),
+    ]
   ),
   GoRoute(
     name: RouteNames.DAWA_DROP,
@@ -446,39 +463,124 @@ final List<RouteBase> openRoutes = [
 
 final List<RouteBase> selfScreeningRoutes = [
   GoRoute(
-      name: RouteNames.BMI_CALCULATOR,
-      path: 'bmi-calculator',
+      name: RouteNames.BMI_CALCULATOR_RESULTS,
+      path: "bmi-calculator-results",
       builder: (BuildContext context, GoRouterState state) {
-        return const BMICalculatorScreen();
+        // Ensure that state.extra is of the expected type
+        final extra = state.extra;
+
+        if (extra is Map<String, dynamic>) {
+          double? bmi = extra['bmi'] as double?;
+          bool? isForSelf = extra['isForSelf'] as bool?;
+          return BMICalculatorResultsScreen(
+            otherBMI: bmi,
+            isForSelf: isForSelf,
+          );
+        } else {
+          return BMICalculatorResultsScreen(
+            otherBMI: null,
+            isForSelf: true,
+          );
+        }
       },
-      routes: [
-        GoRoute(
-            name: RouteNames.BMI_CALCULATOR_RESULTS,
-            path: "bmi-calculator-results",
-            builder: (BuildContext context, GoRouterState state) {
-              double extra = state.extra! as double;
-              return BMICalculatorResultsScreen(bmi: extra);
-            }),
-        GoRoute(
-            name: RouteNames.BMI_HISTORY,
-            path: "bmi-history",
-            builder: (BuildContext context, GoRouterState state) {
-              return BMIHistoryScreen();
-            }),
-      ]),
+          routes: [
+            GoRoute(
+                name: RouteNames.BMI_CALCULATOR,
+                path: 'bmi-calculator',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const BMICalculatorScreen();
+                },
+            ),
+            GoRoute(
+                name: RouteNames.BMI_HISTORY,
+                path: "bmi-history",
+                builder: (BuildContext context, GoRouterState state) {
+                  return BMIHistoryScreen();
+                }
+            ),
+          ]
+        ),
   GoRoute(
     name: RouteNames.BLOOD_PRESSURE,
     path: 'blood-pressure',
     builder: (BuildContext context, GoRouterState state) {
       return BPMonitorScreen();
     },
+    routes: [
+      GoRoute(
+          name: RouteNames.BLOOD_PRESSURE_INSIGHT,
+          path: 'blood-pressure-insight',
+          builder: (BuildContext context, GoRouterState state) {
+            return BpInsightScreen();
+          },
+          routes: [
+            GoRoute(
+              name: RouteNames.BLOOD_PRESSURE_POSTS,
+              path: 'blood-pressure-posts',
+              builder: (BuildContext context, GoRouterState state) {
+                dynamic ann = state.extra;
+                return BloodPressurePostScreen(announcement: ann,);
+              },
+            )
+          ]
+      ),
+      GoRoute(
+        name: RouteNames.BLOOD_PRESSURE_RECORDS,
+        path: 'blood-pressure-records',
+        builder: (context, state) {
+          dynamic extras = state.extra;
+          return BloodPressureRecords(data: extras);
+        },
+      ),
+      GoRoute(
+        name: RouteNames.BLOOD_PRESSURE_INPUT,
+        path: 'blood-pressure-input',
+        builder: (context, state) {
+          return BloodPressureInputs();
+        },
+      ),
+    ]
   ),
   GoRoute(
-    name: MenuItemNames.BLOOD_SUGAR,
+    name: RouteNames.BLOOD_SUGAR,
     path: 'blood-sugar',
     builder: (BuildContext context, GoRouterState state) {
       return BloodSugarScreen();
     },
+    routes: [
+      GoRoute(
+        name: RouteNames.BLOOD_SUGAR_INSIGHT,
+        path: 'blood-sugar-insight',
+        builder: (BuildContext context, GoRouterState state) {
+          return BsInsightScreen();
+        },
+        routes: [
+          GoRoute(
+              name: RouteNames.BLOOD_SUGAR_POSTS,
+              path: 'blood-sugar-posts',
+              builder: (BuildContext context, GoRouterState state) {
+                dynamic ann = state.extra;
+                return BloodSugarPostScreen(announcement: ann,);
+              },
+          )
+        ]
+      ),
+      GoRoute(
+        name: RouteNames.BLOOD_SUGAR_RECORDS,
+        path: 'blood-sugar-records',
+        builder: (context, state) {
+          dynamic extras = state.extra;
+          return BloodSugarRecords(data: extras);
+        },
+      ),
+      GoRoute(
+        name: RouteNames.BLOOD_SUGAR_INPUT,
+        path: 'blood-sugar-input',
+        builder: (context, state) {
+          return BloodSugarInputs();
+        },
+      ),
+    ]
   ),
   //Routes for the Period Planner
   GoRoute(

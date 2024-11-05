@@ -22,11 +22,13 @@ Visit _$VisitFromJson(Map<String, dynamic> json) {
 mixin _$Visit {
   String get uuid => throw _privateConstructorUsedError;
   List<Allergy> get allergies => throw _privateConstructorUsedError;
-  List<Complaint> get complaints => throw _privateConstructorUsedError;
+  List<Medication> get medications => throw _privateConstructorUsedError;
   List<Condition> get conditions => throw _privateConstructorUsedError;
-  List<Diagnosis> get diagnosis => throw _privateConstructorUsedError;
+  List<Procedure> get procedures => throw _privateConstructorUsedError;
   List<LabResult> get labResults => throw _privateConstructorUsedError;
   List<Vital> get vitals => throw _privateConstructorUsedError;
+  List<Immunization> get immunization => throw _privateConstructorUsedError;
+  String? get facility => throw _privateConstructorUsedError;
   String get visitDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,11 +44,13 @@ abstract class $VisitCopyWith<$Res> {
   $Res call(
       {String uuid,
       List<Allergy> allergies,
-      List<Complaint> complaints,
+      List<Medication> medications,
       List<Condition> conditions,
-      List<Diagnosis> diagnosis,
+      List<Procedure> procedures,
       List<LabResult> labResults,
       List<Vital> vitals,
+      List<Immunization> immunization,
+      String? facility,
       String visitDate});
 }
 
@@ -65,11 +69,13 @@ class _$VisitCopyWithImpl<$Res, $Val extends Visit>
   $Res call({
     Object? uuid = null,
     Object? allergies = null,
-    Object? complaints = null,
+    Object? medications = null,
     Object? conditions = null,
-    Object? diagnosis = null,
+    Object? procedures = null,
     Object? labResults = null,
     Object? vitals = null,
+    Object? immunization = null,
+    Object? facility = freezed,
     Object? visitDate = null,
   }) {
     return _then(_value.copyWith(
@@ -81,18 +87,18 @@ class _$VisitCopyWithImpl<$Res, $Val extends Visit>
           ? _value.allergies
           : allergies // ignore: cast_nullable_to_non_nullable
               as List<Allergy>,
-      complaints: null == complaints
-          ? _value.complaints
-          : complaints // ignore: cast_nullable_to_non_nullable
-              as List<Complaint>,
+      medications: null == medications
+          ? _value.medications
+          : medications // ignore: cast_nullable_to_non_nullable
+              as List<Medication>,
       conditions: null == conditions
           ? _value.conditions
           : conditions // ignore: cast_nullable_to_non_nullable
               as List<Condition>,
-      diagnosis: null == diagnosis
-          ? _value.diagnosis
-          : diagnosis // ignore: cast_nullable_to_non_nullable
-              as List<Diagnosis>,
+      procedures: null == procedures
+          ? _value.procedures
+          : procedures // ignore: cast_nullable_to_non_nullable
+              as List<Procedure>,
       labResults: null == labResults
           ? _value.labResults
           : labResults // ignore: cast_nullable_to_non_nullable
@@ -101,6 +107,14 @@ class _$VisitCopyWithImpl<$Res, $Val extends Visit>
           ? _value.vitals
           : vitals // ignore: cast_nullable_to_non_nullable
               as List<Vital>,
+      immunization: null == immunization
+          ? _value.immunization
+          : immunization // ignore: cast_nullable_to_non_nullable
+              as List<Immunization>,
+      facility: freezed == facility
+          ? _value.facility
+          : facility // ignore: cast_nullable_to_non_nullable
+              as String?,
       visitDate: null == visitDate
           ? _value.visitDate
           : visitDate // ignore: cast_nullable_to_non_nullable
@@ -119,11 +133,13 @@ abstract class _$$VisitImplCopyWith<$Res> implements $VisitCopyWith<$Res> {
   $Res call(
       {String uuid,
       List<Allergy> allergies,
-      List<Complaint> complaints,
+      List<Medication> medications,
       List<Condition> conditions,
-      List<Diagnosis> diagnosis,
+      List<Procedure> procedures,
       List<LabResult> labResults,
       List<Vital> vitals,
+      List<Immunization> immunization,
+      String? facility,
       String visitDate});
 }
 
@@ -140,11 +156,13 @@ class __$$VisitImplCopyWithImpl<$Res>
   $Res call({
     Object? uuid = null,
     Object? allergies = null,
-    Object? complaints = null,
+    Object? medications = null,
     Object? conditions = null,
-    Object? diagnosis = null,
+    Object? procedures = null,
     Object? labResults = null,
     Object? vitals = null,
+    Object? immunization = null,
+    Object? facility = freezed,
     Object? visitDate = null,
   }) {
     return _then(_$VisitImpl(
@@ -156,18 +174,18 @@ class __$$VisitImplCopyWithImpl<$Res>
           ? _value._allergies
           : allergies // ignore: cast_nullable_to_non_nullable
               as List<Allergy>,
-      complaints: null == complaints
-          ? _value._complaints
-          : complaints // ignore: cast_nullable_to_non_nullable
-              as List<Complaint>,
+      medications: null == medications
+          ? _value._medications
+          : medications // ignore: cast_nullable_to_non_nullable
+              as List<Medication>,
       conditions: null == conditions
           ? _value._conditions
           : conditions // ignore: cast_nullable_to_non_nullable
               as List<Condition>,
-      diagnosis: null == diagnosis
-          ? _value._diagnosis
-          : diagnosis // ignore: cast_nullable_to_non_nullable
-              as List<Diagnosis>,
+      procedures: null == procedures
+          ? _value._procedures
+          : procedures // ignore: cast_nullable_to_non_nullable
+              as List<Procedure>,
       labResults: null == labResults
           ? _value._labResults
           : labResults // ignore: cast_nullable_to_non_nullable
@@ -176,6 +194,14 @@ class __$$VisitImplCopyWithImpl<$Res>
           ? _value._vitals
           : vitals // ignore: cast_nullable_to_non_nullable
               as List<Vital>,
+      immunization: null == immunization
+          ? _value._immunization
+          : immunization // ignore: cast_nullable_to_non_nullable
+              as List<Immunization>,
+      facility: freezed == facility
+          ? _value.facility
+          : facility // ignore: cast_nullable_to_non_nullable
+              as String?,
       visitDate: null == visitDate
           ? _value.visitDate
           : visitDate // ignore: cast_nullable_to_non_nullable
@@ -190,18 +216,21 @@ class _$VisitImpl with DiagnosticableTreeMixin implements _Visit {
   const _$VisitImpl(
       {required this.uuid,
       final List<Allergy> allergies = const [],
-      final List<Complaint> complaints = const [],
+      final List<Medication> medications = const [],
       final List<Condition> conditions = const [],
-      final List<Diagnosis> diagnosis = const [],
+      final List<Procedure> procedures = const [],
       final List<LabResult> labResults = const [],
       final List<Vital> vitals = const [],
+      final List<Immunization> immunization = const [],
+      this.facility,
       required this.visitDate})
       : _allergies = allergies,
-        _complaints = complaints,
+        _medications = medications,
         _conditions = conditions,
-        _diagnosis = diagnosis,
+        _procedures = procedures,
         _labResults = labResults,
-        _vitals = vitals;
+        _vitals = vitals,
+        _immunization = immunization;
 
   factory _$VisitImpl.fromJson(Map<String, dynamic> json) =>
       _$$VisitImplFromJson(json);
@@ -217,13 +246,13 @@ class _$VisitImpl with DiagnosticableTreeMixin implements _Visit {
     return EqualUnmodifiableListView(_allergies);
   }
 
-  final List<Complaint> _complaints;
+  final List<Medication> _medications;
   @override
   @JsonKey()
-  List<Complaint> get complaints {
-    if (_complaints is EqualUnmodifiableListView) return _complaints;
+  List<Medication> get medications {
+    if (_medications is EqualUnmodifiableListView) return _medications;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_complaints);
+    return EqualUnmodifiableListView(_medications);
   }
 
   final List<Condition> _conditions;
@@ -235,13 +264,13 @@ class _$VisitImpl with DiagnosticableTreeMixin implements _Visit {
     return EqualUnmodifiableListView(_conditions);
   }
 
-  final List<Diagnosis> _diagnosis;
+  final List<Procedure> _procedures;
   @override
   @JsonKey()
-  List<Diagnosis> get diagnosis {
-    if (_diagnosis is EqualUnmodifiableListView) return _diagnosis;
+  List<Procedure> get procedures {
+    if (_procedures is EqualUnmodifiableListView) return _procedures;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_diagnosis);
+    return EqualUnmodifiableListView(_procedures);
   }
 
   final List<LabResult> _labResults;
@@ -262,12 +291,23 @@ class _$VisitImpl with DiagnosticableTreeMixin implements _Visit {
     return EqualUnmodifiableListView(_vitals);
   }
 
+  final List<Immunization> _immunization;
+  @override
+  @JsonKey()
+  List<Immunization> get immunization {
+    if (_immunization is EqualUnmodifiableListView) return _immunization;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_immunization);
+  }
+
+  @override
+  final String? facility;
   @override
   final String visitDate;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Visit(uuid: $uuid, allergies: $allergies, complaints: $complaints, conditions: $conditions, diagnosis: $diagnosis, labResults: $labResults, vitals: $vitals, visitDate: $visitDate)';
+    return 'Visit(uuid: $uuid, allergies: $allergies, medications: $medications, conditions: $conditions, procedures: $procedures, labResults: $labResults, vitals: $vitals, immunization: $immunization, facility: $facility, visitDate: $visitDate)';
   }
 
   @override
@@ -277,11 +317,13 @@ class _$VisitImpl with DiagnosticableTreeMixin implements _Visit {
       ..add(DiagnosticsProperty('type', 'Visit'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('allergies', allergies))
-      ..add(DiagnosticsProperty('complaints', complaints))
+      ..add(DiagnosticsProperty('medications', medications))
       ..add(DiagnosticsProperty('conditions', conditions))
-      ..add(DiagnosticsProperty('diagnosis', diagnosis))
+      ..add(DiagnosticsProperty('procedures', procedures))
       ..add(DiagnosticsProperty('labResults', labResults))
       ..add(DiagnosticsProperty('vitals', vitals))
+      ..add(DiagnosticsProperty('immunization', immunization))
+      ..add(DiagnosticsProperty('facility', facility))
       ..add(DiagnosticsProperty('visitDate', visitDate));
   }
 
@@ -294,14 +336,18 @@ class _$VisitImpl with DiagnosticableTreeMixin implements _Visit {
             const DeepCollectionEquality()
                 .equals(other._allergies, _allergies) &&
             const DeepCollectionEquality()
-                .equals(other._complaints, _complaints) &&
+                .equals(other._medications, _medications) &&
             const DeepCollectionEquality()
                 .equals(other._conditions, _conditions) &&
             const DeepCollectionEquality()
-                .equals(other._diagnosis, _diagnosis) &&
+                .equals(other._procedures, _procedures) &&
             const DeepCollectionEquality()
                 .equals(other._labResults, _labResults) &&
             const DeepCollectionEquality().equals(other._vitals, _vitals) &&
+            const DeepCollectionEquality()
+                .equals(other._immunization, _immunization) &&
+            (identical(other.facility, facility) ||
+                other.facility == facility) &&
             (identical(other.visitDate, visitDate) ||
                 other.visitDate == visitDate));
   }
@@ -312,11 +358,13 @@ class _$VisitImpl with DiagnosticableTreeMixin implements _Visit {
       runtimeType,
       uuid,
       const DeepCollectionEquality().hash(_allergies),
-      const DeepCollectionEquality().hash(_complaints),
+      const DeepCollectionEquality().hash(_medications),
       const DeepCollectionEquality().hash(_conditions),
-      const DeepCollectionEquality().hash(_diagnosis),
+      const DeepCollectionEquality().hash(_procedures),
       const DeepCollectionEquality().hash(_labResults),
       const DeepCollectionEquality().hash(_vitals),
+      const DeepCollectionEquality().hash(_immunization),
+      facility,
       visitDate);
 
   @JsonKey(ignore: true)
@@ -337,11 +385,13 @@ abstract class _Visit implements Visit {
   const factory _Visit(
       {required final String uuid,
       final List<Allergy> allergies,
-      final List<Complaint> complaints,
+      final List<Medication> medications,
       final List<Condition> conditions,
-      final List<Diagnosis> diagnosis,
+      final List<Procedure> procedures,
       final List<LabResult> labResults,
       final List<Vital> vitals,
+      final List<Immunization> immunization,
+      final String? facility,
       required final String visitDate}) = _$VisitImpl;
 
   factory _Visit.fromJson(Map<String, dynamic> json) = _$VisitImpl.fromJson;
@@ -351,15 +401,19 @@ abstract class _Visit implements Visit {
   @override
   List<Allergy> get allergies;
   @override
-  List<Complaint> get complaints;
+  List<Medication> get medications;
   @override
   List<Condition> get conditions;
   @override
-  List<Diagnosis> get diagnosis;
+  List<Procedure> get procedures;
   @override
   List<LabResult> get labResults;
   @override
   List<Vital> get vitals;
+  @override
+  List<Immunization> get immunization;
+  @override
+  String? get facility;
   @override
   String get visitDate;
   @override

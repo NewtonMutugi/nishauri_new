@@ -45,6 +45,7 @@ class RouteNames {
 
   static const LAB_RESULTS = "lab-results";
   static const MY_CLINIC_CARD = "clinic-card";
+  static const HEALTH_RECORD = "health-record";
   static const CHAT_BOT = "chat-bot";
   static const SETTINGS = "settings";
 
@@ -78,6 +79,15 @@ class RouteNames {
   static const DAWA_DROP_MANAGER = "dawa-drop-manager";
   static const LOCATION_SELECTION = "location-selection";
   static const PROVIDER_DETAILS = "provider-details";
+  static const BLOOD_SUGAR = "blood-sugar";
+  static const BLOOD_SUGAR_INSIGHT = 'blood-sugar-insight';
+  static const BLOOD_SUGAR_POSTS = 'blood-sugar-posts';
+  static const BLOOD_PRESSURE_INSIGHT = 'blood-pressure-insight';
+  static const BLOOD_PRESSURE_POSTS = 'blood-pressure-posts';
+  static const BLOOD_PRESSURE_RECORDS = 'blood-pressure-records';
+  static const BLOOD_SUGAR_RECORDS = 'blood-sugar-records';
+  static const BLOOD_PRESSURE_INPUT= 'blood-pressure-input';
+  static const BLOOD_SUGAR_INPUT= 'blood-sugar-input';
 }
 
 class MenuItemNames {

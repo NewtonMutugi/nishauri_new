@@ -1,0 +1,24 @@
+{
+  "status": [
+    {
+      "label": "Normal",
+      "description": "Blood sugar levels are within the normal range.",
+      "advice": "Maintain a balanced diet and regular exercise to keep your blood sugar stable."
+    },
+    {
+      "label": "Impaired Fasting",
+      "description": "Blood sugar levels are elevated after fasting.",
+      "advice": "Consider lifestyle changes such as a healthier diet, regular physical activity, and monitoring your blood sugar levels."
+    },
+    {
+      "label": "Impaired Glucose Tolerance",
+      "description": "Blood sugar levels are elevated after meals.",
+      "advice": "Implement dietary changes, increase physical activity, and consult a healthcare professional for a personalized plan."
+    },
+    {
+      "label": "Diabetes",
+      "description": "Blood sugar levels indicate diabetes.",
+      "advice": "Seek medical advice for a comprehensive management plan, including medication, diet, and exercise."
+    }
+  ]
+}

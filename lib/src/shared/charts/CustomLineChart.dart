@@ -18,6 +18,7 @@ class CustomLineChart extends StatelessWidget {
   final List<Color> gradientColors;
   final double? interval;
   final String dateFormat;
+  final String? filter;
 
   const CustomLineChart({
     Key? key,
@@ -35,106 +36,110 @@ class CustomLineChart extends StatelessWidget {
     required this.bottomTile,
     this.interval,
     required this.dateFormat,
+    this.filter
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: LineChart(
-              LineChartData(
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: dataPoints,
-                    isCurved: true,
-                    color: barColor,
-                    barWidth: 6,
-                    belowBarData: BarAreaData(
-                      show: true,
-                      gradient: LinearGradient(
-                        colors: gradientColors
-                            .map((color) => color.withOpacity(0.3))
-                            .toList(),
+    return Container(
+      height: 300,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: LineChart(
+                LineChartData(
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: dataPoints,
+                      isCurved: true,
+                      color: barColor,
+                      barWidth: 2,
+                      belowBarData: BarAreaData(
+                        show: true,
+                        gradient: LinearGradient(
+                          colors: gradientColors
+                              .map((color) => color.withOpacity(0.3))
+                              .toList(),
+                        ),
                       ),
+                      dotData: const FlDotData(show: true),
                     ),
-                    dotData: const FlDotData(show: true),
-                  ),
-                ],
-                titlesData: FlTitlesData(
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: bottomTile,
-                      getTitlesWidget: (value, meta) {
-                        int index = value.toInt();
-                        if (index >= 0 && index < dateTimes.length) {
-                          DateTime date = DateTime.parse(dateTimes[index]);
-                          return Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Transform.rotate(
-                              angle: -45 *
-                                  (3.14 /
-                                      180), // Rotate the text by -45 degrees
-                              child: Text(DateFormat(dateFormat).format(date)),
-                            ),
+                  ],
+                  titlesData: FlTitlesData(
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: bottomTile,
+                        getTitlesWidget: (value, meta) {
+                          int index = value.toInt();
+                          if (index >= 0 && index < dateTimes.length) {
+                            DateTime date = DateTime.parse(dateTimes[index]);
+                            return Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Transform.rotate(
+                                angle: -45 *
+                                    (3.14 /
+                                        180),
+                                child: Text(DateFormat(dateFormat).format(date)),
+                              ),
+                            );
+                          }
+                          return const Text('');
+                        },
+                        reservedSize: 30,
+                        interval: 1,
+                      ),
+                      axisNameWidget: Text(xAxisLabel ?? ''),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: leftTile,
+                        getTitlesWidget: (value, meta) {
+                          return Text(
+                            value.toString(),
+                            style: const TextStyle(fontSize: 10),
                           );
-                        }
-                        return const Text('');
-                      },
-                      reservedSize: 30,
-                      interval: 1, // Show labels at an interval of 1 unit
+                        },
+                        reservedSize: 30,
+                        interval:
+                        interval ?? 1, // Show labels at an interval of 1 unit
+                      ),
+                      axisNameWidget: Text(yAxisLabel ?? ''),
                     ),
-                    axisNameWidget: Text(xAxisLabel ?? ''),
-                  ),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: leftTile,
-                      getTitlesWidget: (value, meta) {
-                        return Text(
-                          value.toString(),
-                          style: const TextStyle(fontSize: 10),
-                        );
-                      },
-                      reservedSize: 30,
-                      interval:
-                          interval ?? 1, // Show labels at an interval of 1 unit
+                    topTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
                     ),
-                    axisNameWidget: Text(yAxisLabel ?? ''),
+                    rightTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
                   ),
-                  topTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  rightTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                ),
-                minX: minX,
-                maxX: maxX,
-                minY: minY,
-                maxY: maxY,
-                borderData: FlBorderData(show: true),
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: true,
-                  drawHorizontalLine: true,
-                  getDrawingHorizontalLine: (value) {
-                    return const FlLine(strokeWidth: 1, color: Colors.grey);
-                  },
-                  getDrawingVerticalLine: (value) {
-                    if (value.toInt() % 1 == 0) {
+                  minX: minX,
+                  maxX: maxX,
+                  minY: minY,
+                  maxY: maxY,
+                  borderData: FlBorderData(show: true),
+                  gridData: FlGridData(
+                    show: true,
+                    drawVerticalLine: true,
+                    drawHorizontalLine: true,
+                    getDrawingHorizontalLine: (value) {
                       return const FlLine(strokeWidth: 1, color: Colors.grey);
-                    }
-                    return const FlLine(
-                        strokeWidth: 0); // Hide lines for non-integer values
-                  },
+                    },
+                    getDrawingVerticalLine: (value) {
+                      if (value.toInt() % 1 == 0) {
+                        return const FlLine(strokeWidth: 1, color: Colors.grey);
+                      }
+                      return const FlLine(
+                          strokeWidth: 0);
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
