@@ -20,11 +20,11 @@ Immunization _$ImmunizationFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Immunization {
-  String get uuid => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get dateRecorded => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
-  String get value => throw _privateConstructorUsedError;
+  String? get uuid => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get immunizationDate => throw _privateConstructorUsedError;
+  String? get manufacturer => throw _privateConstructorUsedError;
+  String? get lot => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $ImmunizationCopyWith<$Res> {
       _$ImmunizationCopyWithImpl<$Res, Immunization>;
   @useResult
   $Res call(
-      {String uuid,
-      String name,
-      String dateRecorded,
-      String status,
-      String value});
+      {String? uuid,
+      String? name,
+      String? immunizationDate,
+      String? manufacturer,
+      String? lot});
 }
 
 /// @nodoc
@@ -59,33 +59,33 @@ class _$ImmunizationCopyWithImpl<$Res, $Val extends Immunization>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? name = null,
-    Object? dateRecorded = null,
-    Object? status = null,
-    Object? value = null,
+    Object? uuid = freezed,
+    Object? name = freezed,
+    Object? immunizationDate = freezed,
+    Object? manufacturer = freezed,
+    Object? lot = freezed,
   }) {
     return _then(_value.copyWith(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateRecorded: null == dateRecorded
-          ? _value.dateRecorded
-          : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      immunizationDate: freezed == immunizationDate
+          ? _value.immunizationDate
+          : immunizationDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      manufacturer: freezed == manufacturer
+          ? _value.manufacturer
+          : manufacturer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lot: freezed == lot
+          ? _value.lot
+          : lot // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -99,11 +99,11 @@ abstract class _$$ImmunizationImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String uuid,
-      String name,
-      String dateRecorded,
-      String status,
-      String value});
+      {String? uuid,
+      String? name,
+      String? immunizationDate,
+      String? manufacturer,
+      String? lot});
 }
 
 /// @nodoc
@@ -117,33 +117,33 @@ class __$$ImmunizationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? name = null,
-    Object? dateRecorded = null,
-    Object? status = null,
-    Object? value = null,
+    Object? uuid = freezed,
+    Object? name = freezed,
+    Object? immunizationDate = freezed,
+    Object? manufacturer = freezed,
+    Object? lot = freezed,
   }) {
     return _then(_$ImmunizationImpl(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateRecorded: null == dateRecorded
-          ? _value.dateRecorded
-          : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      immunizationDate: freezed == immunizationDate
+          ? _value.immunizationDate
+          : immunizationDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      manufacturer: freezed == manufacturer
+          ? _value.manufacturer
+          : manufacturer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lot: freezed == lot
+          ? _value.lot
+          : lot // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -152,29 +152,29 @@ class __$$ImmunizationImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ImmunizationImpl implements _Immunization {
   const _$ImmunizationImpl(
-      {required this.uuid,
-      required this.name,
-      required this.dateRecorded,
-      required this.status,
-      required this.value});
+      {this.uuid,
+      this.name,
+      this.immunizationDate,
+      this.manufacturer,
+      this.lot});
 
   factory _$ImmunizationImpl.fromJson(Map<String, dynamic> json) =>
       _$$ImmunizationImplFromJson(json);
 
   @override
-  final String uuid;
+  final String? uuid;
   @override
-  final String name;
+  final String? name;
   @override
-  final String dateRecorded;
+  final String? immunizationDate;
   @override
-  final String status;
+  final String? manufacturer;
   @override
-  final String value;
+  final String? lot;
 
   @override
   String toString() {
-    return 'Immunization(uuid: $uuid, name: $name, dateRecorded: $dateRecorded, status: $status, value: $value)';
+    return 'Immunization(uuid: $uuid, name: $name, immunizationDate: $immunizationDate, manufacturer: $manufacturer, lot: $lot)';
   }
 
   @override
@@ -184,16 +184,17 @@ class _$ImmunizationImpl implements _Immunization {
             other is _$ImmunizationImpl &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.dateRecorded, dateRecorded) ||
-                other.dateRecorded == dateRecorded) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.immunizationDate, immunizationDate) ||
+                other.immunizationDate == immunizationDate) &&
+            (identical(other.manufacturer, manufacturer) ||
+                other.manufacturer == manufacturer) &&
+            (identical(other.lot, lot) || other.lot == lot));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, uuid, name, dateRecorded, status, value);
+      Object.hash(runtimeType, uuid, name, immunizationDate, manufacturer, lot);
 
   @JsonKey(ignore: true)
   @override
@@ -211,25 +212,25 @@ class _$ImmunizationImpl implements _Immunization {
 
 abstract class _Immunization implements Immunization {
   const factory _Immunization(
-      {required final String uuid,
-      required final String name,
-      required final String dateRecorded,
-      required final String status,
-      required final String value}) = _$ImmunizationImpl;
+      {final String? uuid,
+      final String? name,
+      final String? immunizationDate,
+      final String? manufacturer,
+      final String? lot}) = _$ImmunizationImpl;
 
   factory _Immunization.fromJson(Map<String, dynamic> json) =
       _$ImmunizationImpl.fromJson;
 
   @override
-  String get uuid;
+  String? get uuid;
   @override
-  String get name;
+  String? get name;
   @override
-  String get dateRecorded;
+  String? get immunizationDate;
   @override
-  String get status;
+  String? get manufacturer;
   @override
-  String get value;
+  String? get lot;
   @override
   @JsonKey(ignore: true)
   _$$ImmunizationImplCopyWith<_$ImmunizationImpl> get copyWith =>

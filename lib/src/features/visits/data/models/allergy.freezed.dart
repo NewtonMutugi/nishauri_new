@@ -20,12 +20,12 @@ Allergy _$AllergyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Allergy {
-  String get uuid => throw _privateConstructorUsedError;
-  String get allergen => throw _privateConstructorUsedError;
-  String get reaction => throw _privateConstructorUsedError;
+  String? get uuid => throw _privateConstructorUsedError;
+  String? get allergen => throw _privateConstructorUsedError;
+  String? get reaction => throw _privateConstructorUsedError;
   String? get onsetDate => throw _privateConstructorUsedError;
-  String get dateRecorded => throw _privateConstructorUsedError;
-  String get severity => throw _privateConstructorUsedError;
+  String? get dateRecorded => throw _privateConstructorUsedError;
+  String? get severity => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,12 +38,12 @@ abstract class $AllergyCopyWith<$Res> {
       _$AllergyCopyWithImpl<$Res, Allergy>;
   @useResult
   $Res call(
-      {String uuid,
-      String allergen,
-      String reaction,
+      {String? uuid,
+      String? allergen,
+      String? reaction,
       String? onsetDate,
-      String dateRecorded,
-      String severity});
+      String? dateRecorded,
+      String? severity});
 }
 
 /// @nodoc
@@ -59,38 +59,38 @@ class _$AllergyCopyWithImpl<$Res, $Val extends Allergy>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? allergen = null,
-    Object? reaction = null,
+    Object? uuid = freezed,
+    Object? allergen = freezed,
+    Object? reaction = freezed,
     Object? onsetDate = freezed,
-    Object? dateRecorded = null,
-    Object? severity = null,
+    Object? dateRecorded = freezed,
+    Object? severity = freezed,
   }) {
     return _then(_value.copyWith(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      allergen: null == allergen
+              as String?,
+      allergen: freezed == allergen
           ? _value.allergen
           : allergen // ignore: cast_nullable_to_non_nullable
-              as String,
-      reaction: null == reaction
+              as String?,
+      reaction: freezed == reaction
           ? _value.reaction
           : reaction // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       onsetDate: freezed == onsetDate
           ? _value.onsetDate
           : onsetDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateRecorded: null == dateRecorded
+      dateRecorded: freezed == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      severity: null == severity
+              as String?,
+      severity: freezed == severity
           ? _value.severity
           : severity // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -103,12 +103,12 @@ abstract class _$$AllergyImplCopyWith<$Res> implements $AllergyCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String uuid,
-      String allergen,
-      String reaction,
+      {String? uuid,
+      String? allergen,
+      String? reaction,
       String? onsetDate,
-      String dateRecorded,
-      String severity});
+      String? dateRecorded,
+      String? severity});
 }
 
 /// @nodoc
@@ -122,38 +122,38 @@ class __$$AllergyImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? allergen = null,
-    Object? reaction = null,
+    Object? uuid = freezed,
+    Object? allergen = freezed,
+    Object? reaction = freezed,
     Object? onsetDate = freezed,
-    Object? dateRecorded = null,
-    Object? severity = null,
+    Object? dateRecorded = freezed,
+    Object? severity = freezed,
   }) {
     return _then(_$AllergyImpl(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      allergen: null == allergen
+              as String?,
+      allergen: freezed == allergen
           ? _value.allergen
           : allergen // ignore: cast_nullable_to_non_nullable
-              as String,
-      reaction: null == reaction
+              as String?,
+      reaction: freezed == reaction
           ? _value.reaction
           : reaction // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       onsetDate: freezed == onsetDate
           ? _value.onsetDate
           : onsetDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateRecorded: null == dateRecorded
+      dateRecorded: freezed == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      severity: null == severity
+              as String?,
+      severity: freezed == severity
           ? _value.severity
           : severity // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -162,28 +162,28 @@ class __$$AllergyImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AllergyImpl with DiagnosticableTreeMixin implements _Allergy {
   const _$AllergyImpl(
-      {required this.uuid,
-      required this.allergen,
-      required this.reaction,
+      {this.uuid,
+      this.allergen,
+      this.reaction,
       this.onsetDate,
-      required this.dateRecorded,
-      required this.severity});
+      this.dateRecorded,
+      this.severity});
 
   factory _$AllergyImpl.fromJson(Map<String, dynamic> json) =>
       _$$AllergyImplFromJson(json);
 
   @override
-  final String uuid;
+  final String? uuid;
   @override
-  final String allergen;
+  final String? allergen;
   @override
-  final String reaction;
+  final String? reaction;
   @override
   final String? onsetDate;
   @override
-  final String dateRecorded;
+  final String? dateRecorded;
   @override
-  final String severity;
+  final String? severity;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -242,27 +242,27 @@ class _$AllergyImpl with DiagnosticableTreeMixin implements _Allergy {
 
 abstract class _Allergy implements Allergy {
   const factory _Allergy(
-      {required final String uuid,
-      required final String allergen,
-      required final String reaction,
+      {final String? uuid,
+      final String? allergen,
+      final String? reaction,
       final String? onsetDate,
-      required final String dateRecorded,
-      required final String severity}) = _$AllergyImpl;
+      final String? dateRecorded,
+      final String? severity}) = _$AllergyImpl;
 
   factory _Allergy.fromJson(Map<String, dynamic> json) = _$AllergyImpl.fromJson;
 
   @override
-  String get uuid;
+  String? get uuid;
   @override
-  String get allergen;
+  String? get allergen;
   @override
-  String get reaction;
+  String? get reaction;
   @override
   String? get onsetDate;
   @override
-  String get dateRecorded;
+  String? get dateRecorded;
   @override
-  String get severity;
+  String? get severity;
   @override
   @JsonKey(ignore: true)
   _$$AllergyImplCopyWith<_$AllergyImpl> get copyWith =>

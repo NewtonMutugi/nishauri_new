@@ -8,11 +8,12 @@ part of 'medication.dart';
 
 _$MedicationImpl _$$MedicationImplFromJson(Map<String, dynamic> json) =>
     _$MedicationImpl(
-      uuid: json['uuid'] as String,
-      name: json['name'] as String,
+      uuid: json['uuid'] as String?,
+      name: json['name'] as String?,
       onsetDate: json['onsetDate'] as String?,
-      dateRecorded: json['dateRecorded'] as String,
-      value: json['value'] as String,
+      dateRecorded: json['dateRecorded'] as String?,
+      value: json['value'] as String?,
+      indication: json['indication'] as String?,
     );
 
 Map<String, dynamic> _$$MedicationImplToJson(_$MedicationImpl instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$MedicationImplToJson(_$MedicationImpl instance) =>
       'onsetDate': instance.onsetDate,
       'dateRecorded': instance.dateRecorded,
       'value': instance.value,
+      'indication': instance.indication,
     };

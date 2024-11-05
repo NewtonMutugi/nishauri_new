@@ -20,12 +20,12 @@ Condition _$ConditionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Condition {
-  String get uuid => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get uuid => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   String? get onsetDate => throw _privateConstructorUsedError;
-  String get dateRecorded => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
-  String get value => throw _privateConstructorUsedError;
+  String? get dateRecorded => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  String? get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,12 +39,12 @@ abstract class $ConditionCopyWith<$Res> {
       _$ConditionCopyWithImpl<$Res, Condition>;
   @useResult
   $Res call(
-      {String uuid,
-      String name,
+      {String? uuid,
+      String? name,
       String? onsetDate,
-      String dateRecorded,
-      String status,
-      String value});
+      String? dateRecorded,
+      String? status,
+      String? value});
 }
 
 /// @nodoc
@@ -60,38 +60,38 @@ class _$ConditionCopyWithImpl<$Res, $Val extends Condition>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? name = null,
+    Object? uuid = freezed,
+    Object? name = freezed,
     Object? onsetDate = freezed,
-    Object? dateRecorded = null,
-    Object? status = null,
-    Object? value = null,
+    Object? dateRecorded = freezed,
+    Object? status = freezed,
+    Object? value = freezed,
   }) {
     return _then(_value.copyWith(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       onsetDate: freezed == onsetDate
           ? _value.onsetDate
           : onsetDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateRecorded: null == dateRecorded
+      dateRecorded: freezed == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
+              as String?,
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
+              as String?,
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -105,12 +105,12 @@ abstract class _$$ConditionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String uuid,
-      String name,
+      {String? uuid,
+      String? name,
       String? onsetDate,
-      String dateRecorded,
-      String status,
-      String value});
+      String? dateRecorded,
+      String? status,
+      String? value});
 }
 
 /// @nodoc
@@ -124,38 +124,38 @@ class __$$ConditionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? name = null,
+    Object? uuid = freezed,
+    Object? name = freezed,
     Object? onsetDate = freezed,
-    Object? dateRecorded = null,
-    Object? status = null,
-    Object? value = null,
+    Object? dateRecorded = freezed,
+    Object? status = freezed,
+    Object? value = freezed,
   }) {
     return _then(_$ConditionImpl(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       onsetDate: freezed == onsetDate
           ? _value.onsetDate
           : onsetDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateRecorded: null == dateRecorded
+      dateRecorded: freezed == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
+              as String?,
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
+              as String?,
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -164,28 +164,28 @@ class __$$ConditionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ConditionImpl with DiagnosticableTreeMixin implements _Condition {
   const _$ConditionImpl(
-      {required this.uuid,
-      required this.name,
+      {this.uuid,
+      this.name,
       this.onsetDate,
-      required this.dateRecorded,
-      required this.status,
-      required this.value});
+      this.dateRecorded,
+      this.status,
+      this.value});
 
   factory _$ConditionImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConditionImplFromJson(json);
 
   @override
-  final String uuid;
+  final String? uuid;
   @override
-  final String name;
+  final String? name;
   @override
   final String? onsetDate;
   @override
-  final String dateRecorded;
+  final String? dateRecorded;
   @override
-  final String status;
+  final String? status;
   @override
-  final String value;
+  final String? value;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -241,28 +241,28 @@ class _$ConditionImpl with DiagnosticableTreeMixin implements _Condition {
 
 abstract class _Condition implements Condition {
   const factory _Condition(
-      {required final String uuid,
-      required final String name,
+      {final String? uuid,
+      final String? name,
       final String? onsetDate,
-      required final String dateRecorded,
-      required final String status,
-      required final String value}) = _$ConditionImpl;
+      final String? dateRecorded,
+      final String? status,
+      final String? value}) = _$ConditionImpl;
 
   factory _Condition.fromJson(Map<String, dynamic> json) =
       _$ConditionImpl.fromJson;
 
   @override
-  String get uuid;
+  String? get uuid;
   @override
-  String get name;
+  String? get name;
   @override
   String? get onsetDate;
   @override
-  String get dateRecorded;
+  String? get dateRecorded;
   @override
-  String get status;
+  String? get status;
   @override
-  String get value;
+  String? get value;
   @override
   @JsonKey(ignore: true)
   _$$ConditionImplCopyWith<_$ConditionImpl> get copyWith =>

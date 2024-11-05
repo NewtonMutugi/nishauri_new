@@ -8,12 +8,12 @@ part of 'condition.dart';
 
 _$ConditionImpl _$$ConditionImplFromJson(Map<String, dynamic> json) =>
     _$ConditionImpl(
-      uuid: json['uuid'] as String,
-      name: json['name'] as String,
+      uuid: json['uuid'] as String?,
+      name: json['name'] as String?,
       onsetDate: json['onsetDate'] as String?,
-      dateRecorded: json['dateRecorded'] as String,
-      status: json['status'] as String,
-      value: json['value'] as String,
+      dateRecorded: json['dateRecorded'] as String?,
+      status: json['status'] as String?,
+      value: json['value'] as String?,
     );
 
 Map<String, dynamic> _$$ConditionImplToJson(_$ConditionImpl instance) =>

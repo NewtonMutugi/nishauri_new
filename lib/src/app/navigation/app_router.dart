@@ -397,14 +397,14 @@ final List<RouteBase> secureRoutes = [
         return const FacilityVisitsScreen();
       },
       routes: [
-        GoRoute(
-          name: RouteNames.FACILITY_VISIT_DETAIL,
-          path: ':visitId',
-          builder: (BuildContext context, GoRouterState state) {
-            return FacilityVisitDetailScreen(
-                visitId: state.pathParameters["visitId"]!);
-          },
-        )
+        // GoRoute(
+        //   name: RouteNames.FACILITY_VISIT_DETAIL,
+        //   path: ':visitId',
+        //   builder: (BuildContext context, GoRouterState state) {
+        //     return FacilityVisitDetailScreen(
+        //         visitId: state.pathParameters["visitId"]!);
+        //   },
+        // )
       ]),
   GoRoute(
     name: RouteNames.PROVIDER_MAIN_SCREEN,

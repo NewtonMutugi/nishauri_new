@@ -26,14 +26,12 @@ class HealthRecord extends StatelessWidget {
               padding: const EdgeInsets.all(Constants.SPACING),
               child: Column(
                 children: [
-                  _buildButtonRow(),
                   const SizedBox(height: Constants.SPACING),
                   _buildDateRow("16 October 2024", theme),
                   const SizedBox(height: Constants.SPACING),
                   _buildHospitalRow("KENYATTA NATIONAL HOSPITAL", theme),
                   const SizedBox(height: Constants.SPACING),
                   const Divider(),
-                  const SizedBox(height: Constants.SPACING),
                   _buildListView(theme),
                 ],
               ),
@@ -44,36 +42,38 @@ class HealthRecord extends StatelessWidget {
     );
   }
 
-  Widget _buildButtonRow() {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Constants.bgColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          HealthButton(title: "Last Update", color: Constants.bgColor),
-          HealthButton(title: "A - Z", color: Constants.bgColor),
-        ],
-      ),
-    );
-  }
+  // Widget _buildButtonRow() {
+  //   return Container(
+  //     width: double.infinity,
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(12),
+  //       color: Constants.bgColor,
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: Colors.grey.withOpacity(0.3),
+  //           spreadRadius: 2,
+  //           blurRadius: 5,
+  //           offset: const Offset(0, 3),
+  //         ),
+  //       ],
+  //     ),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //       children: [
+  //         HealthButton(title: "Last Update", color: Constants.bgColor),
+  //         HealthButton(title: "A - Z", color: Constants.bgColor),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildDateRow(String date, ThemeData theme) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(date, style: theme.textTheme.titleMedium),
+        HealthButton(),
       ],
     );
   }
@@ -89,7 +89,7 @@ class HealthRecord extends StatelessWidget {
 
   Widget _buildListView(ThemeData theme) {
     return ListView.builder(
-      itemCount: 3, // Adjust item count based on your data
+      itemCount: 3,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
@@ -97,21 +97,47 @@ class HealthRecord extends StatelessWidget {
           title: Card(
             child: Padding(
               padding: const EdgeInsets.all(Constants.SPACING),
-              child: Row(
+              child: ExpansionTile(
+                title:Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildAllergyRow(theme),
+                          // _buildSeverityRow(theme),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  ListTile(
+                    title: Column(
                       children: [
-                        _buildAllergyRow(theme),
-                        _buildSeverityRow(theme),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Reactions", style: theme.textTheme.bodyMedium,),
+                            Text("Headache, Arrythmia", style: theme.textTheme.bodySmall,)
+                          ],
+                        ),
+                        const Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Onset Date", style: theme.textTheme.bodyMedium,),
+                            Text("25 October, 2024", style: theme.textTheme.bodySmall,)
+                          ],
+                        ),
                       ],
                     ),
-                  ),
+                  )
                 ],
-              ),
+              )
             ),
           ),
+          
         );
       },
     );
@@ -128,36 +154,41 @@ class HealthRecord extends StatelessWidget {
         const SizedBox(width: Constants.SPACING),
         Text("Allergies", style: theme.textTheme.titleMedium),
         Spacer(),
-        TextButton(
-          onPressed: () {},
-          child: const Icon(Icons.chevron_right),
-        ),
+        Text("Mild", style: theme.textTheme.bodyMedium),
+        // TextButton(
+        //   onPressed: () {},
+        //   child: const Icon(Icons.chevron_right),
+        // ),
       ],
     );
   }
 
-  Widget _buildSeverityRow(ThemeData theme) {
-    return Row(
-      children: [
-        Text("Mild", style: theme.textTheme.bodyMedium),
-      ],
-    );
-  }
+  // Widget _buildSeverityRow(ThemeData theme) {
+  //   return Row(
+  //     children: [
+  //       Text("Mild", style: theme.textTheme.bodyMedium),
+  //     ],
+  //   );
+  // }
 }
 
-class HealthButton extends StatelessWidget {
-  final String title;
-  final Color? color;
+class HealthButton extends StatefulWidget {
+  const HealthButton({Key? key}) : super(key: key);
 
-  const HealthButton({Key? key, required this.title, this.color}) : super(key: key);
+  @override
+  _HealthButtonState createState() => _HealthButtonState();
+}
+
+class _HealthButtonState extends State<HealthButton> {
+  // Define the selectedMenu variable
+  SampleItem? selectedMenu;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.47,
+      width: MediaQuery.of(context).size.width * 0.2,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: color,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.3),
@@ -167,12 +198,48 @@ class HealthButton extends StatelessWidget {
           ),
         ],
       ),
-      child: Button(
-        title: title,
-        backgroundColor: color,
-        titleStyle: TextStyle(color: Colors.black54),
-        onPress: () {},
+      child: MenuAnchor(
+        builder: (BuildContext context, MenuController controller, Widget? child) {
+          return IconButton(
+            onPressed: () {
+              // Open or close the menu on button press
+              if (controller.isOpen) {
+                controller.close();
+              } else {
+                controller.open();
+              }
+            },
+            icon: SvgPicture.asset(
+              "assets/images/clinic_menu.svg",
+              semanticsLabel: "Doctors",
+              fit: BoxFit.contain,
+              height: 30,
+              width: 30,
+            ),
+            // icon: const Icon(Icons.more_horiz),
+            tooltip: 'Show menu',
+          );
+        },
+        menuChildren: List<MenuItemButton>.generate(
+          3,
+              (int index) => MenuItemButton(
+            onPressed: () {
+              // Update the selectedMenu state when a menu item is pressed
+              setState(() {
+                selectedMenu = SampleItem.values[index];
+              });
+            },
+            child: Text('Item ${index + 1}'),
+          ),
+        ),
       ),
     );
   }
+}
+
+// Enum to represent sample menu items
+enum SampleItem {
+  item1,
+  item2,
+  item3,
 }

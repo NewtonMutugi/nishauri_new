@@ -5,11 +5,11 @@ part 'immunization.g.dart';
 @Freezed()
 class Immunization with _$Immunization {
   const factory Immunization({
-    required String uuid,
-    required String name,
-    required String dateRecorded,
-    required String status,
-    required String value,
+    String? uuid,
+    String? name,
+    String? immunizationDate,
+    String? manufacturer,
+    String? lot,
   }) = _Immunization;
 
   factory Immunization.fromJson(Map<String, dynamic> json)=> _$ImmunizationFromJson(json);

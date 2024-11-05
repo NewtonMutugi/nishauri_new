@@ -8,18 +8,18 @@ part of 'immunization.dart';
 
 _$ImmunizationImpl _$$ImmunizationImplFromJson(Map<String, dynamic> json) =>
     _$ImmunizationImpl(
-      uuid: json['uuid'] as String,
-      name: json['name'] as String,
-      dateRecorded: json['dateRecorded'] as String,
-      status: json['status'] as String,
-      value: json['value'] as String,
+      uuid: json['uuid'] as String?,
+      name: json['name'] as String?,
+      immunizationDate: json['immunizationDate'] as String?,
+      manufacturer: json['manufacturer'] as String?,
+      lot: json['lot'] as String?,
     );
 
 Map<String, dynamic> _$$ImmunizationImplToJson(_$ImmunizationImpl instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'name': instance.name,
-      'dateRecorded': instance.dateRecorded,
-      'status': instance.status,
-      'value': instance.value,
+      'immunizationDate': instance.immunizationDate,
+      'manufacturer': instance.manufacturer,
+      'lot': instance.lot,
     };

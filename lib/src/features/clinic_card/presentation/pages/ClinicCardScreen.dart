@@ -81,7 +81,6 @@ class ClinicCardScreen extends HookConsumerWidget {
     ];
 
     final List<String> paths = [
-      RouteNames.BLOOD_PRESSURE,
       RouteNames.HEALTH_RECORD,
     ];
 

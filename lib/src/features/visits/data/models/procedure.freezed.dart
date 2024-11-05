@@ -20,10 +20,12 @@ Procedure _$ProcedureFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Procedure {
-  String get uuid => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get dateRecorded => throw _privateConstructorUsedError;
-  String get value => throw _privateConstructorUsedError;
+  String? get uuid => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get dateRecorded => throw _privateConstructorUsedError;
+  String? get value => throw _privateConstructorUsedError;
+  String? get site => throw _privateConstructorUsedError;
+  double? get repeat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,13 @@ abstract class $ProcedureCopyWith<$Res> {
   factory $ProcedureCopyWith(Procedure value, $Res Function(Procedure) then) =
       _$ProcedureCopyWithImpl<$Res, Procedure>;
   @useResult
-  $Res call({String uuid, String name, String dateRecorded, String value});
+  $Res call(
+      {String? uuid,
+      String? name,
+      String? dateRecorded,
+      String? value,
+      String? site,
+      double? repeat});
 }
 
 /// @nodoc
@@ -52,28 +60,38 @@ class _$ProcedureCopyWithImpl<$Res, $Val extends Procedure>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? name = null,
-    Object? dateRecorded = null,
-    Object? value = null,
+    Object? uuid = freezed,
+    Object? name = freezed,
+    Object? dateRecorded = freezed,
+    Object? value = freezed,
+    Object? site = freezed,
+    Object? repeat = freezed,
   }) {
     return _then(_value.copyWith(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateRecorded: null == dateRecorded
+              as String?,
+      dateRecorded: freezed == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
+              as String?,
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      site: freezed == site
+          ? _value.site
+          : site // ignore: cast_nullable_to_non_nullable
+              as String?,
+      repeat: freezed == repeat
+          ? _value.repeat
+          : repeat // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -86,7 +104,13 @@ abstract class _$$ProcedureImplCopyWith<$Res>
       __$$ProcedureImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, String name, String dateRecorded, String value});
+  $Res call(
+      {String? uuid,
+      String? name,
+      String? dateRecorded,
+      String? value,
+      String? site,
+      double? repeat});
 }
 
 /// @nodoc
@@ -100,28 +124,38 @@ class __$$ProcedureImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? name = null,
-    Object? dateRecorded = null,
-    Object? value = null,
+    Object? uuid = freezed,
+    Object? name = freezed,
+    Object? dateRecorded = freezed,
+    Object? value = freezed,
+    Object? site = freezed,
+    Object? repeat = freezed,
   }) {
     return _then(_$ProcedureImpl(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateRecorded: null == dateRecorded
+              as String?,
+      dateRecorded: freezed == dateRecorded
           ? _value.dateRecorded
           : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
+              as String?,
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      site: freezed == site
+          ? _value.site
+          : site // ignore: cast_nullable_to_non_nullable
+              as String?,
+      repeat: freezed == repeat
+          ? _value.repeat
+          : repeat // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -130,26 +164,32 @@ class __$$ProcedureImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProcedureImpl with DiagnosticableTreeMixin implements _Procedure {
   const _$ProcedureImpl(
-      {required this.uuid,
-      required this.name,
-      required this.dateRecorded,
-      required this.value});
+      {this.uuid,
+      this.name,
+      this.dateRecorded,
+      this.value,
+      this.site,
+      this.repeat});
 
   factory _$ProcedureImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProcedureImplFromJson(json);
 
   @override
-  final String uuid;
+  final String? uuid;
   @override
-  final String name;
+  final String? name;
   @override
-  final String dateRecorded;
+  final String? dateRecorded;
   @override
-  final String value;
+  final String? value;
+  @override
+  final String? site;
+  @override
+  final double? repeat;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Procedure(uuid: $uuid, name: $name, dateRecorded: $dateRecorded, value: $value)';
+    return 'Procedure(uuid: $uuid, name: $name, dateRecorded: $dateRecorded, value: $value, site: $site, repeat: $repeat)';
   }
 
   @override
@@ -160,7 +200,9 @@ class _$ProcedureImpl with DiagnosticableTreeMixin implements _Procedure {
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('dateRecorded', dateRecorded))
-      ..add(DiagnosticsProperty('value', value));
+      ..add(DiagnosticsProperty('value', value))
+      ..add(DiagnosticsProperty('site', site))
+      ..add(DiagnosticsProperty('repeat', repeat));
   }
 
   @override
@@ -172,12 +214,15 @@ class _$ProcedureImpl with DiagnosticableTreeMixin implements _Procedure {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.dateRecorded, dateRecorded) ||
                 other.dateRecorded == dateRecorded) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.site, site) || other.site == site) &&
+            (identical(other.repeat, repeat) || other.repeat == repeat));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, name, dateRecorded, value);
+  int get hashCode =>
+      Object.hash(runtimeType, uuid, name, dateRecorded, value, site, repeat);
 
   @JsonKey(ignore: true)
   @override
@@ -195,22 +240,28 @@ class _$ProcedureImpl with DiagnosticableTreeMixin implements _Procedure {
 
 abstract class _Procedure implements Procedure {
   const factory _Procedure(
-      {required final String uuid,
-      required final String name,
-      required final String dateRecorded,
-      required final String value}) = _$ProcedureImpl;
+      {final String? uuid,
+      final String? name,
+      final String? dateRecorded,
+      final String? value,
+      final String? site,
+      final double? repeat}) = _$ProcedureImpl;
 
   factory _Procedure.fromJson(Map<String, dynamic> json) =
       _$ProcedureImpl.fromJson;
 
   @override
-  String get uuid;
+  String? get uuid;
   @override
-  String get name;
+  String? get name;
   @override
-  String get dateRecorded;
+  String? get dateRecorded;
   @override
-  String get value;
+  String? get value;
+  @override
+  String? get site;
+  @override
+  double? get repeat;
   @override
   @JsonKey(ignore: true)
   _$$ProcedureImplCopyWith<_$ProcedureImpl> get copyWith =>
