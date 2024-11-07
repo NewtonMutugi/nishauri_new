@@ -26,12 +26,19 @@ class HealthRecord extends StatelessWidget {
               padding: const EdgeInsets.all(Constants.SPACING),
               child: Column(
                 children: [
-                  const SizedBox(height: Constants.SPACING),
+                  _buildFilterMenu(theme),
                   _buildDateRow("16 October 2024", theme),
                   const SizedBox(height: Constants.SPACING),
                   _buildHospitalRow("KENYATTA NATIONAL HOSPITAL", theme),
                   const SizedBox(height: Constants.SPACING),
                   const Divider(),
+                  _buildListView(theme),
+                  const Divider(),
+                  const SizedBox(height: Constants.SPACING),
+                  _buildDateRow("25 October 2024", theme),
+                  const SizedBox(height: Constants.SPACING),
+                  _buildHospitalRow("KENYATTA NATIONAL HOSPITAL", theme),
+                  const SizedBox(height: Constants.SPACING),
                   _buildListView(theme),
                 ],
               ),
@@ -42,30 +49,15 @@ class HealthRecord extends StatelessWidget {
     );
   }
 
-  // Widget _buildButtonRow() {
-  //   return Container(
-  //     width: double.infinity,
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.circular(12),
-  //       color: Constants.bgColor,
-  //       boxShadow: [
-  //         BoxShadow(
-  //           color: Colors.grey.withOpacity(0.3),
-  //           spreadRadius: 2,
-  //           blurRadius: 5,
-  //           offset: const Offset(0, 3),
-  //         ),
-  //       ],
-  //     ),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //       children: [
-  //         HealthButton(title: "Last Update", color: Constants.bgColor),
-  //         HealthButton(title: "A - Z", color: Constants.bgColor),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget _buildFilterMenu(ThemeData theme) {
+    return const Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        HealthButton(),
+      ],
+    );
+  }
 
   Widget _buildDateRow(String date, ThemeData theme) {
     return Row(
@@ -73,7 +65,6 @@ class HealthRecord extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(date, style: theme.textTheme.titleMedium),
-        HealthButton(),
       ],
     );
   }
@@ -147,7 +138,7 @@ class HealthRecord extends StatelessWidget {
     return Row(
       children: [
         SvgPicture.asset(
-          "assets/images/boldDuotoneFoldersFolderPathConnect.svg",
+          "assets/images/boldDuotoneMedicineVirus.svg",
           width: 20,
           height: 20,
         ),
@@ -162,14 +153,6 @@ class HealthRecord extends StatelessWidget {
       ],
     );
   }
-
-  // Widget _buildSeverityRow(ThemeData theme) {
-  //   return Row(
-  //     children: [
-  //       Text("Mild", style: theme.textTheme.bodyMedium),
-  //     ],
-  //   );
-  // }
 }
 
 class HealthButton extends StatefulWidget {
@@ -186,18 +169,7 @@ class _HealthButtonState extends State<HealthButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.2,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
+      width: MediaQuery.of(context).size.width * 0.1,
       child: MenuAnchor(
         builder: (BuildContext context, MenuController controller, Widget? child) {
           return IconButton(
@@ -213,10 +185,9 @@ class _HealthButtonState extends State<HealthButton> {
               "assets/images/clinic_menu.svg",
               semanticsLabel: "Doctors",
               fit: BoxFit.contain,
-              height: 30,
-              width: 30,
+              height: 40,
+              width: 40,
             ),
-            // icon: const Icon(Icons.more_horiz),
             tooltip: 'Show menu',
           );
         },

@@ -70,7 +70,7 @@ class ClinicCardScreen extends HookConsumerWidget {
     ];
 
     final List<String> icons = [
-      "assets/images/boldDuotoneFoldersFolderPathConnect.svg",
+      // "assets/images/boldDuotoneFoldersFolderPathConnect.svg",
       "assets/images/boldDuotoneMedicineVirus.svg",
       "assets/images/boldDuotoneMedicineStethoscope.svg",
       "assets/images/boldDuotoneMedicineSyringe.svg",
