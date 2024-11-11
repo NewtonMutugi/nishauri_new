@@ -37,6 +37,7 @@ class ItemList extends StatelessWidget {
                   svgAsset![index],
                   width: 20,
                   height: 20,
+                  color: backgroundColor,
                 )
                     : null,
                 title: Text(items[index]),

@@ -21,6 +21,7 @@ import 'package:nishauri/src/features/auth/presentation/pages/VerifyResetPasswor
 import 'package:nishauri/src/features/auth/presentation/pages/WelcomeScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/health.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/health_record.dart';
+import 'package:nishauri/src/features/clinic_card/relationship/presentation/pages/dependant_profile.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/BloodSugarScreen.dart';
 import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMICalculatorResultsScreen.dart';
 import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMICalculatorScreen.dart';
@@ -366,6 +367,13 @@ final List<RouteBase> secureRoutes = [
         path: 'health-record',
         builder: (BuildContext context, GoRouterState state) {
           return HealthRecordTest();
+        },
+      ),
+      GoRoute(
+        name: RouteNames.DEPENDANT_PROFILE,
+        path: 'dependant-profile',
+        builder: (BuildContext context, GoRouterState state) {
+          return DependantProfileScreen();
         },
       ),
     ]

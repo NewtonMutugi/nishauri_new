@@ -4,16 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nishauri/src/features/clinic_card/data/providers/programProvider.dart';
 import 'package:nishauri/src/features/self_screening/presentation/widgets/health_list.dart';
+import 'package:nishauri/src/features/user_programs/data/providers/program_provider.dart';
 import 'package:nishauri/src/features/visits/data/providers/visits_provider.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
 import 'package:nishauri/src/shared/display/background_image_widget.dart';
+import 'package:nishauri/src/shared/display/profile_app_bar.dart';
 import 'package:nishauri/src/utils/constants.dart';
 import 'package:nishauri/src/utils/routes.dart';
 
-import '../../../user_programs/data/providers/program_provider.dart';
-
-class ClinicCardScreen extends HookConsumerWidget {
-  const ClinicCardScreen({Key? key}) : super(key: key);
+class DependantProfileScreen extends HookConsumerWidget {
+  const DependantProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,7 +70,6 @@ class ClinicCardScreen extends HookConsumerWidget {
     ];
 
     final List<String> icons = [
-      // "assets/images/boldDuotoneFoldersFolderPathConnect.svg",
       "assets/images/boldDuotoneMedicineVirus.svg",
       "assets/images/boldDuotoneMedicineStethoscope.svg",
       "assets/images/boldDuotoneMedicineSyringe.svg",
@@ -104,10 +103,13 @@ class ClinicCardScreen extends HookConsumerWidget {
         return Scaffold(
           body: Column(
             children: [
-              const CustomAppBar(
-                title: "My Clinic Card 👨🏾‍💼",
+              const ProfileAppBar(
+                title: "👨🏾‍ Eric Muthomi",
                 color: Constants.clinicCardBgColor,
-                subTitle: "Access all your medical details",
+                subTitle: "Relationship: Child",
+                age: "Age: 8 Years",
+                address: "Address: Ole Dume Road",
+                svgPathGroup: "assets/images/group_clinic_card.svg",
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -127,11 +129,6 @@ class ClinicCardScreen extends HookConsumerWidget {
                               const SizedBox(height: 10),
                               ItemList(items: items, path: paths, svgAsset: icons),
                               const SizedBox(height: 10),
-                              Row(
-                                  children: [Text("Shared With Me", style: theme.textTheme.titleMedium),
-                                  ]
-                              ),
-                              const ItemList(items: ["Eric Muthomi"], svgAsset: ["assets/images/clinicCardCard.svg"],path: [RouteNames.DEPENDANT_PROFILE], backgroundColor: Constants.selfScreeningBgColor,),
                             ],
                           ),
                         ),
