@@ -187,7 +187,11 @@ class _HealthRecordTestState extends State<HealthRecordTest> {
   Widget _buildDateRow(String date, ThemeData theme) {
     return Row(
       children: [
-        Text(date, style: theme.textTheme.titleMedium),
+      Expanded(
+        child: Text(
+        date,
+        style: theme.textTheme.titleMedium),
+      ),
       ],
     );
   }
@@ -195,7 +199,13 @@ class _HealthRecordTestState extends State<HealthRecordTest> {
   Widget _buildHospitalRow(String hospital, ThemeData theme) {
     return Row(
       children: [
-        Text(hospital, style: theme.textTheme.titleLarge),
+        Expanded( // Wrap the Text widget in Expanded
+          child: Text(
+            hospital,
+            style: theme.textTheme.titleLarge,
+            overflow: TextOverflow.ellipsis, // Truncate if too long
+          ),
+        ),
       ],
     );
   }
@@ -254,9 +264,14 @@ class _HealthRecordTestState extends State<HealthRecordTest> {
           height: 20,
         ),
         const SizedBox(width: Constants.SPACING),
-        Text(condition.name, style: theme.textTheme.titleMedium),
+        Expanded(
+        child:Text(condition.name,
+           style: theme.textTheme.titleMedium?.copyWith(fontSize: 8), // Reduce font size
+            overflow: TextOverflow.ellipsis,  // Truncate if too long
+            maxLines: 1,
+            ),),
         const Spacer(),
-        Text(condition.status, style: theme.textTheme.bodyMedium?.copyWith(color: getStatusColor(condition.status))),
+        Text(condition.status, style: theme.textTheme.bodyMedium?.copyWith(fontSize: 6,  color: getStatusColor(condition.status))),
       ],
     );
   }
