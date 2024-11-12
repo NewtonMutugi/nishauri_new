@@ -51,8 +51,8 @@ class ClinicCardScreen extends HookConsumerWidget {
 
     final Map<String, String> svgMapping = {
       "allergies": "assets/images/boldDuotoneMedicineVirus.svg",
-      "conditions": "assets/images/boldDuotoneMedicineStethoscope.svg",
       "immunization":  "assets/images/boldDuotoneMedicineSyringe.svg",
+      "conditions": "assets/images/boldDuotoneMedicineStethoscope.svg",
       "labResults": "assets/images/boldDuotoneMedicineTestTube.svg",
       "medications": "assets/images/boldDuotoneMedicineJarOfPills2.svg",
       "procedures": "assets/images/boldDuotoneMedicineBone.svg",
@@ -83,11 +83,13 @@ class ClinicCardScreen extends HookConsumerWidget {
     final List<String> paths = [
       "",
       RouteNames.HEALTH_RECORD,
+      RouteNames.IMMUNIZATION_RECORD,
       "",
       "",
       "",
       "",
       RouteNames.VITAL_HEALTH_RECORD,
+
     ];
 
     void _reloadData() {

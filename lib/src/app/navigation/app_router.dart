@@ -92,6 +92,8 @@ import 'package:nishauri/src/features/visits/presentations/pages/FacilityVisitDe
 import 'package:nishauri/src/features/visits/presentations/pages/FacilityVisitsScreen.dart';
 import 'package:nishauri/src/utils/routes.dart';
 
+import '../../features/clinic_card/presentation/widgets/immunization.dart';
+
 final routesProvider = Provider<GoRouter>((ref) {
   final router = RouterNotifier(ref);
   return GoRouter(
@@ -108,7 +110,7 @@ class RouterNotifier extends ChangeNotifier {
   RouterNotifier(this._ref) {
     _ref.listen<AsyncValue<AuthState>>(
       authStateProvider,
-      (_, __) => notifyListeners(),
+          (_, __) => notifyListeners(),
     );
   }
 
@@ -153,66 +155,66 @@ class RouterNotifier extends ChangeNotifier {
   }
 
   List<GoRoute> get routes => [
-        GoRoute(
-          name: RouteNames.SPLASH_SCREEN,
-          path: '/splash',
-          builder: (BuildContext context, GoRouterState state) {
-            return const SplashScreen();
+    GoRoute(
+      name: RouteNames.SPLASH_SCREEN,
+      path: '/splash',
+      builder: (BuildContext context, GoRouterState state) {
+        return const SplashScreen();
+      },
+    ),
+    GoRoute(
+      name: RouteNames.WELCOME_SCREEN,
+      path: '/auth',
+      builder: (BuildContext context, GoRouterState state) {
+        return const WelcomeScreen();
+      },
+      routes: openRoutes,
+    ),
+    GoRoute(
+      name: RouteNames.LANDING_SCREEN,
+      path: '/',
+      builder: (context, state) => const MainScreen(),
+      routes: secureRoutes,
+    ),
+    // GoRoute(
+    //   name: RouteNames.VERIFY_ACCOUNT,
+    //   path: '/account-verify',
+    //   builder: (BuildContext context, GoRouterState state) {
+    //     final extras = getPhone() as String;
+    //     print("this is extras $extras");
+    //     return VerificationScreen(username: extras);
+    //   },
+    // ),
+    GoRoute(
+      name: RouteNames.VERIFY_ACCOUNT,
+      path: '/account-verify',
+      builder: (BuildContext context, GoRouterState state) {
+        return FutureBuilder<String>(
+          future: getPhone(),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              final extras = snapshot.data!;
+              return VerificationScreen(username: extras);
+            } else {
+              return const Center(child: Text('No data available'));
+            }
           },
-        ),
-        GoRoute(
-          name: RouteNames.WELCOME_SCREEN,
-          path: '/auth',
-          builder: (BuildContext context, GoRouterState state) {
-            return const WelcomeScreen();
-          },
-          routes: openRoutes,
-        ),
-        GoRoute(
-          name: RouteNames.LANDING_SCREEN,
-          path: '/',
-          builder: (context, state) => const MainScreen(),
-          routes: secureRoutes,
-        ),
-        // GoRoute(
-        //   name: RouteNames.VERIFY_ACCOUNT,
-        //   path: '/account-verify',
-        //   builder: (BuildContext context, GoRouterState state) {
-        //     final extras = getPhone() as String;
-        //     print("this is extras $extras");
-        //     return VerificationScreen(username: extras);
-        //   },
-        // ),
-        GoRoute(
-          name: RouteNames.VERIFY_ACCOUNT,
-          path: '/account-verify',
-          builder: (BuildContext context, GoRouterState state) {
-            return FutureBuilder<String>(
-              future: getPhone(),
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (snapshot.hasData) {
-                  final extras = snapshot.data!;
-                  return VerificationScreen(username: extras);
-                } else {
-                  return const Center(child: Text('No data available'));
-                }
-              },
-            );
-          },
-        ),
+        );
+      },
+    ),
 
-        GoRoute(
-          name: RouteNames.PROFILE_EDIT_FORM,
-          path: '/profile-edit',
-          builder: (BuildContext context, GoRouterState state) {
-            return const ProfileWizardFormScreen();
-          },
-        ),
-      ];
+    GoRoute(
+      name: RouteNames.PROFILE_EDIT_FORM,
+      path: '/profile-edit',
+      builder: (BuildContext context, GoRouterState state) {
+        return const ProfileWizardFormScreen();
+      },
+    ),
+  ];
 }
 
 final List<RouteBase> secureRoutes = [
@@ -478,104 +480,104 @@ final List<RouteBase> selfScreeningRoutes = [
           );
         }
       },
-          routes: [
-            GoRoute(
-                name: RouteNames.BMI_CALCULATOR,
-                path: 'bmi-calculator',
-                builder: (BuildContext context, GoRouterState state) {
-                  return const BMICalculatorScreen();
-                },
-            ),
-            GoRoute(
-                name: RouteNames.BMI_HISTORY,
-                path: "bmi-history",
-                builder: (BuildContext context, GoRouterState state) {
-                  return BMIHistoryScreen();
-                }
-            ),
-          ]
-        ),
-  GoRoute(
-    name: RouteNames.BLOOD_PRESSURE,
-    path: 'blood-pressure',
-    builder: (BuildContext context, GoRouterState state) {
-      return BPMonitorScreen();
-    },
-    routes: [
-      GoRoute(
-          name: RouteNames.BLOOD_PRESSURE_INSIGHT,
-          path: 'blood-pressure-insight',
+      routes: [
+        GoRoute(
+          name: RouteNames.BMI_CALCULATOR,
+          path: 'bmi-calculator',
           builder: (BuildContext context, GoRouterState state) {
-            return BpInsightScreen();
+            return const BMICalculatorScreen();
           },
-          routes: [
-            GoRoute(
-              name: RouteNames.BLOOD_PRESSURE_POSTS,
-              path: 'blood-pressure-posts',
-              builder: (BuildContext context, GoRouterState state) {
-                dynamic ann = state.extra;
-                return BloodPressurePostScreen(announcement: ann,);
-              },
-            )
-          ]
-      ),
-      GoRoute(
-        name: RouteNames.BLOOD_PRESSURE_RECORDS,
-        path: 'blood-pressure-records',
-        builder: (context, state) {
-          dynamic extras = state.extra;
-          return BloodPressureRecords(data: extras);
-        },
-      ),
-      GoRoute(
-        name: RouteNames.BLOOD_PRESSURE_INPUT,
-        path: 'blood-pressure-input',
-        builder: (context, state) {
-          return BloodPressureInputs();
-        },
-      ),
-    ]
+        ),
+        GoRoute(
+            name: RouteNames.BMI_HISTORY,
+            path: "bmi-history",
+            builder: (BuildContext context, GoRouterState state) {
+              return BMIHistoryScreen();
+            }
+        ),
+      ]
   ),
   GoRoute(
-    name: RouteNames.BLOOD_SUGAR,
-    path: 'blood-sugar',
-    builder: (BuildContext context, GoRouterState state) {
-      return BloodSugarScreen();
-    },
-    routes: [
-      GoRoute(
-        name: RouteNames.BLOOD_SUGAR_INSIGHT,
-        path: 'blood-sugar-insight',
-        builder: (BuildContext context, GoRouterState state) {
-          return BsInsightScreen();
-        },
-        routes: [
-          GoRoute(
-              name: RouteNames.BLOOD_SUGAR_POSTS,
-              path: 'blood-sugar-posts',
-              builder: (BuildContext context, GoRouterState state) {
-                dynamic ann = state.extra;
-                return BloodSugarPostScreen(announcement: ann,);
-              },
-          )
-        ]
-      ),
-      GoRoute(
-        name: RouteNames.BLOOD_SUGAR_RECORDS,
-        path: 'blood-sugar-records',
-        builder: (context, state) {
-          dynamic extras = state.extra;
-          return BloodSugarRecords(data: extras);
-        },
-      ),
-      GoRoute(
-        name: RouteNames.BLOOD_SUGAR_INPUT,
-        path: 'blood-sugar-input',
-        builder: (context, state) {
-          return BloodSugarInputs();
-        },
-      ),
-    ]
+      name: RouteNames.BLOOD_PRESSURE,
+      path: 'blood-pressure',
+      builder: (BuildContext context, GoRouterState state) {
+        return BPMonitorScreen();
+      },
+      routes: [
+        GoRoute(
+            name: RouteNames.BLOOD_PRESSURE_INSIGHT,
+            path: 'blood-pressure-insight',
+            builder: (BuildContext context, GoRouterState state) {
+              return BpInsightScreen();
+            },
+            routes: [
+              GoRoute(
+                name: RouteNames.BLOOD_PRESSURE_POSTS,
+                path: 'blood-pressure-posts',
+                builder: (BuildContext context, GoRouterState state) {
+                  dynamic ann = state.extra;
+                  return BloodPressurePostScreen(announcement: ann,);
+                },
+              )
+            ]
+        ),
+        GoRoute(
+          name: RouteNames.BLOOD_PRESSURE_RECORDS,
+          path: 'blood-pressure-records',
+          builder: (context, state) {
+            dynamic extras = state.extra;
+            return BloodPressureRecords(data: extras);
+          },
+        ),
+        GoRoute(
+          name: RouteNames.BLOOD_PRESSURE_INPUT,
+          path: 'blood-pressure-input',
+          builder: (context, state) {
+            return BloodPressureInputs();
+          },
+        ),
+      ]
+  ),
+  GoRoute(
+      name: RouteNames.BLOOD_SUGAR,
+      path: 'blood-sugar',
+      builder: (BuildContext context, GoRouterState state) {
+        return BloodSugarScreen();
+      },
+      routes: [
+        GoRoute(
+            name: RouteNames.BLOOD_SUGAR_INSIGHT,
+            path: 'blood-sugar-insight',
+            builder: (BuildContext context, GoRouterState state) {
+              return BsInsightScreen();
+            },
+            routes: [
+              GoRoute(
+                name: RouteNames.BLOOD_SUGAR_POSTS,
+                path: 'blood-sugar-posts',
+                builder: (BuildContext context, GoRouterState state) {
+                  dynamic ann = state.extra;
+                  return BloodSugarPostScreen(announcement: ann,);
+                },
+              )
+            ]
+        ),
+        GoRoute(
+          name: RouteNames.BLOOD_SUGAR_RECORDS,
+          path: 'blood-sugar-records',
+          builder: (context, state) {
+            dynamic extras = state.extra;
+            return BloodSugarRecords(data: extras);
+          },
+        ),
+        GoRoute(
+          name: RouteNames.BLOOD_SUGAR_INPUT,
+          path: 'blood-sugar-input',
+          builder: (context, state) {
+            return BloodSugarInputs();
+          },
+        ),
+      ]
   ),
   //Routes for the Period Planner
   GoRoute(
@@ -851,6 +853,14 @@ final List<RouteBase> clinicCardRoutes = [
     path: 'health-record',
     builder: (BuildContext context, GoRouterState state) {
       return HealthRecordTest();
+    },
+  ),
+
+  GoRoute(
+    name: RouteNames.IMMUNIZATION_RECORD,
+    path: 'immunization-record',
+    builder: (BuildContext context, GoRouterState state) {
+      return ImmunizationTest();
     },
   ),
   GoRoute(

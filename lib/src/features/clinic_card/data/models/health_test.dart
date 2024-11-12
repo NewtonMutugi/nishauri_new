@@ -8,7 +8,7 @@ class HealthRecordModel {
   final List<Vital> vitals;
   // final List<LabResult> labResults;
   // final List<Procedure> procedures;
-  // final List<Immunization> immunizations;
+   final List<Immunization> immunizations;
 
   HealthRecordModel({
     required this.uuid,
@@ -20,7 +20,7 @@ class HealthRecordModel {
     required this.vitals,
     // required this.labResults,
     // required this.procedures,
-    // required this.immunizations,
+     required this.immunizations,
   });
 
   factory HealthRecordModel.fromJson(Map<String, dynamic> json) {
@@ -46,9 +46,9 @@ class HealthRecordModel {
       // procedures: (json['procedures'] as List)
       //     .map((procedure) => Procedure.fromJson(procedure))
       //     .toList(),
-      // immunizations: (json['immunization'] as List)
-      //     .map((immunization) => Immunization.fromJson(immunization))
-      //     .toList(),
+       immunizations: (json['immunization'] as List)
+           .map((immunization) => Immunization.fromJson(immunization))
+          .toList(),
     );
   }
 }
@@ -124,3 +124,32 @@ class Vital {
 }
 
 // Define similar models for Medication, Allergy, Vital, LabResult, Procedure, and Immunization.
+//Immunization
+class Immunization{
+ final String uuuid;
+ final String name;
+ final String immunizationDate;
+ final String manufacturer;
+ final String lot;
+
+
+ Immunization({
+   required this.uuuid,
+   required this.name,
+   required this.immunizationDate,
+   required this.manufacturer,
+   required this.lot,
+});
+
+ factory Immunization.fromJson(Map<String, dynamic> json){
+   return Immunization(
+     uuuid: json['uuid'],
+     name: json['name'],
+     immunizationDate: json['immunizationDate'],
+     manufacturer: json['manufacturer'],
+     lot:   json['lot']
+   );
+ }
+
+}
+
