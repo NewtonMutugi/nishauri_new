@@ -87,7 +87,6 @@ class ClinicCardScreen extends HookConsumerWidget {
       "",
       "",
       "",
-      "",
       RouteNames.VITAL_HEALTH_RECORD,
 
     ];
