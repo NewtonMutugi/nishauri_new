@@ -73,6 +73,7 @@ class BMICalculatorScreen extends HookConsumerWidget {
             title: "BMI Calculator ⚖️",
             subTitle: "Empower Your Health Journey \nWith BMI Insights",
             color: Constants.selfScreeningBgColor,
+            svgPathGroup: "assets/images/group_clinic_card.svg",
           ),
           Expanded(
             child: SingleChildScrollView(

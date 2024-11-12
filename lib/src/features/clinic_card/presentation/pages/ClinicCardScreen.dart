@@ -108,6 +108,7 @@ class ClinicCardScreen extends HookConsumerWidget {
                 title: "My Clinic Card 👨🏾‍💼",
                 color: Constants.clinicCardBgColor,
                 subTitle: "Access all your medical details",
+                svgPathGroup: "assets/images/group_clinic_card.svg",
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -159,6 +160,7 @@ class ClinicCardScreen extends HookConsumerWidget {
         title: "My Clinic Card 👨🏾‍💼",
         color: Constants.clinicCardBgColor,
         subTitle: "Access all your medical details",
+        svgPathGroup: "assets/images/group_clinic_card.svg",
       ),
       svgImage: 'assets/images/lab-empty-state.svg',
       notFoundText: "No programs available",
@@ -173,6 +175,7 @@ class ClinicCardScreen extends HookConsumerWidget {
         title: "My Clinic Card 👨🏾‍💼",
         color: Constants.clinicCardBgColor,
         subTitle: "Access all your medical details",
+        svgPathGroup: "assets/images/group_clinic_card.svg",
       ),
       svgImage: 'assets/images/lab-empty-state.svg',
       notFoundText: error,
@@ -190,6 +193,7 @@ class ClinicCardScreen extends HookConsumerWidget {
             title: "My Clinic Card 👨🏾‍💼",
             color: Constants.clinicCardBgColor,
             subTitle: "Access all your medical details",
+            svgPathGroup: "assets/images/group_clinic_card.svg",
           ),
           Text(
             "Loading Programs",

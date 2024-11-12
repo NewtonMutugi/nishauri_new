@@ -16,6 +16,7 @@ class CustomAppBar extends StatelessWidget {
   final String? smallTitle;
   final String? rightBtTitle;
   final String? path;
+  final String? svgPathGroup;
 
   const CustomAppBar({
     super.key,
@@ -27,7 +28,8 @@ class CustomAppBar extends StatelessWidget {
     this.height,
     this.smallTitle,
     this.rightBtTitle,
-    this.path
+    this.path,
+    this.svgPathGroup,
   });
 
   @override
@@ -47,81 +49,96 @@ class CustomAppBar extends StatelessWidget {
           bottomLeft: Radius.circular(Constants.SPACING),
           bottomRight: Radius.circular(Constants.SPACING),
         ),
-        image: const DecorationImage(
-          image: AssetImage("assets/images/contours.png"),
-          opacity: 0.1,
-          fit: BoxFit.cover,
-        ),
+        // image: const DecorationImage(
+        //   image: AssetImage("assets/images/contours.png"),
+        //   opacity: 0.1,
+        //   fit: BoxFit.cover,
+        // ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          const SizedBox(height: Constants.SPACING),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  child: SvgPicture.asset(
-                    "assets/images/reply.svg",
-                    semanticsLabel: "Back",
-                    fit: BoxFit.contain,
-                    width: 25,
-                    height: 25,
-                  ),
-                  onTap: () => context.pop(),
-                ),
-                if (smallTitle != null)
-                  Text(
-                    smallTitle ?? '',
-                    style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
-                  ),
-                if (rightBtTitle != null)
-                  TextButton(
-                    onPressed: (){
-                      context.goNamed(path??'');
-                       },
-                      child: Text(rightBtTitle??'', style: theme.textTheme.titleSmall!.copyWith(color: Constants.bgColor),)
-                  // Container(
-                  //   height: 10,
-                  //   width: 150,
-                  //   child: Button(
-                  //     backgroundColor: color,
-                  //     textColor: Constants.bgColor,
-                  //     title: rightBtTitle ?? '',
-                  //     onPress: () {
-                  //       // Add your onPress logic here
-                  //     },
-                  //   ),
-                  )
-              ],
+          Positioned(
+            top: 0,
+            right: 0,
+              child: SvgPicture.asset(
+                svgPathGroup ?? '',
+                semanticsLabel: "Background SVG",
+                fit: BoxFit.contain,
+                width: 110,
+                height: 110,
+              ),
           ),
-          if (title != null)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: Constants.SPACING),
-                Text(
-                  title ?? '',
-                  style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white),
-                ),
-                const SizedBox(width: Constants.SPACING),
-                if (icon != null)
-                  Icon(
-                    icon,
-                    color: theme.canvasColor,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: Constants.SPACING),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    child: SvgPicture.asset(
+                      "assets/images/reply.svg",
+                      semanticsLabel: "Back",
+                      fit: BoxFit.contain,
+                      width: 25,
+                      height: 25,
+                    ),
+                    onTap: () => context.pop(),
                   ),
-              ],
-            ),
-          if (subTitle != null)
-            const SizedBox(height: Constants.SPACING * 2),
-          if (subTitle != null)
-            Text(
-              subTitle!,
-              style: theme.textTheme.titleLarge?.copyWith(color: Colors.white),
-            ),
-          // if (bottom != null)
-          //   const SizedBox(height: Constants.SPACING * 2),
-          //   bottom!,
+                  if (smallTitle != null)
+                    Text(
+                      smallTitle ?? '',
+                      style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
+                    ),
+                  if (rightBtTitle != null)
+                    TextButton(
+                        onPressed: (){
+                          context.goNamed(path??'');
+                        },
+                        child: Text(rightBtTitle??'', style: theme.textTheme.titleSmall!.copyWith(color: Constants.bgColor),)
+                      // Container(
+                      //   height: 10,
+                      //   width: 150,
+                      //   child: Button(
+                      //     backgroundColor: color,
+                      //     textColor: Constants.bgColor,
+                      //     title: rightBtTitle ?? '',
+                      //     onPress: () {
+                      //       // Add your onPress logic here
+                      //     },
+                      //   ),
+                    )
+                ],
+              ),
+              if (title != null)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: Constants.SPACING),
+                    Text(
+                      title ?? '',
+                      style: theme.textTheme.headlineMedium?.copyWith(color: Colors.white),
+                    ),
+                    const SizedBox(width: Constants.SPACING),
+                    if (icon != null)
+                      Icon(
+                        icon,
+                        color: theme.canvasColor,
+                      ),
+                  ],
+                ),
+              if (subTitle != null)
+                const SizedBox(height: Constants.SPACING * 2),
+              if (subTitle != null)
+                Text(
+                  subTitle!,
+                  style: theme.textTheme.titleLarge?.copyWith(color: Colors.white),
+                ),
+              // if (bottom != null)
+              //   const SizedBox(height: Constants.SPACING * 2),
+              //   bottom!,
+            ],
+          ),
         ],
       ),
     );
