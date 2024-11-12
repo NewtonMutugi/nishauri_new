@@ -21,6 +21,7 @@ import 'package:nishauri/src/features/auth/presentation/pages/VerifyResetPasswor
 import 'package:nishauri/src/features/auth/presentation/pages/WelcomeScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/health.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/health_record.dart';
+import 'package:nishauri/src/features/clinic_card/presentation/widgets/vital_records.dart';
 import 'package:nishauri/src/features/clinic_card/relationship/presentation/pages/dependant_profile.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/BloodSugarScreen.dart';
 import 'package:nishauri/src/features/self_screening/bmi/presentation/pages/BMICalculatorResultsScreen.dart';
@@ -361,22 +362,7 @@ final List<RouteBase> secureRoutes = [
     builder: (BuildContext context, GoRouterState state) {
       return const ClinicCardScreen();
     },
-    routes: [
-      GoRoute(
-        name: RouteNames.HEALTH_RECORD,
-        path: 'health-record',
-        builder: (BuildContext context, GoRouterState state) {
-          return HealthRecordTest();
-        },
-      ),
-      GoRoute(
-        name: RouteNames.DEPENDANT_PROFILE,
-        path: 'dependant-profile',
-        builder: (BuildContext context, GoRouterState state) {
-          return DependantProfileScreen();
-        },
-      ),
-    ]
+    routes: clinicCardRoutes,
   ),
   GoRoute(
     name: RouteNames.DAWA_DROP,
@@ -856,5 +842,30 @@ final List<RouteBase> programMenu = [
       return const HIVMenuScreen();
     },
     routes: hivProgramRoutes,
+  ),
+];
+
+final List<RouteBase> clinicCardRoutes = [
+  GoRoute(
+    name: RouteNames.HEALTH_RECORD,
+    path: 'health-record',
+    builder: (BuildContext context, GoRouterState state) {
+      return HealthRecordTest();
+    },
+  ),
+  GoRoute(
+    name: RouteNames.DEPENDANT_PROFILE,
+    path: 'dependant-profile',
+    builder: (BuildContext context, GoRouterState state) {
+      return DependantProfileScreen();
+    },
+  ),
+
+  GoRoute(
+    name: RouteNames.VITAL_HEALTH_RECORD,
+    path: 'vital-health-record',
+    builder: (BuildContext context, GoRouterState state) {
+      return VisitHealthRecord();
+    },
   ),
 ];

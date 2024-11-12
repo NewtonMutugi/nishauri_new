@@ -5,7 +5,7 @@ class HealthRecordModel {
   final List<Condition> conditions;
   // final List<Medication> medications;
   // final List<Allergy> allergies;
-  // final List<Vital> vitals;
+  final List<Vital> vitals;
   // final List<LabResult> labResults;
   // final List<Procedure> procedures;
   // final List<Immunization> immunizations;
@@ -17,7 +17,7 @@ class HealthRecordModel {
     required this.conditions,
     // required this.medications,
     // required this.allergies,
-    // required this.vitals,
+    required this.vitals,
     // required this.labResults,
     // required this.procedures,
     // required this.immunizations,
@@ -37,9 +37,9 @@ class HealthRecordModel {
       // allergies: (json['allergies'] as List)
       //     .map((allergy) => Allergy.fromJson(allergy))
       //     .toList(),
-      // vitals: (json['vitals'] as List)
-      //     .map((vital) => Vital.fromJson(vital))
-      //     .toList(),
+      vitals: (json['vitals'] as List)
+          .map((vital) => Vital.fromJson(vital))
+          .toList(),
       // labResults: (json['labResults'] as List)
       //     .map((labResult) => LabResult.fromJson(labResult))
       //     .toList(),
@@ -78,6 +78,47 @@ class Condition {
       dateRecorded: json['dateRecorded'],
       status: json['status'],
       value: json['value'],
+    );
+  }
+}
+
+class Vital {
+  final String uuid;
+  final String name;
+  final String weight;
+  final String temp;
+  final String systolic;
+  final String diastolic;
+  final String respiratory;
+  final String oxygenSaturation;
+  final String height;
+  final String complain;
+
+  Vital({
+    required this.uuid,
+    required this.name,
+    required this.weight,
+    required this.temp,
+    required this.systolic,
+    required this.diastolic,
+    required this.respiratory,
+    required this.oxygenSaturation,
+    required this.height,
+    required this.complain,
+  });
+
+  factory Vital.fromJson(Map<String, dynamic> json) {
+    return Vital(
+      uuid: json['uuid'],
+      name: json['name'],
+      weight: json['weight'],
+      temp: json['temp'],
+      systolic: json['systolic'],
+      diastolic: json['diastolic'],
+      respiratory: json['respiratory'],
+      oxygenSaturation: json['oxygenSaturation'],
+      height: json['height'],
+      complain: json['complain'],
     );
   }
 }

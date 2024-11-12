@@ -49,6 +49,7 @@ class RouteNames {
   static const CHAT_BOT = "chat-bot";
   static const SETTINGS = "settings";
   static const DEPENDANT_PROFILE = "dependant-profile";
+  static const VITAL_HEALTH_RECORD= "vital-health-record";
 
   static const Facility_Directory = "facility-directory";
   static const PROGRAM_MENU = "program-menu";

@@ -81,7 +81,13 @@ class ClinicCardScreen extends HookConsumerWidget {
     ];
 
     final List<String> paths = [
+      "",
       RouteNames.HEALTH_RECORD,
+      "",
+      "",
+      "",
+      "",
+      RouteNames.VITAL_HEALTH_RECORD,
     ];
 
     void _reloadData() {
