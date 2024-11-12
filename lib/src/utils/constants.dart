@@ -51,4 +51,5 @@ class Constants {
   static const barColor = Color.fromARGB(255, 4, 191, 218);
   static const white = Color.fromARGB(255, 255, 255, 255);
   static const clinicCardBgColor = Color.fromARGB(255, 0, 122, 141);
+  static const clinicCardKinColor = Color.fromARGB(255, 167, 240, 186);
 }

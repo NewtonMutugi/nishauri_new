@@ -131,7 +131,7 @@ class ClinicCardScreen extends HookConsumerWidget {
                                   children: [Text("Shared With Me", style: theme.textTheme.titleMedium),
                                   ]
                               ),
-                              const ItemList(items: ["Eric Muthomi"], svgAsset: ["assets/images/clinicCardCard.svg"],path: [RouteNames.DEPENDANT_PROFILE], backgroundColor: Constants.selfScreeningBgColor,),
+                              const ItemList(items: ["Eric Muthomi"], svgAsset: ["assets/images/clinicCardCard.svg"],path: [RouteNames.DEPENDANT_PROFILE], color: Constants.clinicCardBgColor, relationship: ["Next of Kin"],),
                             ],
                           ),
                         ),
