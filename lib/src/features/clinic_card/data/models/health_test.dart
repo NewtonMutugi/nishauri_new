@@ -3,7 +3,7 @@ class HealthRecordModel {
   final String visitDate;
   final String facility;
   final List<Condition> conditions;
-  // final List<Medication> medications;
+   final List<Medication> medications;
   // final List<Allergy> allergies;
   final List<Vital> vitals;
   // final List<LabResult> labResults;
@@ -15,7 +15,7 @@ class HealthRecordModel {
     required this.visitDate,
     required this.facility,
     required this.conditions,
-    // required this.medications,
+    required this.medications,
     // required this.allergies,
     required this.vitals,
     // required this.labResults,
@@ -31,9 +31,9 @@ class HealthRecordModel {
       conditions: (json['conditions'] as List)
           .map((condition) => Condition.fromJson(condition))
           .toList(),
-      // medications: (json['medications'] as List)
-      //     .map((medication) => Medication.fromJson(medication))
-      //     .toList(),
+      medications: (json['medications'] as List)
+          .map((medication) => Medication.fromJson(medication))
+          .toList(),
       // allergies: (json['allergies'] as List)
       //     .map((allergy) => Allergy.fromJson(allergy))
       //     .toList(),
@@ -149,7 +149,41 @@ class Immunization{
      manufacturer: json['manufacturer'],
      lot:   json['lot']
    );
+ }}
+
+//Medication
+class Medication{
+   final String uuid;
+  final  String name;
+  final String dateRecorded;
+  final String value;
+  final String indication;
+
+  Medication({
+   required this.uuid,
+   required this.name,
+   required this.dateRecorded,
+   required this.value,
+   required this. indication,
+ });
+
+ factory Medication.fromJson(Map<String, dynamic> json){
+   return Medication(
+       uuid: json['uuid'],
+       name: json['name'],
+       dateRecorded: json['dateRecorded'],
+       value: json['value'],
+       indication: json['indication']
+   );
+
+
+ }
  }
 
-}
+
+
+
+
+
+
 

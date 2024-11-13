@@ -4,18 +4,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nishauri/src/features/clinic_card/data/models/health_test.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
-import 'package:nishauri/src/shared/display/heath_filter_button.dart';
-import 'package:nishauri/src/shared/helper/health_record_filter.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
-class ImmunizationTest extends StatefulWidget {
-  const ImmunizationTest({super.key});
+import '../../../../shared/display/heath_filter_button.dart';
+
+
+class MedicationTest extends StatefulWidget {
+  const MedicationTest({super.key});
 
   @override
-  State<ImmunizationTest> createState() => _ImmunizationTestState();
+  State<MedicationTest> createState() => _MedicationTestState();
 }
 
-class _ImmunizationTestState extends State<ImmunizationTest> {
+class _MedicationTestState extends State<MedicationTest> {
+
   // Store the selected filter
   DateFilter? selectedFilter;
   DateTimeRange? selectedDateRange;
@@ -29,37 +31,87 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
   }
 
   // Apply the selected filter to the health records
-  Future<List<HealthRecordModel>> _applyFilter(List<HealthRecordModel> records) async {
-    List<HealthRecordModel> filteredRecords = applyFilter(
-      records,
-      selectedFilter ?? DateFilter.all,
-      selectedDateRange?.start,
-      selectedDateRange?.end,
-    );
+  Future<List<HealthRecordModel>> _applyFilter(
+      List<HealthRecordModel> records) async {
+    if (selectedFilter == null || selectedFilter == DateFilter.all) {
+      return records; // Return all records if no filter or 'All Data' is selected
+    }
+
+    DateTime now = DateTime.now();
+    List<HealthRecordModel> filteredRecords = [];
+
+    switch (selectedFilter) {
+      case DateFilter.today:
+        filteredRecords = records.where((record) {
+          return DateTime.parse(record.visitDate).isAtSameMomentAs(now);
+        }).toList();
+        break;
+      case DateFilter.currentWeek:
+        filteredRecords = records.where((record) {
+          DateTime visitDate = DateTime.parse(record.visitDate);
+          return visitDate.isAfter(
+              now.subtract(Duration(days: now.weekday - 1))) &&
+              visitDate.isBefore(now.add(Duration(days: 7 - now.weekday)));
+        }).toList();
+        break;
+      case DateFilter.currentMonth:
+        filteredRecords = records.where((record) {
+          DateTime visitDate = DateTime.parse(record.visitDate);
+          return visitDate.month == now.month && visitDate.year == now.year;
+        }).toList();
+        break;
+      case DateFilter.dateRange:
+        if (selectedDateRange != null) {
+          filteredRecords = records.where((record) {
+            DateTime visitDate = DateTime.parse(record.visitDate);
+            return visitDate.isAfter(selectedDateRange!.start) &&
+                visitDate.isBefore(selectedDateRange!.end);
+          }).toList();
+        }
+        break;
+      default:
+        filteredRecords = records;
+        break;
+    }
 
     return filteredRecords;
   }
 
   // Function to handle date range selection
   Future<void> _selectDateRange(BuildContext context) async {
-    DateTimeRange? pickedRange = await selectDateRange(
+    final DateTime now = DateTime.now();
+    DateTimeRange? picked = await showDateRangePicker(
       context: context,
+      firstDate: DateTime(now.year - 5),
+      lastDate: DateTime(now.year + 1),
       initialDateRange: selectedDateRange,
-      primaryColor: Constants.bmiCalculatorColor,
+      saveText: 'Done',
       barrierColor: Constants.bmiCalculatorColor,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: Constants.bmiCalculatorColor,
+            // accentColor: Constants.programsColor,
+            colorScheme: ColorScheme.light(
+                primary: Constants.bmiCalculatorColor),
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.normal),
+          ),
+          child: child!,
+        );
+      },
     );
 
-    if (pickedRange != null && pickedRange != selectedDateRange) {
+    if (picked != null && picked != selectedDateRange) {
       setState(() {
-        selectedDateRange = pickedRange;
-        selectedFilter = DateFilter.dateRange;
+        selectedDateRange = picked;
+        selectedFilter =
+            DateFilter.dateRange; // Automatically switch to 'dateRange' filter
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    //return const Placeholder();
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -68,7 +120,7 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
             height: 120,
-            smallTitle: "Immunizations",
+            smallTitle: "Medications",
             rightBtTitle: "",
           ),
           Expanded(
@@ -140,7 +192,7 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
         _buildHospitalRow(record.facility, theme),
         const SizedBox(height: Constants.SPACING),
         const Divider(),
-        _buildConditionList(record.immunizations, theme),
+        _buildConditionList(record.medications, theme),
         const SizedBox(height: Constants.SPACING),
         const Divider(),
       ],
@@ -153,7 +205,7 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
         Expanded(
           child: Text(
               date,
-              style: theme.textTheme.titleSmall),
+              style: theme.textTheme.titleMedium),
         ),
       ],
     );
@@ -165,7 +217,7 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
         Expanded( // Wrap the Text widget in Expanded
           child: Text(
             hospital,
-            style: theme.textTheme.titleMedium,
+            style: theme.textTheme.titleLarge,
             overflow: TextOverflow.ellipsis, // Truncate if too long
           ),
         ),
@@ -173,21 +225,21 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
     );
   }
 
-  Widget _buildConditionList(List<Immunization> immunizations, ThemeData theme) {
-    if (immunizations.isEmpty) {
+  Widget _buildConditionList(List<Medication> medications, ThemeData theme) {
+    if (medications.isEmpty) {
       return const Center(
-          child: Text('No immunizations recorded.')
+          child: Text('No Medications recorded.')
       );
     }
 
     return Column(
-      children: immunizations.map((immunization) =>
-          _buildImmunizationRow(immunization, theme)).toList(),
+      children: medications.map((medication) =>
+          _buildImmunizationRow(medication, theme)).toList(),
     );
   }
 
 
-  Widget _buildImmunizationRow(Immunization immunization, ThemeData theme) {
+  Widget _buildImmunizationRow(Medication medication, ThemeData theme) {
     return ListTile(
       title: ExpansionTile(
         title: Row(
@@ -195,7 +247,7 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildImmunizationsRow(immunization, theme),
+                _buildImmunizationsRow(medication, theme),
               ],
             )),
           ],
@@ -208,9 +260,9 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Vaccination Date", style: theme.textTheme.bodySmall),
-                    Text(immunization.immunizationDate,
-                        style: theme.textTheme.bodySmall),
+                    Text("Dose", style: theme.textTheme.titleSmall,),
+                    Text(medication.value,
+                      style: theme.textTheme.titleSmall),
                   ],
                 ),
               ],
@@ -221,7 +273,7 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
     );
   }
 
-  Widget _buildImmunizationsRow(Immunization immunization, ThemeData theme) {
+  Widget _buildImmunizationsRow(Medication medication, ThemeData theme) {
     return Row(
       children: [
         SvgPicture.asset(
@@ -231,7 +283,8 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
         ),
         const SizedBox(width: Constants.SPACING),
         Expanded(
-          child: Text(immunization.name,
+          child: Text(medication.name,
+           // style: theme.textTheme.titleMedium?.copyWith(fontSize: 8),
             style: theme.textTheme.titleSmall,
             // Reduce font size
             overflow: TextOverflow.ellipsis,
@@ -240,6 +293,16 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
           ),),
       ],
     );
+  }
+
+  Color getStatusColor(String status) {
+    if (status == 'ACTIVE') {
+      return Constants.programsColor;
+    } else if (status == 'INACTIVE') {
+      return Constants.facilityDirectoryColor;
+    } else {
+      return Constants.selfScreeningBgColor;
+    }
   }
 
   // Build the filter menu with the date range option
@@ -271,3 +334,58 @@ class _ImmunizationTestState extends State<ImmunizationTest> {
     );
   }
 }
+
+
+class HealthButton extends StatefulWidget {
+  final Function(DateFilter) onFilterSelected;
+
+  const HealthButton({Key? key, required this.onFilterSelected}) : super(key: key);
+
+  @override
+  _HealthButtonState createState() => _HealthButtonState();
+}
+
+class _HealthButtonState extends State<HealthButton> {
+  DateFilter? selectedMenu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.1,
+      child: MenuAnchor(
+        builder: (BuildContext context, MenuController controller, Widget? child) {
+          return IconButton(
+            onPressed: () {
+              if (controller.isOpen) {
+                controller.close();
+              } else {
+                controller.open();
+              }
+            },
+            icon: SvgPicture.asset(
+              "assets/images/clinic_menu.svg",
+              semanticsLabel: "Doctors",
+              fit: BoxFit.contain,
+              height: 40,
+              width: 40,
+            ),
+            tooltip: 'Show menu',
+          );
+        },
+        menuChildren: List<MenuItemButton>.generate(
+          DateFilter.values.length,
+              (int index) => MenuItemButton(
+            onPressed: () {
+              widget.onFilterSelected(DateFilter.values[index]);
+            },
+            child: Text(DateFilter.values[index].toString().split('.').last),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+enum DateFilter { all, today, currentWeek, currentMonth, dateRange }
+
+

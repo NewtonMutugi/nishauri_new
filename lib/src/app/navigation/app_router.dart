@@ -21,6 +21,7 @@ import 'package:nishauri/src/features/auth/presentation/pages/VerifyResetPasswor
 import 'package:nishauri/src/features/auth/presentation/pages/WelcomeScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/condition_records.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/health_record.dart';
+import 'package:nishauri/src/features/clinic_card/presentation/widgets/medication.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/vital_records.dart';
 import 'package:nishauri/src/features/clinic_card/relationship/presentation/pages/dependant_profile.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/presentation/pages/BloodSugarScreen.dart';
@@ -861,6 +862,16 @@ final List<RouteBase> clinicCardRoutes = [
     path: 'immunization-record',
     builder: (BuildContext context, GoRouterState state) {
       return ImmunizationTest();
+    },
+  ),
+
+  //Medication
+
+  GoRoute(
+    name: RouteNames.MEDICATION_RECORD,
+    path: 'Medication-record',
+    builder: (BuildContext context, GoRouterState state) {
+      return MedicationTest();
     },
   ),
   GoRoute(
