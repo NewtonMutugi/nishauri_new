@@ -4,7 +4,8 @@ class HealthRecordModel {
   final String facility;
   final List<Condition> conditions;
    final List<Medication> medications;
-  // final List<Allergy> allergies;
+  // final List<Medication> medications;
+  final List<Allergy> allergies;
   final List<Vital> vitals;
   // final List<LabResult> labResults;
   // final List<Procedure> procedures;
@@ -16,7 +17,7 @@ class HealthRecordModel {
     required this.facility,
     required this.conditions,
     required this.medications,
-    // required this.allergies,
+    required this.allergies,
     required this.vitals,
     // required this.labResults,
     // required this.procedures,
@@ -34,9 +35,9 @@ class HealthRecordModel {
       medications: (json['medications'] as List)
           .map((medication) => Medication.fromJson(medication))
           .toList(),
-      // allergies: (json['allergies'] as List)
-      //     .map((allergy) => Allergy.fromJson(allergy))
-      //     .toList(),
+      allergies: (json['allergies'] as List)
+          .map((allergy) => Allergy.fromJson(allergy))
+          .toList(),
       vitals: (json['vitals'] as List)
           .map((vital) => Vital.fromJson(vital))
           .toList(),
@@ -119,6 +120,35 @@ class Vital {
       oxygenSaturation: json['oxygenSaturation'],
       height: json['height'],
       complain: json['complain'],
+    );
+  }
+}
+
+class Allergy {
+  final String uuid;
+  final String allergen;
+  final String reaction;
+  final String severity;
+  final String onsetDate;
+  final String dateRecorded;
+
+  Allergy({
+    required this.uuid,
+    required this.allergen,
+    required this.reaction,
+    required this.severity,
+    required this.onsetDate,
+    required this.dateRecorded,
+  });
+
+  factory Allergy.fromJson(Map<String, dynamic> json) {
+    return Allergy(
+      uuid: json['uuid'],
+      allergen: json['allergen'],
+      reaction: json['reaction'],
+      severity: json['severity'],
+      onsetDate: json['onsetDate'],
+      dateRecorded: json['dateRecorded'],
     );
   }
 }

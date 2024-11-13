@@ -4,19 +4,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nishauri/src/features/clinic_card/data/models/health_test.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
+import 'package:nishauri/src/shared/extensions/extensions.dart';
 import 'package:nishauri/src/shared/helper/health_record_filter.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 import '../../../../shared/display/heath_filter_button.dart';
 
-class VitalHealthRecord extends StatefulWidget {
-  const VitalHealthRecord({Key? key}) : super(key: key);
+class AllergyHealthRecord extends StatefulWidget {
+  const AllergyHealthRecord({Key? key}) : super(key: key);
 
   @override
   _VisitHealthRecord createState() => _VisitHealthRecord();
 }
 
-class _VisitHealthRecord extends State<VitalHealthRecord> {
+class _VisitHealthRecord extends State<AllergyHealthRecord> {
   // Store the selected filter
   DateFilter? selectedFilter;
   DateTimeRange? selectedDateRange;
@@ -64,7 +65,7 @@ class _VisitHealthRecord extends State<VitalHealthRecord> {
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
             height: 120,
-            smallTitle: "Vitals",
+            smallTitle: "Allergies",
             rightBtTitle: "",
           ),
           Expanded(
@@ -130,7 +131,7 @@ class _VisitHealthRecord extends State<VitalHealthRecord> {
         _buildHospitalRow(record.facility, theme),
         const SizedBox(height: Constants.SPACING),
         const Divider(),
-        _buildConditionList(record.vitals, theme),
+        _buildConditionList(record.allergies, theme),
         const SizedBox(height: Constants.SPACING),
         const Divider(),
       ],
@@ -163,19 +164,19 @@ class _VisitHealthRecord extends State<VitalHealthRecord> {
     );
   }
 
-  Widget _buildConditionList(List<Vital> vitals, ThemeData theme) {
-    if (vitals.isEmpty) {
+  Widget _buildConditionList(List<Allergy> allergies, ThemeData theme) {
+    if (allergies.isEmpty) {
       return const Center(
           child:Text('No Vitals recorded.')
       );
     }
 
     return Column(
-      children: vitals.map((vital) => _buildConditionRow(vital, theme)).toList(),
+      children: allergies.map((allergy) => _buildConditionRow(allergy, theme)).toList(),
     );
   }
 
-  Widget _buildConditionRow(Vital vital, ThemeData theme) {
+  Widget _buildConditionRow(Allergy allergy, ThemeData theme) {
     return ListTile(
       title: ExpansionTile(
         title: Row(
@@ -183,7 +184,7 @@ class _VisitHealthRecord extends State<VitalHealthRecord> {
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildVitalsRow(vital, theme),
+                _buildVitalsRow(allergy, theme),
               ],
             )),
           ],
@@ -196,64 +197,16 @@ class _VisitHealthRecord extends State<VitalHealthRecord> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Temperature", style: theme.textTheme.bodySmall),
-                    Text(vital.temp, style: theme.textTheme.bodySmall),
+                    Text("Reactions", style: theme.textTheme.bodySmall),
+                    Text(allergy.reaction, style: theme.textTheme.bodySmall),
                   ],
                 ),
                 const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Systolic  B.P", style: theme.textTheme.bodySmall),
-                    Text(vital.systolic, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Diastolic  B.P", style: theme.textTheme.bodySmall),
-                    Text(vital.diastolic, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Respiratory Rate", style: theme.textTheme.bodySmall),
-                    Text(vital.respiratory, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Oxygen Saturation", style: theme.textTheme.bodySmall),
-                    Text(vital.oxygenSaturation, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Weight", style: theme.textTheme.bodySmall),
-                    Text(vital.weight, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Height", style: theme.textTheme.bodySmall),
-                    Text(vital.height, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Presenting Complaints", style: theme.textTheme.bodySmall),
-                    Text(vital.complain, style: theme.textTheme.bodySmall),
+                    Text("Onset Date", style: theme.textTheme.bodySmall),
+                    Text(allergy.onsetDate, style: theme.textTheme.titleSmall),
                   ],
                 ),
               ],
@@ -264,24 +217,38 @@ class _VisitHealthRecord extends State<VitalHealthRecord> {
     );
   }
 
-  Widget _buildVitalsRow(Vital vital, ThemeData theme) {
+  Widget _buildVitalsRow(Allergy allergy, ThemeData theme) {
     return Row(
       children: [
         SvgPicture.asset(
-          "assets/images/boldDuotoneMedicineStethoscope.svg",
+          "assets/images/boldDuotoneMedicineVirus.svg",
           width: 20,
           height: 20,
         ),
         const SizedBox(width: Constants.SPACING),
         Expanded(
-          child:Text(vital.name,
+          child:Text(allergy.allergen,
             style: theme.textTheme.titleSmall,
             overflow: TextOverflow.ellipsis,  // Truncate if too long
             maxLines: 1,
           ),
         ),
+        const Spacer(),
+        Text(allergy.severity.titleCase, style: theme.textTheme.bodySmall?.copyWith(color: getSeverityColor(allergy.severity), )),
       ],
     );
+  }
+
+  Color getSeverityColor(String severity) {
+    if (severity == 'MILD') {
+      return Constants.programsColor;
+    } else if (severity == 'MODERATE') {
+      return Constants.facilityDirectoryColor;
+    } else if (severity == 'SEVERE') {
+      return Constants.selfScreeningBgColor;
+    } else {
+      return Constants.selfScreeningBgColor;
+    }
   }
 
   // Build the filter menu with the date range option

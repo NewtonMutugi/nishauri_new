@@ -52,6 +52,7 @@ class RouteNames {
   static const SETTINGS = "settings";
   static const DEPENDANT_PROFILE = "dependant-profile";
   static const VITAL_HEALTH_RECORD= "vital-health-record";
+  static const ALLERGY_HEALTH_RECORD= "allergy-health-record";
 
   static const Facility_Directory = "facility-directory";
   static const PROGRAM_MENU = "program-menu";

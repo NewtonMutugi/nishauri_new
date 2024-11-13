@@ -88,7 +88,7 @@ class CustomAppBar extends StatelessWidget {
                   if (smallTitle != null)
                     Text(
                       smallTitle ?? '',
-                      style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
+                      style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white),
                     ),
                   if (rightBtTitle != null)
                     TextButton(

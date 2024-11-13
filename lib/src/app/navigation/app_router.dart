@@ -19,6 +19,7 @@ import 'package:nishauri/src/features/auth/presentation/pages/VerificationScreen
 import 'package:nishauri/src/features/auth/presentation/pages/VerifiedResetPassword.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/VerifyResetPasswordScreen.dart';
 import 'package:nishauri/src/features/auth/presentation/pages/WelcomeScreen.dart';
+import 'package:nishauri/src/features/clinic_card/presentation/widgets/allergy_records.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/condition_records.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/health_record.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/medication.dart';
@@ -881,12 +882,18 @@ final List<RouteBase> clinicCardRoutes = [
       return DependantProfileScreen();
     },
   ),
-
   GoRoute(
     name: RouteNames.VITAL_HEALTH_RECORD,
     path: 'vital-health-record',
     builder: (BuildContext context, GoRouterState state) {
-      return VisitHealthRecord();
+      return VitalHealthRecord();
+    },
+  ),
+  GoRoute(
+    name: RouteNames.ALLERGY_HEALTH_RECORD,
+    path: 'allergy-health-record',
+    builder: (BuildContext context, GoRouterState state) {
+      return AllergyHealthRecord();
     },
   ),
 ];
