@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class HealthRecordModel {
   final String uuid;
   final String visitDate;
@@ -7,7 +9,7 @@ class HealthRecordModel {
   // final List<Medication> medications;
   final List<Allergy> allergies;
   final List<Vital> vitals;
-  // final List<LabResult> labResults;
+  final List<LabResult> labResults;
   // final List<Procedure> procedures;
    final List<Immunization> immunizations;
 
@@ -19,7 +21,7 @@ class HealthRecordModel {
     required this.medications,
     required this.allergies,
     required this.vitals,
-    // required this.labResults,
+    required this.labResults,
     // required this.procedures,
      required this.immunizations,
   });
@@ -41,9 +43,9 @@ class HealthRecordModel {
       vitals: (json['vitals'] as List)
           .map((vital) => Vital.fromJson(vital))
           .toList(),
-      // labResults: (json['labResults'] as List)
-      //     .map((labResult) => LabResult.fromJson(labResult))
-      //     .toList(),
+      labResults: (json['labResults'] as List)
+          .map((labResult) => LabResult.fromJson(labResult))
+          .toList(),
       // procedures: (json['procedures'] as List)
       //     .map((procedure) => Procedure.fromJson(procedure))
       //     .toList(),
@@ -149,6 +151,35 @@ class Allergy {
       severity: json['severity'],
       onsetDate: json['onsetDate'],
       dateRecorded: json['dateRecorded'],
+    );
+  }
+}
+
+class LabResult {
+  final String uuid;
+  final String name;
+  final String results;
+  final String orderedDate;
+  final String status;
+  final int plot;
+
+  LabResult({
+    required this.uuid,
+    required this.name,
+    required this.results,
+    required this.orderedDate,
+    required this.status,
+    required this.plot,
+  });
+
+  factory LabResult.fromJson(Map<String, dynamic> json) {
+    return LabResult(
+      uuid: json['uuid'],
+      name: json['name'],
+      results: json['results'],
+      orderedDate: json['orderedDate'],
+      status: json['status'],
+      plot: json['plot'],
     );
   }
 }

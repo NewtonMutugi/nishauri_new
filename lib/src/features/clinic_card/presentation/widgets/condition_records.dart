@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nishauri/src/features/clinic_card/data/models/health_test.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
 import 'package:nishauri/src/shared/display/heath_filter_button.dart';
+import 'package:nishauri/src/shared/extensions/extensions.dart';
 import 'package:nishauri/src/shared/helper/health_record_filter.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
@@ -226,7 +227,7 @@ class _ConditionHealthRecordState extends State<ConditionHealthRecord> {
             maxLines: 1,
             ),),
         const Spacer(),
-        Text(condition.status, style: theme.textTheme.bodySmall?.copyWith(color: getStatusColor(condition.status))),
+        Text(condition.status.titleCase, style: theme.textTheme.bodySmall?.copyWith(color: getStatusColor(condition.status))),
       ],
     );
   }

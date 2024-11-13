@@ -84,7 +84,7 @@ class ClinicCardScreen extends HookConsumerWidget {
       RouteNames.ALLERGY_HEALTH_RECORD,
       RouteNames.HEALTH_RECORD,
       RouteNames.IMMUNIZATION_RECORD,
-      "",
+      RouteNames.LAB_RESULTS_HEALTH_RECORD,
       RouteNames.MEDICATION_RECORD,
       "",
       RouteNames.VITAL_HEALTH_RECORD,

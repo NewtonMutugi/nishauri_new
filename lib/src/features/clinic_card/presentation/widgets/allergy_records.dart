@@ -131,7 +131,7 @@ class _VisitHealthRecord extends State<AllergyHealthRecord> {
         _buildHospitalRow(record.facility, theme),
         const SizedBox(height: Constants.SPACING),
         const Divider(),
-        _buildConditionList(record.allergies, theme),
+        _buildAllergyList(record.allergies, theme),
         const SizedBox(height: Constants.SPACING),
         const Divider(),
       ],
@@ -164,7 +164,7 @@ class _VisitHealthRecord extends State<AllergyHealthRecord> {
     );
   }
 
-  Widget _buildConditionList(List<Allergy> allergies, ThemeData theme) {
+  Widget _buildAllergyList(List<Allergy> allergies, ThemeData theme) {
     if (allergies.isEmpty) {
       return const Center(
           child:Text('No Vitals recorded.')
@@ -172,11 +172,11 @@ class _VisitHealthRecord extends State<AllergyHealthRecord> {
     }
 
     return Column(
-      children: allergies.map((allergy) => _buildConditionRow(allergy, theme)).toList(),
+      children: allergies.map((allergy) => _buildAllergyRow(allergy, theme)).toList(),
     );
   }
 
-  Widget _buildConditionRow(Allergy allergy, ThemeData theme) {
+  Widget _buildAllergyRow(Allergy allergy, ThemeData theme) {
     return ListTile(
       title: ExpansionTile(
         title: Row(
@@ -184,7 +184,7 @@ class _VisitHealthRecord extends State<AllergyHealthRecord> {
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildVitalsRow(allergy, theme),
+                _buildAllergiesRow(allergy, theme),
               ],
             )),
           ],
@@ -217,7 +217,7 @@ class _VisitHealthRecord extends State<AllergyHealthRecord> {
     );
   }
 
-  Widget _buildVitalsRow(Allergy allergy, ThemeData theme) {
+  Widget _buildAllergiesRow(Allergy allergy, ThemeData theme) {
     return Row(
       children: [
         SvgPicture.asset(

@@ -4,19 +4,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nishauri/src/features/clinic_card/data/models/health_test.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
+import 'package:nishauri/src/shared/extensions/extensions.dart';
 import 'package:nishauri/src/shared/helper/health_record_filter.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 import '../../../../shared/display/heath_filter_button.dart';
 
-class VitalHealthRecord extends StatefulWidget {
-  const VitalHealthRecord({Key? key}) : super(key: key);
+class LabResultHealthRecord extends StatefulWidget {
+  const LabResultHealthRecord({Key? key}) : super(key: key);
 
   @override
-  _VitalHealthRecord createState() => _VitalHealthRecord();
+  _LabResultHealthRecord createState() => _LabResultHealthRecord();
 }
 
-class _VitalHealthRecord extends State<VitalHealthRecord> {
+class _LabResultHealthRecord extends State<LabResultHealthRecord> {
   // Store the selected filter
   DateFilter? selectedFilter;
   DateTimeRange? selectedDateRange;
@@ -64,7 +65,7 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
             height: 120,
-            smallTitle: "Vitals",
+            smallTitle: "Lab Results",
             rightBtTitle: "",
           ),
           Expanded(
@@ -130,7 +131,7 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
         _buildHospitalRow(record.facility, theme),
         const SizedBox(height: Constants.SPACING),
         const Divider(),
-        _buildVitalList(record.vitals, theme),
+        _buildConditionList(record.labResults, theme),
         const SizedBox(height: Constants.SPACING),
         const Divider(),
       ],
@@ -163,19 +164,19 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
     );
   }
 
-  Widget _buildVitalList(List<Vital> vitals, ThemeData theme) {
-    if (vitals.isEmpty) {
+  Widget _buildConditionList(List<LabResult> labResults, ThemeData theme) {
+    if (labResults.isEmpty) {
       return const Center(
           child:Text('No Vitals recorded.')
       );
     }
 
     return Column(
-      children: vitals.map((vital) => _buildVitalRow(vital, theme)).toList(),
+      children: labResults.map((labResult) => _buildLabResultRow(labResult, theme)).toList(),
     );
   }
 
-  Widget _buildVitalRow(Vital vital, ThemeData theme) {
+  Widget _buildLabResultRow(LabResult labResult, ThemeData theme) {
     return ListTile(
       title: ExpansionTile(
         title: Row(
@@ -183,7 +184,7 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildVitalsRow(vital, theme),
+                _buildLabResultsRow(labResult, theme),
               ],
             )),
           ],
@@ -196,64 +197,16 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Temperature", style: theme.textTheme.bodySmall),
-                    Text(vital.temp, style: theme.textTheme.bodySmall),
+                    Text("Reactions", style: theme.textTheme.bodySmall),
+                    Text(labResult.results, style: theme.textTheme.titleSmall),
                   ],
                 ),
                 const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Systolic  B.P", style: theme.textTheme.bodySmall),
-                    Text(vital.systolic, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Diastolic  B.P", style: theme.textTheme.bodySmall),
-                    Text(vital.diastolic, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Respiratory Rate", style: theme.textTheme.bodySmall),
-                    Text(vital.respiratory, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Oxygen Saturation", style: theme.textTheme.bodySmall),
-                    Text(vital.oxygenSaturation, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Weight", style: theme.textTheme.bodySmall),
-                    Text(vital.weight, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Height", style: theme.textTheme.bodySmall),
-                    Text(vital.height, style: theme.textTheme.bodySmall),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Presenting Complaints", style: theme.textTheme.bodySmall),
-                    Text(vital.complain, style: theme.textTheme.bodySmall),
+                    Text("Date Ordered", style: theme.textTheme.bodySmall),
+                    Text(labResult.orderedDate, style: theme.textTheme.titleSmall),
                   ],
                 ),
               ],
@@ -264,17 +217,17 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
     );
   }
 
-  Widget _buildVitalsRow(Vital vital, ThemeData theme) {
+  Widget _buildLabResultsRow(LabResult labResult, ThemeData theme) {
     return Row(
       children: [
         SvgPicture.asset(
-          "assets/images/boldDuotoneMedicineStethoscope.svg",
+          "assets/images/boldDuotoneMedicineTestTube.svg",
           width: 20,
           height: 20,
         ),
         const SizedBox(width: Constants.SPACING),
         Expanded(
-          child:Text(vital.name,
+          child:Text(labResult.name,
             style: theme.textTheme.titleSmall,
             overflow: TextOverflow.ellipsis,  // Truncate if too long
             maxLines: 1,
