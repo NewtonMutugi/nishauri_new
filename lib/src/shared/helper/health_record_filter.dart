@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:nishauri/src/features/clinic_card/data/models/health_test.dart';
 import 'package:nishauri/src/shared/display/heath_filter_button.dart';
 
@@ -51,3 +52,41 @@ List<HealthRecordModel> applyFilter(
 
   return filteredRecords;
 }
+
+Future<DateTimeRange?> selectDateRange({
+  required BuildContext context,
+  DateTimeRange? initialDateRange,
+  DateTime? firstDate,
+  String? saveText,
+  Color? primaryColor,
+  Color? barrierColor,
+}) async {
+  final DateTime now = DateTime.now();
+
+  DateTime effectiveLastDate = now;
+
+  DateTime effectiveFirstDate = firstDate ?? DateTime(now.year - 5); // Default to 5 years ago
+
+  DateTimeRange? picked = await showDateRangePicker(
+    context: context,
+    firstDate: effectiveFirstDate, // Prevent selecting dates earlier than 5 years ago
+    lastDate: effectiveLastDate,   // Prevent selecting dates in the future
+    initialDateRange: initialDateRange,
+    saveText: saveText ?? 'Done',  // Default save text 'Done'
+    barrierColor: barrierColor ?? Colors.black45,  // Default barrier color
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.light().copyWith(
+          primaryColor: primaryColor ?? Colors.blue, // Default to blue if not provided
+          colorScheme: ColorScheme.light(primary: primaryColor ?? Colors.blue),
+          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.normal),
+        ),
+        child: child!,
+      );
+    },
+  );
+
+  return picked;
+}
+
+

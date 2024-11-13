@@ -38,33 +38,18 @@ class _VisitHealthRecord extends State<VisitHealthRecord> {
     return filteredRecords;
   }
 
-  // Function to handle date range selection
   Future<void> _selectDateRange(BuildContext context) async {
-    final DateTime now = DateTime.now();
-    DateTimeRange? picked = await showDateRangePicker(
+    DateTimeRange? pickedRange = await selectDateRange(
       context: context,
-      firstDate: DateTime(now.year - 5),
-      lastDate: DateTime(now.year + 1),
       initialDateRange: selectedDateRange,
-      saveText: 'Done',
+      primaryColor: Constants.bmiCalculatorColor,
       barrierColor: Constants.bmiCalculatorColor,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            primaryColor: Constants.bmiCalculatorColor,
-            // accentColor: Constants.programsColor,
-            colorScheme: ColorScheme.light(primary: Constants.bmiCalculatorColor),
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.normal),
-          ),
-          child: child!,
-        );
-      },
     );
 
-    if (picked != null && picked != selectedDateRange) {
+    if (pickedRange != null && pickedRange != selectedDateRange) {
       setState(() {
-        selectedDateRange = picked;
-        selectedFilter = DateFilter.dateRange; // Automatically switch to 'dateRange' filter
+        selectedDateRange = pickedRange;
+        selectedFilter = DateFilter.dateRange;
       });
     }
   }
