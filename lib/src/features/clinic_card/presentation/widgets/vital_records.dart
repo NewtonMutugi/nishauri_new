@@ -63,7 +63,7 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
         children: [
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
-            height: 120,
+            height: Constants.APP_BAR_HEIGHT,
             smallTitle: "Vitals",
             rightBtTitle: "",
           ),
@@ -269,8 +269,8 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
       children: [
         SvgPicture.asset(
           "assets/images/boldDuotoneMedicineStethoscope.svg",
-          width: 20,
-          height: 20,
+          width: Constants.TWENTY,
+          height: Constants.TWENTY,
         ),
         const SizedBox(width: Constants.SPACING),
         Expanded(

@@ -67,7 +67,7 @@ class _MedicationRecordState extends State<MedicationRecord> {
         children: [
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
-            height: 120,
+            height: Constants.APP_BAR_HEIGHT,
             smallTitle: "Medications",
             rightBtTitle: "",
           ),
@@ -226,8 +226,8 @@ class _MedicationRecordState extends State<MedicationRecord> {
       children: [
         SvgPicture.asset(
           "assets/images/boldDuotoneMedicineStethoscope.svg",
-          width: 20,
-          height: 20,
+          width: Constants.TWENTY,
+          height: Constants.TWENTY,
         ),
         const SizedBox(width: Constants.SPACING),
         Expanded(

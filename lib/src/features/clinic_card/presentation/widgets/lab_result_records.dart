@@ -64,7 +64,7 @@ class _LabResultHealthRecord extends State<LabResultHealthRecord> {
         children: [
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
-            height: 120,
+            height: Constants.APP_BAR_HEIGHT,
             smallTitle: "Lab Results",
             rightBtTitle: "",
           ),
@@ -222,8 +222,8 @@ class _LabResultHealthRecord extends State<LabResultHealthRecord> {
       children: [
         SvgPicture.asset(
           "assets/images/boldDuotoneMedicineTestTube.svg",
-          width: 20,
-          height: 20,
+          width: Constants.TWENTY,
+          height: Constants.TWENTY,
         ),
         const SizedBox(width: Constants.SPACING),
         Expanded(

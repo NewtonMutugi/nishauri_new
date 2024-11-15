@@ -21,7 +21,6 @@ import 'package:nishauri/src/features/auth/presentation/pages/VerifyResetPasswor
 import 'package:nishauri/src/features/auth/presentation/pages/WelcomeScreen.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/allergy_records.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/condition_records.dart';
-import 'package:nishauri/src/features/clinic_card/presentation/widgets/health_record.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/lab_result_records.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/medication.dart';
 import 'package:nishauri/src/features/clinic_card/presentation/widgets/vital_records.dart';

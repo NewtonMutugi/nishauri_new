@@ -64,7 +64,7 @@ class _VisitHealthRecord extends State<AllergyHealthRecord> {
         children: [
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
-            height: 120,
+            height: Constants.APP_BAR_HEIGHT,
             smallTitle: "Allergies",
             rightBtTitle: "",
           ),
@@ -222,8 +222,8 @@ class _VisitHealthRecord extends State<AllergyHealthRecord> {
       children: [
         SvgPicture.asset(
           "assets/images/boldDuotoneMedicineVirus.svg",
-          width: 20,
-          height: 20,
+          width: Constants.TWENTY,
+          height: Constants.TWENTY,
         ),
         const SizedBox(width: Constants.SPACING),
         Expanded(
