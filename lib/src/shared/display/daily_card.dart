@@ -15,26 +15,26 @@ class FilterCard extends StatelessWidget {
 
     return Card(
       color: Constants.bgColor,
-      elevation: 4,
+      elevation: Constants.FOUR,
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(Constants.SPACING),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(child: _buildColumn("Daily", context)),
-                const VerticalDivider(thickness: 3, color: Colors.grey),
-                Expanded(child: _buildColumn("Weekly", context)),
-                const VerticalDivider(thickness: 3, color: Colors.grey),
-                Expanded(child: _buildColumn("Monthly", context)),
-                const VerticalDivider(thickness: 3, color: Colors.grey),
-                Expanded(child: _buildColumn("6Months", context)),
-                const VerticalDivider(thickness: 3, color: Colors.grey),
-                Expanded(child: _buildColumn("Yearly", context)),
-              ],
-            ),
+        IntrinsicHeight(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(child: _buildColumn("Day", context)),
+              const VerticalDivider(thickness: 1, color: Colors.grey),
+              Expanded(child: _buildColumn("Week", context)),
+              const VerticalDivider(thickness: 1, color: Colors.grey),
+              Expanded(child: _buildColumn("Month", context)),
+              const VerticalDivider(thickness: 1, color: Colors.grey),
+              Expanded(child: _buildColumn("6Months", context)),
+            ],
+          ),
+           ),
           ],
         ),
       ),
@@ -44,7 +44,7 @@ class FilterCard extends StatelessWidget {
   Widget _buildColumn(String day, BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: Constants.SMALL_SPACING),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

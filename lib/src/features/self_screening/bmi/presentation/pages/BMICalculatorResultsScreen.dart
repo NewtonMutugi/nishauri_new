@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_log_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_status_nutrition_provider.dart';
+import 'package:nishauri/src/features/self_screening/bmi/presentation/widgets/BMILineGraph.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
+import 'package:nishauri/src/shared/display/daily_card.dart';
 import 'package:nishauri/src/shared/input/Button.dart';
 import 'package:nishauri/src/utils/constants.dart';
 import 'package:nishauri/src/utils/helpers.dart';
@@ -30,11 +32,11 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
   // Function to get color for the BMI segment
   Color getSliderColor(double bmi) {
     if (bmi < 18.5) {
-      return Colors.blue; // Malnutrition
+      return Colors.blue;
     } else if (bmi < 24.9) {
-      return Colors.green; // Normal
+      return Colors.green;
     } else {
-      return Colors.red; // Obese
+      return Colors.red;
     }
   }
 
@@ -61,8 +63,6 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
     final bmiCategory = getBMICategory(bmi!);
     final sliderColor = getSliderColor(bmi);
 
-    print("this self : $isForSelf");
-
     return Scaffold(
       body: Column(children: [
         const CustomAppBar(
@@ -78,6 +78,18 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                    Wrap(
+                      spacing: Constants.SIXTEEN,
+                      runSpacing: Constants.SIXTEEN,
+                      children: [
+                        FilterCard(
+                          onPressed: (){
+
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: Constants.SPACING,),
                   Text(
                     "Results ${isForSelf != true ? ' for others' : ''}",
                     style: theme.textTheme.headlineLarge?.copyWith(
@@ -110,7 +122,7 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                             ),
                           ),
                           Container(
-                            height: 20,
+                            height: Constants.TWENTY,
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
@@ -153,43 +165,37 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                     data: (data) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          bmiCategory,
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            color: sliderColor, fontWeight: FontWeight.bold
-                          ),
-                        ),
                         const SizedBox(height: Constants.SPACING),
-                        Text(
-                          "Diet & Nutrition",
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            color: Constants.labResultsColor,
-                          ),
-                        ),
-                        const SizedBox(height: Constants.SPACING),
-                        Markdown(
-                          data: data
-                              .where((element) =>
-                          element.status == bmiCategory)
-                              .first
-                              .description ??
-                              "",
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                        ),
-                        const SizedBox(height: Constants.SPACING),
-                        Button(
-                          title: "Re-Calculate",
-                          surfixIcon: SvgPicture.asset(
-                            "assets/images/refresh-circle.svg",
-                            semanticsLabel: "Doctors",
-                            fit: BoxFit.contain,
-                          ),
-                          backgroundColor: Constants.selfScreeningBgColor,
-                          textColor: Colors.white,
-                          onPress: () {
-                            context.goNamed(RouteNames.BMI_CALCULATOR);
-                          },
+                        ExpansionTile(
+                          collapsedBackgroundColor: Constants.bgColor,
+                          backgroundColor: Constants.bgColor,
+                            collapsedIconColor: sliderColor,
+                            title: Text(
+                              "Diet & Nutrition",
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                color: Constants.labResultsColor,
+                              ),
+                            ),
+                          children: <Widget>[
+                            const SizedBox(height: Constants.SPACING),
+                            Text(
+                              ' Your BMI is ($bmiCategory)',
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                  color: sliderColor, fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            const SizedBox(height: Constants.SPACING),
+                            Markdown(
+                              data: data
+                                  .where((element) =>
+                              element.status == bmiCategory)
+                                  .first
+                                  .description ??
+                                  "",
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -200,6 +206,58 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                       child: CircularProgressIndicator(),
                     ),
                   ),
+                  const SizedBox(height: Constants.SPACING),
+                if (isForSelf == true)
+                  SizedBox(
+                    height: Constants.GRAPH_HEIGHT,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: bmiListAsync.when(
+                              data: (bmiData) {
+                                final displayedData = bmiData.length > 5 ? bmiData.sublist(bmiData.length - 5) : bmiData;
+                                return BMILineGraph(data: displayedData);
+                              },
+
+                              loading: () => Center(child: CircularProgressIndicator()),
+                              error: (error, _) => Center(child: Text("No BMI Data")),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // Wrap(
+                  //     spacing: 1,
+                  //     runSpacing: Constants.SIXTEEN,
+                  //     children: [
+                  //       bmiListAsync.when(
+                  //         data: (data) {
+                  //           return BMILineGraph(data: data);
+                  //         },
+                  //         loading: () => Center(child: CircularProgressIndicator()),
+                  //         error: (error, _) => Center(child: Text("No BMI Data")),
+                  //       )]
+                  // ),
+                  // const SizedBox(height: Constants.SPACING),
+                  // Button(
+                  //   title: "Calculate BMI",
+                  //   surfixIcon: SvgPicture.asset(
+                  //     "assets/images/refresh-circle.svg",
+                  //     semanticsLabel: "Doctors",
+                  //     fit: BoxFit.contain,
+                  //   ),
+                  //   backgroundColor: Constants.selfScreeningBgColor,
+                  //   textColor: Colors.white,
+                  //   onPress: () {
+                  //     context.goNamed(RouteNames.BMI_CALCULATOR);
+                  //   },
+                  // ),
+                  const SizedBox(height: Constants.SPACING),
+
                 ],
               ),
             ),
@@ -207,6 +265,31 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
         ),
       ]
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(
+            width: Constants.TWO_HUNDRED,
+            child: FloatingActionButton(
+              backgroundColor: Constants.selfScreeningBgColor,
+              onPressed: () {
+                context.goNamed(RouteNames.BMI_CALCULATOR);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Constants.SMALL_SPACING),
+                child: Text(
+                  "Calculate BMI",
+                  style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white)
+                ),
+              ),
+              heroTag: null,
+              elevation: Constants.SMALL_SPACING,
+            ),
+          ),
+        ],
+      ),
+
+
       // bottomNavigationBar: ,
     );
   }

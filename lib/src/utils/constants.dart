@@ -26,7 +26,11 @@ class Constants {
   static const TWENTY = 20.0;
   static const SIDE_SPACE = 0.0;
   static const TIME_OUT = 300;
+  static const TWO_HUNDRED = 200.0;
+  static const GRAPH_HEIGHT = 350.0;
   static const APP_BAR_HEIGHT = 120.0;
+  static const FOUR = 4.0;
+  static const SIXTEEN = 16.0;
   static const facilityDirectoryColor = Color.fromARGB(255, 106, 121, 141);
   static const labResultsColor = Color.fromARGB(255, 31, 37, 94);
   static const appointmentsColor = Color.fromARGB(255, 75, 127, 117);
