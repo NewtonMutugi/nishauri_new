@@ -20,10 +20,10 @@ class BloodSugarRecords extends StatelessWidget {
     final theme = Theme.of(context);
     if (data.isEmpty)
     {
-      BackgroundImageWidget(
-        customAppBar: const CustomAppBar(
+      const BackgroundImageWidget(
+        customAppBar: CustomAppBar(
           color: Constants.selfScreeningBgColor,
-          height: 120,
+          height: Constants.SMALL_APP_BAR_HEIGHT,
           smallTitle: "All Record Data",
           rightBtTitle: "",
         ), svgImage: 'assets/images/emptyself_screening.svg',

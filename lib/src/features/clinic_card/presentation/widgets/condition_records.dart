@@ -66,7 +66,7 @@ class _ConditionHealthRecordState extends State<ConditionHealthRecord> {
         children: [
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
-            height: Constants.APP_BAR_HEIGHT,
+            height: Constants.SMALL_APP_BAR_HEIGHT,
             smallTitle: "Conditions",
             rightBtTitle: "",
           ),

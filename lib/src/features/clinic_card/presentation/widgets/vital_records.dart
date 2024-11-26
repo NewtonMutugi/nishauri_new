@@ -63,7 +63,7 @@ class _VitalHealthRecord extends State<VitalHealthRecord> {
         children: [
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
-            height: Constants.APP_BAR_HEIGHT,
+            height: Constants.SMALL_APP_BAR_HEIGHT,
             smallTitle: "Vitals",
             rightBtTitle: "",
           ),

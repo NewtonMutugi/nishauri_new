@@ -1,30 +1,47 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/model/bmi_log.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/model/filter_data.dart';
 import 'package:nishauri/src/shared/charts/CustomLineChart.dart';
 import 'package:nishauri/src/shared/display/custome_filter_chart.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class BMILineGraph extends StatelessWidget {
-  final List<BMILog> data;
-const BMILineGraph({required this.data, Key? key}): super(key: key);
+  final FilterData data;
+  final String? filter;
+const BMILineGraph({required this.data, this.filter, Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List<FilterData> fData = [];
+    fData.add(data);
+    print(" filter : $data");
     final List<Color> gradientColors = [
       Constants.bmiCalculatorColor.withOpacity(0.3),
       Constants.bmiCalculatorShortcutBgColor.withOpacity(0),
     ];
 
-        data.sort((a, b) => b.created_at.compareTo(a.created_at));
-        final dataPoints = data.asMap().entries.map((entry) {
+        final dataPoints = fData.asMap().entries.map((entry) {
           final index = entry.key.toDouble();
-          final bmi = entry.value.results;
-          return FlSpot(index, bmi);
+          final double bmiFilter ;
+          if (filter == "6 Months") {
+            bmiFilter = entry.value.sixMonths.first.avgResults;
+          }
+          else {
+            bmiFilter = entry.value.week.first.results;
+          }
+          return FlSpot(index, bmiFilter);
         }).toList();
 
-    final date = data.asMap().entries.map((e) {
-      return e.value.created_at.toString();
+    final date = fData.asMap().entries.map((e) {
+      final String dateFilter;
+      if (filter == "6 Months") {
+        dateFilter = e.value.sixMonths.first.month;
+      }
+      else {
+        dateFilter = e.value.week.first.dayName;
+      }
+      return dateFilter;
     }).toList();
 
         return Scaffold(

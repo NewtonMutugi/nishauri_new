@@ -67,7 +67,7 @@ class _MedicationRecordState extends State<MedicationRecord> {
         children: [
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
-            height: Constants.APP_BAR_HEIGHT,
+            height: Constants.SMALL_APP_BAR_HEIGHT,
             smallTitle: "Medications",
             rightBtTitle: "",
           ),

@@ -3,6 +3,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/model/filter_data.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_filter_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_log_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_status_nutrition_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/presentation/widgets/BMILineGraph.dart';
@@ -12,6 +14,8 @@ import 'package:nishauri/src/shared/input/Button.dart';
 import 'package:nishauri/src/utils/constants.dart';
 import 'package:nishauri/src/utils/helpers.dart';
 import 'package:nishauri/src/utils/routes.dart';
+
+final selectedIndexProvider = StateProvider<int>((ref) => 1);
 
 class BMICalculatorResultsScreen extends HookConsumerWidget {
   final double? otherBMI;
@@ -45,6 +49,9 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
     final theme = Theme.of(context);
     final bmiStatusNutritionAsync = ref.watch(bmiNutritionProvider);
     final bmiListAsync = ref.watch(bmiListProvider);
+    final bmiFilter = ref.watch(bmiFilterProvider);
+    final selectedIndex = ref.watch(selectedIndexProvider);
+    final filterData = selectedIndex == 0 ? "Week" : "6 Months";
 
     final currentBMIEntries = bmiListAsync.when(
       data: (data) {
@@ -66,8 +73,8 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
     return Scaffold(
       body: Column(children: [
         const CustomAppBar(
-            title: "BMI Calculator ⚖️",
-            color: Constants.selfScreeningBgColor,
+          title: "BMI Calculator ⚖️",
+          color: Constants.selfScreeningBgColor,
           subTitle: "Empower Your Health Journey with BMI Insights",
           svgPathGroup: "assets/images/group_clinic_card.svg",
         ),
@@ -78,18 +85,19 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                    Wrap(
-                      spacing: Constants.SIXTEEN,
-                      runSpacing: Constants.SIXTEEN,
-                      children: [
-                        FilterCard(
-                          onPressed: (){
-
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: Constants.SPACING,),
+                  Wrap(
+                    spacing: Constants.SIXTEEN,
+                    runSpacing: Constants.SIXTEEN,
+                    children: [
+                      FilterCard(
+                        columnTitles: ["Week", "6 Months"],
+                        onPressed: (index) {
+                        ref.read(selectedIndexProvider.notifier).state = index;
+                        }
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: Constants.SPACING,),
                   Text(
                     "Results ${isForSelf != true ? ' for others' : ''}",
                     style: theme.textTheme.headlineLarge?.copyWith(
@@ -108,7 +116,7 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                               Text(
                                 bmiCategory,
                                 style: theme.textTheme.titleMedium?.copyWith(
-                                  color: sliderColor
+                                    color: sliderColor
                                 ),
                               ),
                             ],
@@ -166,16 +174,40 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: Constants.SPACING),
+                        if (isForSelf == true)
+                          SizedBox(
+                            height: Constants.GRAPH_HEIGHT,
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: bmiFilter.when(
+                                      data: (bmiData) {
+                                        print(selectedIndex);
+                                        print("BMI Filtered: ${bmiData}");
+                                        return BMILineGraph(data: bmiData, filter: filterData,);
+                                      },
+
+                                      loading: () => Center(child: CircularProgressIndicator()),
+                                      error: (error, _) => Center(child: Text("No BMI Data")),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        const SizedBox(height: Constants.SPACING),
                         ExpansionTile(
                           collapsedBackgroundColor: Constants.bgColor,
                           backgroundColor: Constants.bgColor,
-                            collapsedIconColor: sliderColor,
-                            title: Text(
-                              "Diet & Nutrition",
-                              style: theme.textTheme.titleLarge?.copyWith(
-                                color: Constants.labResultsColor,
-                              ),
+                          collapsedIconColor: sliderColor,
+                          title: Text(
+                            "Diet & Nutrition",
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              color: Constants.labResultsColor,
                             ),
+                          ),
                           children: <Widget>[
                             const SizedBox(height: Constants.SPACING),
                             Text(
@@ -197,6 +229,18 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                             ),
                           ],
                         ),
+                        const SizedBox(height: Constants.SPACING),
+                        Card(
+                          color: Constants.bgColor,
+                          child: ListTile(
+                            title: Text("Show All Data", style: theme.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),),
+                            trailing: const Icon(Icons.arrow_forward_ios_outlined),
+                            onTap: (){
+                              ref.refresh(bmiListProvider);
+                              context.goNamed(RouteNames.BMI_HISTORY, extra: data);
+                            },
+                          ),
+                        ),
                       ],
                     ),
                     error: (e, stackTrace) => Align(
@@ -207,57 +251,6 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: Constants.SPACING),
-                if (isForSelf == true)
-                  SizedBox(
-                    height: Constants.GRAPH_HEIGHT,
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: bmiListAsync.when(
-                              data: (bmiData) {
-                                final displayedData = bmiData.length > 5 ? bmiData.sublist(bmiData.length - 5) : bmiData;
-                                return BMILineGraph(data: displayedData);
-                              },
-
-                              loading: () => Center(child: CircularProgressIndicator()),
-                              error: (error, _) => Center(child: Text("No BMI Data")),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Wrap(
-                  //     spacing: 1,
-                  //     runSpacing: Constants.SIXTEEN,
-                  //     children: [
-                  //       bmiListAsync.when(
-                  //         data: (data) {
-                  //           return BMILineGraph(data: data);
-                  //         },
-                  //         loading: () => Center(child: CircularProgressIndicator()),
-                  //         error: (error, _) => Center(child: Text("No BMI Data")),
-                  //       )]
-                  // ),
-                  // const SizedBox(height: Constants.SPACING),
-                  // Button(
-                  //   title: "Calculate BMI",
-                  //   surfixIcon: SvgPicture.asset(
-                  //     "assets/images/refresh-circle.svg",
-                  //     semanticsLabel: "Doctors",
-                  //     fit: BoxFit.contain,
-                  //   ),
-                  //   backgroundColor: Constants.selfScreeningBgColor,
-                  //   textColor: Colors.white,
-                  //   onPress: () {
-                  //     context.goNamed(RouteNames.BMI_CALCULATOR);
-                  //   },
-                  // ),
-                  const SizedBox(height: Constants.SPACING),
-
                 ],
               ),
             ),
@@ -275,15 +268,15 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
               onPressed: () {
                 context.goNamed(RouteNames.BMI_CALCULATOR);
               },
+              heroTag: null,
+              elevation: Constants.SMALL_SPACING,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Constants.SMALL_SPACING),
                 child: Text(
-                  "Calculate BMI",
-                  style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white)
+                    "Calculate BMI",
+                    style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white)
                 ),
               ),
-              heroTag: null,
-              elevation: Constants.SMALL_SPACING,
             ),
           ),
         ],

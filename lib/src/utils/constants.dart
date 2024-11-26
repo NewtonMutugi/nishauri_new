@@ -28,7 +28,7 @@ class Constants {
   static const TIME_OUT = 300;
   static const TWO_HUNDRED = 200.0;
   static const GRAPH_HEIGHT = 350.0;
-  static const APP_BAR_HEIGHT = 120.0;
+  static const SMALL_APP_BAR_HEIGHT = 120.0;
   static const FOUR = 4.0;
   static const SIXTEEN = 16.0;
   static const facilityDirectoryColor = Color.fromARGB(255, 106, 121, 141);
@@ -58,4 +58,5 @@ class Constants {
   static const white = Color.fromARGB(255, 255, 255, 255);
   static const clinicCardBgColor = Color.fromARGB(255, 0, 122, 141);
   static const clinicCardKinColor = Color.fromARGB(255, 167, 240, 186);
+  static const backgroundGray = Color.fromARGB(255, 238, 238, 240);
 }

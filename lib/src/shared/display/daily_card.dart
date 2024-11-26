@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nishauri/src/shared/input/Button.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
-class FilterCard extends StatelessWidget {
-  final VoidCallback? onPressed;
+final selectedIndexProvider = StateProvider<int>((ref) => 1);
+class FilterCard extends HookConsumerWidget {
+  final List<String>? columnTitles;
+  final Function(int selectedIndex)? onPressed;
 
   const FilterCard({
     Key? key,
-    this.onPressed
+    this.columnTitles,
+    this.onPressed,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       color: Constants.bgColor,
       elevation: Constants.FOUR,
@@ -21,28 +24,42 @@ class FilterCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-        IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(child: _buildColumn("Day", context)),
-              const VerticalDivider(thickness: 1, color: Colors.grey),
-              Expanded(child: _buildColumn("Week", context)),
-              const VerticalDivider(thickness: 1, color: Colors.grey),
-              Expanded(child: _buildColumn("Month", context)),
-              const VerticalDivider(thickness: 1, color: Colors.grey),
-              Expanded(child: _buildColumn("6Months", context)),
-            ],
-          ),
-           ),
+            IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: _buildColumns(context, ref),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildColumn(String day, BuildContext context) {
+  List<Widget> _buildColumns(BuildContext context, WidgetRef ref) {
+    if (columnTitles!.isEmpty) {
+      return [];
+    }
+
+    List<Widget> columns = [];
+    for (int i = 0; i < columnTitles!.length; i++) {
+      String title = columnTitles![i];
+      columns.add(
+        Expanded(
+          child: _buildColumn(title, i, context, ref),
+        ),
+      );
+      if (i < columnTitles!.length - 1) {
+        columns.add(const VerticalDivider(thickness: 1, color: Colors.grey));
+      }
+    }
+    return columns;
+  }
+
+  // Build a column and highlight the selected one
+  Widget _buildColumn(String title, int index, BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    // final bool isSelected = index == _selectedIndex;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Constants.SMALL_SPACING),
       child: Row(
@@ -50,13 +67,19 @@ class FilterCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              TextButton(
-                  onPressed: onPressed,
-                  child:  Text(day, style: theme.textTheme.titleLarge),
-              )
-
-              // const SizedBox(width: 4),
-              // Text("TUE", style: theme.textTheme.titleLarge),
+              SizedBox(
+                width: Constants.SMALL_APP_BAR_HEIGHT,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: index == ref.watch(selectedIndexProvider) ? Constants.white : null,
+                  ),
+                  onPressed: () => onPressed!(index),
+                  child: Text(
+                    title,
+                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
             ],
           ),
         ],

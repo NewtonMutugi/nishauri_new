@@ -8,6 +8,7 @@ import 'package:nishauri/src/features/self_screening/bmi/presentation/widgets/BM
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
 import 'package:nishauri/src/shared/display/background_image_widget.dart';
 import 'package:nishauri/src/utils/constants.dart';
+import 'package:nishauri/src/utils/routes.dart';
 
 class BMIHistoryScreen extends HookWidget {
   @override
@@ -24,9 +25,11 @@ class BMIHistoryScreen extends HookWidget {
               return Column(
                 children: [
                   const CustomAppBar(
-                    title: "BMI Monitor 📈",
-                    // icon: Icons.trending_up,
-                    color: Constants.bmiCalculatorColor,
+                    smallTitle: "All Record Data",
+                    height: Constants.SMALL_APP_BAR_HEIGHT,
+                    rightBtTitle: "Record BMI",
+                    path: RouteNames.BMI_CALCULATOR,
+                    color: Constants.selfScreeningBgColor,
                   ),
                   Expanded(
                     child: Center(
@@ -38,10 +41,10 @@ class BMIHistoryScreen extends HookWidget {
                               flex: 1,
                               child: BMILinelist(data: data),
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: BMILineGraph(data: displayedData),
-                            ),
+                            // Expanded(
+                            //   flex: 1,
+                            //   child: BMILineGraph(data: displayedData),
+                            // ),
                           ],
                         ),
                       ),
@@ -53,11 +56,13 @@ class BMIHistoryScreen extends HookWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, _) => BackgroundImageWidget(
               customAppBar: const CustomAppBar(
-                title: "BMI Monitor 📈",
+                smallTitle: "All Record Data",
+                height: Constants.SMALL_APP_BAR_HEIGHT,
+                rightBtTitle: "Record BMI",
                 // icon: Icons.trending_up,
-                color: Constants.bmiCalculatorColor,
+                color: Constants.selfScreeningBgColor,
               ),
-              svgImage: 'assets/images/lab-empty-state.svg',
+              svgImage: 'assets/images/lab-eBLOOD_SUGAR_INPUTmpty-state.svg',
               notFoundText: "No BMI Data",
               floatingButtonIcon1: Icons.refresh,
               floatingButtonAction1: () {

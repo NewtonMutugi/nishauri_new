@@ -90,7 +90,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
               const CustomAppBar(
                 // title: "Blood Pressure",
                 color: Constants.selfScreeningBgColor,
-                height: Constants.APP_BAR_HEIGHT,
+                height: Constants.SMALL_APP_BAR_HEIGHT,
                 smallTitle: "Blood Pressure",
                 rightBtTitle: "Add Data",
                 path: RouteNames.BLOOD_PRESSURE_INPUT,
@@ -109,9 +109,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                               runSpacing: Constants.SIXTEEN,
                               children: [
                                 FilterCard(
-                                  onPressed: (){
-
-                                  },
+                                    columnTitles: ["Day", "Week", "6 Months"]
                                 ),
                               ],
                             ),

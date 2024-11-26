@@ -69,8 +69,8 @@ class CustomFilterLineChart extends StatelessWidget {
                           // Determine the label based on the filter
                           switch (filter) {
                             case 'Daily':
-                              DateTime date = DateTime.parse(dateTimes[index]);
-                              label = DateFormat('E').format(date);
+                              // DateTime date = DateTime.parse(dateTimes[index]);
+                              label = dateTimes[index];
                               break;
                             case 'Weekly':
                               label = 'Week ${index + 1}'; // Week number

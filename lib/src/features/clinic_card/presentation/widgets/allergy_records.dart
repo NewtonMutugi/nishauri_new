@@ -64,7 +64,7 @@ class _VisitHealthRecord extends State<AllergyHealthRecord> {
         children: [
           const CustomAppBar(
             color: Constants.clinicCardBgColor,
-            height: Constants.APP_BAR_HEIGHT,
+            height: Constants.SMALL_APP_BAR_HEIGHT,
             smallTitle: "Allergies",
             rightBtTitle: "",
           ),

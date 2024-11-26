@@ -39,8 +39,8 @@ class ItemList extends StatelessWidget {
                 leading: svgAsset != null
                     ? SvgPicture.asset(
                   svgAsset![index],
-                  width: 20,
-                  height: 20,
+                  width: Constants.TWENTY,
+                  height: Constants.TWENTY,
                   color: color,
                 )
                     : null,

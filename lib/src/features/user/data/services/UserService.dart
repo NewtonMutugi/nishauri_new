@@ -72,7 +72,6 @@ class UserService extends HTTPService {
 
   Future<User> getUser() async {
     final response = await call(getUser_, null);
-    print(response.statusCode);
     final responseString = await response.stream.bytesToString();
     final userData = json.decode(responseString);
     final Map<String, dynamic> person = userData["data"];

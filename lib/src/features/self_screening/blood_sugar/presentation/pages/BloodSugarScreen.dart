@@ -126,7 +126,7 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
                     Wrap(
                       spacing: 16,
                       runSpacing: 16,
-                      children: [FilterCard(onPressed: _changeColor)],
+                      children: [FilterCard(columnTitles: ["Day", "Week", "6 Months"],)],
                     ),
                     const SizedBox(height: Constants.SPACING),
                     _buildLastRecordRow(displayedData, theme),
