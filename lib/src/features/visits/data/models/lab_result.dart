@@ -6,10 +6,12 @@ part 'lab_result.g.dart';
 @Freezed()
 class LabResult with _$LabResult {
   const factory LabResult({
-    required String uuid,
-    required String name,
-    required String dateRecorded,
-    required String value,
+    String? uuid,
+    String? name,
+    String? results,
+    String? orderedDate,
+    String? status,
+    double? plot,
   }) = _LabResult;
 
   factory LabResult.fromJson(Map<String, dynamic> json)=> _$LabResultFromJson(json);

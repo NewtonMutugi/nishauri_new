@@ -51,8 +51,8 @@ class ClinicCardScreen extends HookConsumerWidget {
 
     final Map<String, String> svgMapping = {
       "allergies": "assets/images/boldDuotoneMedicineVirus.svg",
-      "conditions": "assets/images/boldDuotoneMedicineStethoscope.svg",
       "immunization":  "assets/images/boldDuotoneMedicineSyringe.svg",
+      "conditions": "assets/images/boldDuotoneMedicineStethoscope.svg",
       "labResults": "assets/images/boldDuotoneMedicineTestTube.svg",
       "medications": "assets/images/boldDuotoneMedicineJarOfPills2.svg",
       "procedures": "assets/images/boldDuotoneMedicineBone.svg",
@@ -70,7 +70,7 @@ class ClinicCardScreen extends HookConsumerWidget {
     ];
 
     final List<String> icons = [
-      "assets/images/boldDuotoneFoldersFolderPathConnect.svg",
+      // "assets/images/boldDuotoneFoldersFolderPathConnect.svg",
       "assets/images/boldDuotoneMedicineVirus.svg",
       "assets/images/boldDuotoneMedicineStethoscope.svg",
       "assets/images/boldDuotoneMedicineSyringe.svg",
@@ -81,8 +81,14 @@ class ClinicCardScreen extends HookConsumerWidget {
     ];
 
     final List<String> paths = [
-      RouteNames.BLOOD_PRESSURE,
+      RouteNames.ALLERGY_HEALTH_RECORD,
       RouteNames.HEALTH_RECORD,
+      RouteNames.IMMUNIZATION_RECORD,
+      RouteNames.LAB_RESULTS_HEALTH_RECORD,
+      RouteNames.MEDICATION_RECORD,
+      "",
+      RouteNames.VITAL_HEALTH_RECORD,
+
     ];
 
     void _reloadData() {
@@ -109,6 +115,7 @@ class ClinicCardScreen extends HookConsumerWidget {
                 title: "My Clinic Card 👨🏾‍💼",
                 color: Constants.clinicCardBgColor,
                 subTitle: "Access all your medical details",
+                svgPathGroup: "assets/images/group_clinic_card.svg",
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -129,10 +136,10 @@ class ClinicCardScreen extends HookConsumerWidget {
                               ItemList(items: items, path: paths, svgAsset: icons),
                               const SizedBox(height: 10),
                               Row(
-                                  children: [Text("Programs", style: theme.textTheme.titleMedium),
+                                  children: [Text("Shared With Me", style: theme.textTheme.titleMedium),
                                   ]
                               ),
-                              ItemList(items: items, path: paths),
+                              const ItemList(items: ["Eric Muthomi"], svgAsset: ["assets/images/clinicCardCard.svg"],path: [RouteNames.DEPENDANT_PROFILE], color: Constants.clinicCardBgColor, relationship: ["Next of Kin"],),
                             ],
                           ),
                         ),
@@ -160,6 +167,7 @@ class ClinicCardScreen extends HookConsumerWidget {
         title: "My Clinic Card 👨🏾‍💼",
         color: Constants.clinicCardBgColor,
         subTitle: "Access all your medical details",
+        svgPathGroup: "assets/images/group_clinic_card.svg",
       ),
       svgImage: 'assets/images/lab-empty-state.svg',
       notFoundText: "No programs available",
@@ -174,6 +182,7 @@ class ClinicCardScreen extends HookConsumerWidget {
         title: "My Clinic Card 👨🏾‍💼",
         color: Constants.clinicCardBgColor,
         subTitle: "Access all your medical details",
+        svgPathGroup: "assets/images/group_clinic_card.svg",
       ),
       svgImage: 'assets/images/lab-empty-state.svg',
       notFoundText: error,
@@ -191,6 +200,7 @@ class ClinicCardScreen extends HookConsumerWidget {
             title: "My Clinic Card 👨🏾‍💼",
             color: Constants.clinicCardBgColor,
             subTitle: "Access all your medical details",
+            svgPathGroup: "assets/images/group_clinic_card.svg",
           ),
           Text(
             "Loading Programs",

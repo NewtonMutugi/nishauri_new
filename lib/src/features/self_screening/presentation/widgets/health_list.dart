@@ -6,14 +6,18 @@ import 'package:nishauri/src/utils/constants.dart';
 class ItemList extends StatelessWidget {
   final List<String> items;
   final Color backgroundColor;
+  final Color? color;
   final List<String> path;
   final List<String>? svgAsset;
+  final List<String>? relationship;
   const ItemList({
     Key? key,
     required this.items,
     required this.path,
     this.svgAsset,
     this.backgroundColor = Constants.bgColor,
+    this.color,
+    this.relationship
   }) : super(key: key);
 
   @override
@@ -35,12 +39,36 @@ class ItemList extends StatelessWidget {
                 leading: svgAsset != null
                     ? SvgPicture.asset(
                   svgAsset![index],
-                  width: 20,
-                  height: 20,
+                  width: Constants.TWENTY,
+                  height: Constants.TWENTY,
+                  color: color,
                 )
                     : null,
-                title: Text(items[index]),
-                onTap: () {
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: Constants.SPACING),
+                      child: Text(items[index]),
+                    ),
+                    if (relationship != null)
+                      Padding(
+                        padding: const EdgeInsets.only(left: Constants.SPACING),
+                        child: Card(
+                          color: Constants.clinicCardKinColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(Constants.SMALL_SPACING),
+                            child: Text(
+                              relationship![index],
+                              style: const TextStyle(color: Constants.programsColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                  onTap: () {
                   context.goNamed(path[index]);
                 },
                 trailing: const Icon(Icons.chevron_right),

@@ -48,8 +48,8 @@ class HealthCard extends StatelessWidget {
                 if (svgAsset != null) ...[
                   SvgPicture.asset(
                     svgAsset!,
-                    width: 20,
-                    height: 20,
+                    width: Constants.TWENTY,
+                    height: Constants.TWENTY,
                   ),
                   const SizedBox(width: 10),
                 ],
@@ -104,7 +104,7 @@ class HealthCard extends StatelessWidget {
       return const SizedBox.shrink();
     }
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: Constants.SMALL_SPACING),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,7 +112,7 @@ class HealthCard extends StatelessWidget {
           Row(
             children: [
               Text(value, style: theme.textTheme.titleLarge),
-              const SizedBox(width: 4),
+              const SizedBox(width: Constants.FOUR),
               Text(text, style: theme.textTheme.bodyMedium),
             ],
           ),

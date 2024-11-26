@@ -6,12 +6,12 @@ part 'allergy.g.dart';
 @Freezed()
 class Allergy with _$Allergy {
   const factory Allergy({
-    required String uuid,
-    required String allergen,
-    required String reaction,
+    String? uuid,
+    String? allergen,
+    String? reaction,
     String? onsetDate,
-    required String dateRecorded,
-    required String severity,
+    String? dateRecorded,
+    String? severity,
   }) = _Allergy;
 
   factory Allergy.fromJson(Map<String, dynamic> json)=> _$AllergyFromJson(json);

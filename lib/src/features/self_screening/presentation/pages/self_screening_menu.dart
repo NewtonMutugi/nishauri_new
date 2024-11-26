@@ -92,8 +92,9 @@ class _SelfScreeningState extends ConsumerState<SelfScreening> {
         children: [
           const CustomAppBar(
             title: "Self Screening",
-            subTitle: "Easily track your health. Stay informed and take control of well-being.",
+            subTitle: "Easily track your health. Stay informed \nand take control of well-being.",
             color: Constants.selfScreeningBgColor,
+            svgPathGroup: "assets/images/group_clinic_card.svg",
           ),
           Expanded(
             child: SingleChildScrollView(

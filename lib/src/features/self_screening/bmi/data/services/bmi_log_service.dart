@@ -81,7 +81,6 @@ class BMILogService extends HTTPService{
     final response = await call(fetchBMI_, null);
     if (response.statusCode == 200) {
       final responseString = await response.stream.bytesToString();
-    // final String responseString = await rootBundle.loadString('assets/data/bmi_log.json');
     final Map<String, dynamic> responseData = json.decode(responseString);
     if (responseData["success"] == true){
       final List<dynamic> jsonList = responseData["data"]["bmi_log"];

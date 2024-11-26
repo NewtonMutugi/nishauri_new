@@ -26,7 +26,8 @@
                 "uuid": "m1",
                 "name": "Levothyroxine",
                 "dateRecorded": "2023-03-06",
-                "value": "Levothyroxine 50 mcg"
+                "value": "Levothyroxine 50 mcg",
+                "indication": "Pain"
             }
         ],
         "allergies": [
@@ -42,91 +43,302 @@
         "vitals": [
             {
                 "uuid": "v1",
-                "name": "Weight (kg)",
-                "dateRecorded": "2023-03-06",
-                "value": "70.0"
+                "name": "Vitals",
+                "weight": "67 Kgs",
+                "temp": "36.5 C",
+                "systolic": "120 mm/Hg",
+                "diastolic": "80 mm/Hg",
+                "respiratory": "20",
+                "oxygenSaturation": "",
+                "height": "180 CM",
+                "complain": "Abdominal pain"
             }
         ],
-        "labResults": [],
-        "procedures": []
+        "labResults": [
+            {
+                "uuid": "lb1",
+                "name": "CD4 Counts Test",
+                "results": "1200 cells/ul",
+                "orderedDate": "2019-09-18",
+                "status": "Viral Suppressed",
+                "plot": 49
+            }
+        ],
+        "procedures": [
+            {
+                "uuid": "pr1",
+                "name": "Vasectomy",
+                "status": "",
+                "site": "Penis",
+                "repeat": 0
+            }
+        ],
+        "immunization": [
+            {
+                "uuid": "imm1",
+                "name": "HPV Vaccine",
+                "immunizationDate": "2024-09-18",
+                "manufacturer": "Johnson & Johnson",
+                "lot": "LOT-004"
+            }
+        ]
     },
     {
         "uuid": "2",
-        "visitDate": "2023-03-07",
-        "facility": "NATIONAL HOSPITAL",
-        "conditions": [],
+        "visitDate": "2023-07-15",
+        "facility": "MOUNT KENYA MEDICAL CENTER",
+        "conditions": [
+            {
+                "uuid": "c3",
+                "name": "Type 2 Diabetes",
+                "onsetDate": "2020-01-10",
+                "dateRecorded": "2023-07-15",
+                "status": "ACTIVE",
+                "value": "Type 2 Diabetes"
+            },
+            {
+                "uuid": "c4",
+                "name": "Hypertension",
+                "onsetDate": "2021-11-25",
+                "dateRecorded": "2023-07-15",
+                "status": "ACTIVE",
+                "value": "Hypertension"
+            }
+        ],
         "medications": [
             {
                 "uuid": "m2",
                 "name": "Metformin",
-                "dateRecorded": "2023-03-07",
-                "value": "Metformin 500 mg"
-            }
-        ],
-        "allergies": [],
-        "vitals": [
+                "dateRecorded": "2023-07-15",
+                "value": "Metformin 500 mg",
+                "indication": "Type 2 Diabetes"
+            },
             {
-                "uuid": "v2",
-                "name": "Blood Pressure",
-                "dateRecorded": "2023-03-07",
-                "value": "130/85"
+                "uuid": "m3",
+                "name": "Lisinopril",
+                "dateRecorded": "2023-07-15",
+                "value": "Lisinopril 20 mg",
+                "indication": "Hypertension"
             }
         ],
-        "labResults": [],
-        "procedures": []
-    },
-    {
-        "uuid": "3",
-        "visitDate": "2023-03-08",
-        "facility": "CITY HOSPITAL",
-        "conditions": [
-            {
-                "uuid": "c3",
-                "name": "Chronic Kidney Disease",
-                "onsetDate": "",
-                "dateRecorded": "2023-03-08",
-                "status": "ACTIVE",
-                "value": "Chronic Kidney Disease"
-            }
-        ],
-        "medications": [],
-        "allergies": [],
-        "vitals": [
-            {
-                "uuid": "v3",
-                "name": "Height (cm)",
-                "dateRecorded": "2023-03-08",
-                "value": "180.0"
-            }
-        ],
-        "labResults": [],
-        "procedures": []
-    },
-    {
-        "uuid": "4",
-        "visitDate": "2023-03-09",
-        "facility": "GENERAL HOSPITAL",
-        "conditions": [],
-        "medications": [],
         "allergies": [
             {
                 "uuid": "a2",
-                "allergen": "Aspirin",
-                "reaction": "Nausea",
-                "severity": "SEVERE",
+                "allergen": "Sulfa Drugs",
+                "reaction": "Hives",
+                "severity": "MODERATE",
                 "onsetDate": "",
-                "dateRecorded": "2023-03-09"
+                "dateRecorded": "2023-07-15"
             }
         ],
-        "vitals": [],
+        "vitals": [
+            {
+                "uuid": "v2",
+                "name": "Vitals",
+                "weight": "92 Kgs",
+                "temp": "37.1 C",
+                "systolic": "145 mm/Hg",
+                "diastolic": "90 mm/Hg",
+                "respiratory": "22",
+                "oxygenSaturation": "",
+                "height": "175 CM",
+                "complain": "Headache"
+            }
+        ],
         "labResults": [
             {
-                "uuid": "l1",
-                "name": "Complete Blood Count",
-                "dateRecorded": "2023-03-09",
-                "value": "Normal"
+                "uuid": "lb2",
+                "name": "Blood Glucose Test",
+                "results": "160 mg/dL",
+                "orderedDate": "2023-07-15",
+                "status": "Uncontrolled",
+                "plot": 75
             }
         ],
-        "procedures": []
+        "procedures": [
+            {
+                "uuid": "pr2",
+                "name": "Electrocardiogram (ECG)",
+                "status": "Normal",
+                "site": "Chest",
+                "repeat": 1
+            }
+        ],
+        "immunization": [
+            {
+                "uuid": "imm2",
+                "name": "Influenza Vaccine",
+                "immunizationDate": "2024-01-10",
+                "manufacturer": "Pfizer",
+                "lot": "FLU-123"
+            }
+        ]
+    },
+    {
+        "uuid": "3",
+        "visitDate": "2024-05-25",
+        "facility": "Nairobi Women's Hospital",
+        "conditions": [
+            {
+                "uuid": "c5",
+                "name": "Asthma",
+                "onsetDate": "2018-03-12",
+                "dateRecorded": "2024-05-25",
+                "status": "ACTIVE",
+                "value": "Asthma"
+            },
+            {
+                "uuid": "c6",
+                "name": "Chronic Sinusitis",
+                "onsetDate": "2022-08-04",
+                "dateRecorded": "2024-05-25",
+                "status": "ACTIVE",
+                "value": "Chronic Sinusitis"
+            }
+        ],
+        "medications": [
+            {
+                "uuid": "m4",
+                "name": "Salbutamol",
+                "dateRecorded": "2024-05-25",
+                "value": "Salbutamol 100 mcg",
+                "indication": "Asthma"
+            },
+            {
+                "uuid": "m5",
+                "name": "Fluticasone",
+                "dateRecorded": "2024-05-25",
+                "value": "Fluticasone 50 mcg",
+                "indication": "Asthma"
+            }
+        ],
+        "allergies": [
+            {
+                "uuid": "a3",
+                "allergen": "Dust",
+                "reaction": "Sneezing",
+                "severity": "MODERATE",
+                "onsetDate": "",
+                "dateRecorded": "2024-05-25"
+            }
+        ],
+        "vitals": [
+            {
+                "uuid": "v3",
+                "name": "Vitals",
+                "weight": "58 Kgs",
+                "temp": "36.9 C",
+                "systolic": "110 mm/Hg",
+                "diastolic": "70 mm/Hg",
+                "respiratory": "18",
+                "oxygenSaturation": "",
+                "height": "165 CM",
+                "complain": "Breathing difficulty"
+            }
+        ],
+        "labResults": [
+            {
+                "uuid": "lb3",
+                "name": "Pulmonary Function Test",
+                "results": "FEV1: 75%",
+                "orderedDate": "2024-05-25",
+                "status": "Mild Obstruction",
+                "plot": 45
+            }
+        ],
+        "procedures": [
+            {
+                "uuid": "pr3",
+                "name": "CT Scan Sinuses",
+                "status": "Normal",
+                "site": "Sinuses",
+                "repeat": 0
+            }
+        ],
+        "immunization": [
+            {
+                "uuid": "imm3",
+                "name": "Pneumococcal Vaccine",
+                "immunizationDate": "2024-06-10",
+                "manufacturer": "AstraZeneca",
+                "lot": "PNEUMO-789"
+            }
+        ]
+    },
+    {
+        "uuid": "4",
+        "visitDate": "2024-09-10",
+        "facility": "Nairobi Hospital",
+        "conditions": [
+            {
+                "uuid": "c7",
+                "name": "Gastroesophageal Reflux Disease (GERD)",
+                "onsetDate": "2021-05-20",
+                "dateRecorded": "2024-09-10",
+                "status": "ACTIVE",
+                "value": "GERD"
+            }
+        ],
+        "medications": [
+            {
+                "uuid": "m6",
+                "name": "Omeprazole",
+                "dateRecorded": "2024-09-10",
+                "value": "Omeprazole 20 mg",
+                "indication": "GERD"
+            }
+        ],
+        "allergies": [
+            {
+                "uuid": "a4",
+                "allergen": "Lactose",
+                "reaction": "Stomach cramps",
+                "severity": "SEVERE",
+                "onsetDate": "",
+                "dateRecorded": "2024-09-10"
+            }
+        ],
+        "vitals": [
+            {
+                "uuid": "v4",
+                "name": "Vitals",
+                "weight": "72 Kgs",
+                "temp": "37.0 C",
+                "systolic": "130 mm/Hg",
+                "diastolic": "85 mm/Hg",
+                "respiratory": "22",
+                "oxygenSaturation": "",
+                "height": "170 CM",
+                "complain": "Heartburn"
+            }
+        ],
+        "labResults": [
+            {
+                "uuid": "lb4",
+                "name": "Upper Endoscopy",
+                "results": "Mild Inflammation",
+                "orderedDate": "2024-09-10",
+                "status": "Stable",
+                "plot": 60
+            }
+        ],
+        "procedures": [
+            {
+                "uuid": "pr4",
+                "name": "Upper Endoscopy",
+                "status": "Completed",
+                "site": "Esophagus",
+                "repeat": 0
+            }
+        ],
+        "immunization": [
+            {
+                "uuid": "imm4",
+                "name": "Hepatitis B Vaccine",
+                "immunizationDate": "2024-10-10",
+                "manufacturer": "GSK",
+                "lot": "HEPB-567"
+            }
+        ]
     }
 ]

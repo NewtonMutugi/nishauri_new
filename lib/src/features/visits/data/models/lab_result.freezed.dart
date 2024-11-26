@@ -20,10 +20,12 @@ LabResult _$LabResultFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LabResult {
-  String get uuid => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get dateRecorded => throw _privateConstructorUsedError;
-  String get value => throw _privateConstructorUsedError;
+  String? get uuid => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get results => throw _privateConstructorUsedError;
+  String? get orderedDate => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  double? get plot => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,13 @@ abstract class $LabResultCopyWith<$Res> {
   factory $LabResultCopyWith(LabResult value, $Res Function(LabResult) then) =
       _$LabResultCopyWithImpl<$Res, LabResult>;
   @useResult
-  $Res call({String uuid, String name, String dateRecorded, String value});
+  $Res call(
+      {String? uuid,
+      String? name,
+      String? results,
+      String? orderedDate,
+      String? status,
+      double? plot});
 }
 
 /// @nodoc
@@ -52,28 +60,38 @@ class _$LabResultCopyWithImpl<$Res, $Val extends LabResult>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? name = null,
-    Object? dateRecorded = null,
-    Object? value = null,
+    Object? uuid = freezed,
+    Object? name = freezed,
+    Object? results = freezed,
+    Object? orderedDate = freezed,
+    Object? status = freezed,
+    Object? plot = freezed,
   }) {
     return _then(_value.copyWith(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateRecorded: null == dateRecorded
-          ? _value.dateRecorded
-          : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      results: freezed == results
+          ? _value.results
+          : results // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderedDate: freezed == orderedDate
+          ? _value.orderedDate
+          : orderedDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      plot: freezed == plot
+          ? _value.plot
+          : plot // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -86,7 +104,13 @@ abstract class _$$LabResultImplCopyWith<$Res>
       __$$LabResultImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, String name, String dateRecorded, String value});
+  $Res call(
+      {String? uuid,
+      String? name,
+      String? results,
+      String? orderedDate,
+      String? status,
+      double? plot});
 }
 
 /// @nodoc
@@ -100,28 +124,38 @@ class __$$LabResultImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = null,
-    Object? name = null,
-    Object? dateRecorded = null,
-    Object? value = null,
+    Object? uuid = freezed,
+    Object? name = freezed,
+    Object? results = freezed,
+    Object? orderedDate = freezed,
+    Object? status = freezed,
+    Object? plot = freezed,
   }) {
     return _then(_$LabResultImpl(
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateRecorded: null == dateRecorded
-          ? _value.dateRecorded
-          : dateRecorded // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      results: freezed == results
+          ? _value.results
+          : results // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderedDate: freezed == orderedDate
+          ? _value.orderedDate
+          : orderedDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      plot: freezed == plot
+          ? _value.plot
+          : plot // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -130,26 +164,32 @@ class __$$LabResultImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LabResultImpl with DiagnosticableTreeMixin implements _LabResult {
   const _$LabResultImpl(
-      {required this.uuid,
-      required this.name,
-      required this.dateRecorded,
-      required this.value});
+      {this.uuid,
+      this.name,
+      this.results,
+      this.orderedDate,
+      this.status,
+      this.plot});
 
   factory _$LabResultImpl.fromJson(Map<String, dynamic> json) =>
       _$$LabResultImplFromJson(json);
 
   @override
-  final String uuid;
+  final String? uuid;
   @override
-  final String name;
+  final String? name;
   @override
-  final String dateRecorded;
+  final String? results;
   @override
-  final String value;
+  final String? orderedDate;
+  @override
+  final String? status;
+  @override
+  final double? plot;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LabResult(uuid: $uuid, name: $name, dateRecorded: $dateRecorded, value: $value)';
+    return 'LabResult(uuid: $uuid, name: $name, results: $results, orderedDate: $orderedDate, status: $status, plot: $plot)';
   }
 
   @override
@@ -159,8 +199,10 @@ class _$LabResultImpl with DiagnosticableTreeMixin implements _LabResult {
       ..add(DiagnosticsProperty('type', 'LabResult'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('dateRecorded', dateRecorded))
-      ..add(DiagnosticsProperty('value', value));
+      ..add(DiagnosticsProperty('results', results))
+      ..add(DiagnosticsProperty('orderedDate', orderedDate))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('plot', plot));
   }
 
   @override
@@ -170,14 +212,17 @@ class _$LabResultImpl with DiagnosticableTreeMixin implements _LabResult {
             other is _$LabResultImpl &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.dateRecorded, dateRecorded) ||
-                other.dateRecorded == dateRecorded) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.results, results) || other.results == results) &&
+            (identical(other.orderedDate, orderedDate) ||
+                other.orderedDate == orderedDate) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.plot, plot) || other.plot == plot));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, name, dateRecorded, value);
+  int get hashCode =>
+      Object.hash(runtimeType, uuid, name, results, orderedDate, status, plot);
 
   @JsonKey(ignore: true)
   @override
@@ -195,22 +240,28 @@ class _$LabResultImpl with DiagnosticableTreeMixin implements _LabResult {
 
 abstract class _LabResult implements LabResult {
   const factory _LabResult(
-      {required final String uuid,
-      required final String name,
-      required final String dateRecorded,
-      required final String value}) = _$LabResultImpl;
+      {final String? uuid,
+      final String? name,
+      final String? results,
+      final String? orderedDate,
+      final String? status,
+      final double? plot}) = _$LabResultImpl;
 
   factory _LabResult.fromJson(Map<String, dynamic> json) =
       _$LabResultImpl.fromJson;
 
   @override
-  String get uuid;
+  String? get uuid;
   @override
-  String get name;
+  String? get name;
   @override
-  String get dateRecorded;
+  String? get results;
   @override
-  String get value;
+  String? get orderedDate;
+  @override
+  String? get status;
+  @override
+  double? get plot;
   @override
   @JsonKey(ignore: true)
   _$$LabResultImplCopyWith<_$LabResultImpl> get copyWith =>

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_filter_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_log_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/presentation/widgets/BMILineGraph.dart';
 import 'package:nishauri/src/features/self_screening/bp/data/providers/blood_pressure_provider.dart';
@@ -12,7 +13,7 @@ class GeneralDashboard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bmiAsync = ref.watch(bmiListProvider);
+    final bmiAsync = ref.watch(bmiFilterProvider);
     final bloodPressureAsync = ref.watch(bloodPressureListProvider);
     final bloodSugarAsync = ref.watch(bloodSugarEntriesProvider);
     final theme = Theme.of(context);
@@ -31,8 +32,7 @@ class GeneralDashboard extends ConsumerWidget {
                     Expanded(
                       child: bmiAsync.when(
                         data: (bmiData) {
-                          final displayedData = bmiData.length > 5 ? bmiData.sublist(bmiData.length - 5) : bmiData;
-                          return BMILineGraph(data: displayedData);
+                          return BMILineGraph(data: bmiData,);
                         },
 
                         loading: () => Center(child: CircularProgressIndicator()),

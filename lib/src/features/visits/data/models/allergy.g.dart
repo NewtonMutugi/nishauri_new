@@ -8,12 +8,12 @@ part of 'allergy.dart';
 
 _$AllergyImpl _$$AllergyImplFromJson(Map<String, dynamic> json) =>
     _$AllergyImpl(
-      uuid: json['uuid'] as String,
-      allergen: json['allergen'] as String,
-      reaction: json['reaction'] as String,
+      uuid: json['uuid'] as String?,
+      allergen: json['allergen'] as String?,
+      reaction: json['reaction'] as String?,
       onsetDate: json['onsetDate'] as String?,
-      dateRecorded: json['dateRecorded'] as String,
-      severity: json['severity'] as String,
+      dateRecorded: json['dateRecorded'] as String?,
+      severity: json['severity'] as String?,
     );
 
 Map<String, dynamic> _$$AllergyImplToJson(_$AllergyImpl instance) =>

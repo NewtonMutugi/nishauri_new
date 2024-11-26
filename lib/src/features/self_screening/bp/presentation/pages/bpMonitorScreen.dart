@@ -90,7 +90,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
               const CustomAppBar(
                 // title: "Blood Pressure",
                 color: Constants.selfScreeningBgColor,
-                height: 120,
+                height: Constants.SMALL_APP_BAR_HEIGHT,
                 smallTitle: "Blood Pressure",
                 rightBtTitle: "Add Data",
                 path: RouteNames.BLOOD_PRESSURE_INPUT,
@@ -105,13 +105,11 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Wrap(
-                              spacing: 16,
-                              runSpacing: 16,
+                              spacing: Constants.SIXTEEN,
+                              runSpacing: Constants.SIXTEEN,
                               children: [
                                 FilterCard(
-                                  onPressed: (){
-
-                                  },
+                                    columnTitles: ["Day", "Week", "6 Months"]
                                 ),
                               ],
                             ),
@@ -119,7 +117,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                             Row(
                               children: [
                                 Text("Last Record Date:", style: theme.textTheme.bodyLarge),
-                                const SizedBox(width: 4),
+                                const SizedBox(width: Constants.FOUR),
                                 Text(DateFormat('dd MMM yyyy').format(displayedData!.created_at), style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
                               ],
                             ),
@@ -127,16 +125,16 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                             Row(
                               children: [
                                 Text("${displayedData.systolic}/${displayedData.diastolic}", style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
-                                const SizedBox(width: 4),
+                                const SizedBox(width: Constants.FOUR),
                                 Text("mmHG", style: theme.textTheme.bodyMedium),
-                                const SizedBox(width: 4,),
+                                const SizedBox(width: Constants.FOUR,),
                                 Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: _getStatusColor(status,), ),)
                               ],
                             ),
                             const SizedBox(height: Constants.SPACING,),
                             Wrap(
                               spacing: 1,
-                              runSpacing: 16,
+                              runSpacing: Constants.SIXTEEN,
                               children: [
                                 TrendChartScreen(data: chatData,)
                               ],
@@ -156,7 +154,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                             Container(
                               decoration: BoxDecoration(
                                 color: Constants.bgColor,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(Constants.SPACING),
                                 border: Border.all(color: Constants.bgColor),
                               ),
                               // color: Constants.bgColor,
@@ -174,7 +172,7 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                                               'Your Blood Pressure is ',
                                               style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
                                             ),
-                                            const SizedBox(width: 4,),
+                                            const SizedBox(width: Constants.FOUR,),
                                             Text("($status)", style: theme.textTheme.bodyLarge!.copyWith(color: _getStatusColor(status,), ),)
                                           ],
                                         ),

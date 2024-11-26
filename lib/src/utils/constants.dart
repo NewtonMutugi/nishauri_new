@@ -23,8 +23,14 @@ class Constants {
   static const SPACING = 10.0;
   static const MEDIUM_SCREEN_WIDTH = 600.00;
   static const BUTTON_FONT_SIZE = 20.0;
+  static const TWENTY = 20.0;
   static const SIDE_SPACE = 0.0;
   static const TIME_OUT = 300;
+  static const TWO_HUNDRED = 200.0;
+  static const GRAPH_HEIGHT = 350.0;
+  static const SMALL_APP_BAR_HEIGHT = 120.0;
+  static const FOUR = 4.0;
+  static const SIXTEEN = 16.0;
   static const facilityDirectoryColor = Color.fromARGB(255, 106, 121, 141);
   static const labResultsColor = Color.fromARGB(255, 31, 37, 94);
   static const appointmentsColor = Color.fromARGB(255, 75, 127, 117);
@@ -51,4 +57,6 @@ class Constants {
   static const barColor = Color.fromARGB(255, 4, 191, 218);
   static const white = Color.fromARGB(255, 255, 255, 255);
   static const clinicCardBgColor = Color.fromARGB(255, 0, 122, 141);
+  static const clinicCardKinColor = Color.fromARGB(255, 167, 240, 186);
+  static const backgroundGray = Color.fromARGB(255, 238, 238, 240);
 }

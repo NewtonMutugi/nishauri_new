@@ -6,12 +6,12 @@ part 'condition.g.dart';
 @Freezed()
 class Condition with _$Condition {
   const factory Condition({
-    required String uuid,
-    required String name,
+    String? uuid,
+    String? name,
     String? onsetDate,
-    required String dateRecorded,
-    required String status,
-    required String value,
+    String? dateRecorded,
+    String? status,
+    String? value,
   }) = _Condition;
 
   factory Condition.fromJson(Map<String, dynamic> json)=> _$ConditionFromJson(json);

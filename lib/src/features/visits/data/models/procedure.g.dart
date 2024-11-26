@@ -8,10 +8,12 @@ part of 'procedure.dart';
 
 _$ProcedureImpl _$$ProcedureImplFromJson(Map<String, dynamic> json) =>
     _$ProcedureImpl(
-      uuid: json['uuid'] as String,
-      name: json['name'] as String,
-      dateRecorded: json['dateRecorded'] as String,
-      value: json['value'] as String,
+      uuid: json['uuid'] as String?,
+      name: json['name'] as String?,
+      dateRecorded: json['dateRecorded'] as String?,
+      value: json['value'] as String?,
+      site: json['site'] as String?,
+      repeat: (json['repeat'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$ProcedureImplToJson(_$ProcedureImpl instance) =>
@@ -20,4 +22,6 @@ Map<String, dynamic> _$$ProcedureImplToJson(_$ProcedureImpl instance) =>
       'name': instance.name,
       'dateRecorded': instance.dateRecorded,
       'value': instance.value,
+      'site': instance.site,
+      'repeat': instance.repeat,
     };

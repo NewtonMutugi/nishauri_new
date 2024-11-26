@@ -6,10 +6,12 @@ part 'procedure.g.dart';
 @Freezed()
 class Procedure with _$Procedure {
   const factory Procedure({
-    required String uuid,
-    required String name,
-    required String dateRecorded,
-    required String value,
+    String? uuid,
+    String? name,
+    String? dateRecorded,
+    String? value,
+    String? site,
+    double? repeat,
   }) = _Procedure;
 
   factory Procedure.fromJson(Map<String, dynamic> json)=> _$ProcedureFromJson(json);

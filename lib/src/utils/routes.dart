@@ -46,8 +46,14 @@ class RouteNames {
   static const LAB_RESULTS = "lab-results";
   static const MY_CLINIC_CARD = "clinic-card";
   static const HEALTH_RECORD = "health-record";
+  static const IMMUNIZATION_RECORD = "immunization-record";
+  static const MEDICATION_RECORD = "medication-record";
   static const CHAT_BOT = "chat-bot";
   static const SETTINGS = "settings";
+  static const DEPENDANT_PROFILE = "dependant-profile";
+  static const VITAL_HEALTH_RECORD= "vital-health-record";
+  static const ALLERGY_HEALTH_RECORD= "allergy-health-record";
+  static const LAB_RESULTS_HEALTH_RECORD= "blood-result-health-record";
 
   static const Facility_Directory = "facility-directory";
   static const PROGRAM_MENU = "program-menu";
