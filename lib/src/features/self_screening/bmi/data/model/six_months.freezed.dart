@@ -20,10 +20,10 @@ SixMonths _$SixMonthsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SixMonths {
-  String get month => throw _privateConstructorUsedError;
+  String? get month => throw _privateConstructorUsedError;
   double? get avgWeight => throw _privateConstructorUsedError;
   double? get avgHeight => throw _privateConstructorUsedError;
-  double get avgResults => throw _privateConstructorUsedError;
+  double? get avgResults => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,10 @@ abstract class $SixMonthsCopyWith<$Res> {
       _$SixMonthsCopyWithImpl<$Res, SixMonths>;
   @useResult
   $Res call(
-      {String month, double? avgWeight, double? avgHeight, double avgResults});
+      {String? month,
+      double? avgWeight,
+      double? avgHeight,
+      double? avgResults});
 }
 
 /// @nodoc
@@ -53,16 +56,16 @@ class _$SixMonthsCopyWithImpl<$Res, $Val extends SixMonths>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? month = null,
+    Object? month = freezed,
     Object? avgWeight = freezed,
     Object? avgHeight = freezed,
-    Object? avgResults = null,
+    Object? avgResults = freezed,
   }) {
     return _then(_value.copyWith(
-      month: null == month
+      month: freezed == month
           ? _value.month
           : month // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avgWeight: freezed == avgWeight
           ? _value.avgWeight
           : avgWeight // ignore: cast_nullable_to_non_nullable
@@ -71,10 +74,10 @@ class _$SixMonthsCopyWithImpl<$Res, $Val extends SixMonths>
           ? _value.avgHeight
           : avgHeight // ignore: cast_nullable_to_non_nullable
               as double?,
-      avgResults: null == avgResults
+      avgResults: freezed == avgResults
           ? _value.avgResults
           : avgResults // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ) as $Val);
   }
 }
@@ -88,7 +91,10 @@ abstract class _$$SixMonthsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String month, double? avgWeight, double? avgHeight, double avgResults});
+      {String? month,
+      double? avgWeight,
+      double? avgHeight,
+      double? avgResults});
 }
 
 /// @nodoc
@@ -102,16 +108,16 @@ class __$$SixMonthsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? month = null,
+    Object? month = freezed,
     Object? avgWeight = freezed,
     Object? avgHeight = freezed,
-    Object? avgResults = null,
+    Object? avgResults = freezed,
   }) {
     return _then(_$SixMonthsImpl(
-      month: null == month
+      month: freezed == month
           ? _value.month
           : month // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avgWeight: freezed == avgWeight
           ? _value.avgWeight
           : avgWeight // ignore: cast_nullable_to_non_nullable
@@ -120,10 +126,10 @@ class __$$SixMonthsImplCopyWithImpl<$Res>
           ? _value.avgHeight
           : avgHeight // ignore: cast_nullable_to_non_nullable
               as double?,
-      avgResults: null == avgResults
+      avgResults: freezed == avgResults
           ? _value.avgResults
           : avgResults // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 }
@@ -132,22 +138,19 @@ class __$$SixMonthsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SixMonthsImpl implements _SixMonths {
   const _$SixMonthsImpl(
-      {required this.month,
-      this.avgWeight,
-      this.avgHeight,
-      required this.avgResults});
+      {this.month, this.avgWeight, this.avgHeight, this.avgResults});
 
   factory _$SixMonthsImpl.fromJson(Map<String, dynamic> json) =>
       _$$SixMonthsImplFromJson(json);
 
   @override
-  final String month;
+  final String? month;
   @override
   final double? avgWeight;
   @override
   final double? avgHeight;
   @override
-  final double avgResults;
+  final double? avgResults;
 
   @override
   String toString() {
@@ -189,22 +192,22 @@ class _$SixMonthsImpl implements _SixMonths {
 
 abstract class _SixMonths implements SixMonths {
   const factory _SixMonths(
-      {required final String month,
+      {final String? month,
       final double? avgWeight,
       final double? avgHeight,
-      required final double avgResults}) = _$SixMonthsImpl;
+      final double? avgResults}) = _$SixMonthsImpl;
 
   factory _SixMonths.fromJson(Map<String, dynamic> json) =
       _$SixMonthsImpl.fromJson;
 
   @override
-  String get month;
+  String? get month;
   @override
   double? get avgWeight;
   @override
   double? get avgHeight;
   @override
-  double get avgResults;
+  double? get avgResults;
   @override
   @JsonKey(ignore: true)
   _$$SixMonthsImplCopyWith<_$SixMonthsImpl> get copyWith =>

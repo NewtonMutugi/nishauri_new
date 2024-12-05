@@ -13,52 +13,67 @@ const BMILineGraph({required this.data, this.filter, Key? key}): super(key: key)
 
   @override
   Widget build(BuildContext context) {
-    final List<FilterData> fData = [];
-    fData.add(data);
-    print(" filter : $data");
     final List<Color> gradientColors = [
       Constants.bmiCalculatorColor.withOpacity(0.3),
       Constants.bmiCalculatorShortcutBgColor.withOpacity(0),
     ];
 
-        final dataPoints = fData.asMap().entries.map((entry) {
-          final index = entry.key.toDouble();
-          final double bmiFilter ;
-          if (filter == "6 Months") {
-            bmiFilter = entry.value.sixMonths.first.avgResults;
-          }
-          else {
-            bmiFilter = entry.value.week.first.results;
-          }
-          return FlSpot(index, bmiFilter);
-        }).toList();
+    final List<FlSpot> dataPoint;
 
-    final date = fData.asMap().entries.map((e) {
-      final String dateFilter;
-      if (filter == "6 Months") {
-        dateFilter = e.value.sixMonths.first.month;
-      }
-      else {
-        dateFilter = e.value.week.first.dayName;
-      }
-      return dateFilter;
-    }).toList();
+      if (filter == "Week") {
+      dataPoint = data.week
+          !.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(), entry.value.results ?? 0,
+      )).toList();
+    } else if (filter == "6 Months") {
+      dataPoint = data.sixMonths
+          !.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),entry.value.avgResults ?? 0,
+      ))
+          .toList();
+    } else {
+      dataPoint = [];
+    }
+
+    final List<String> dateTimeList;
+    if (filter == "Week") {
+      dateTimeList = data.week
+          ?.asMap()
+          .entries
+          .map((entry) => entry.value.dayName )
+          .whereType<String>()
+          .toList() ?? [];
+    } else if (filter == "6 Months") {
+      dateTimeList = data.sixMonths
+          ?.asMap()
+          .entries
+          .map((entry) => entry.value.month)
+          .whereType<String>()
+          .toList() ?? [];
+    } else {
+      dateTimeList = [];
+    }
 
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: CustomFilterLineChart(
-              dataPoints: dataPoints,
-              dateTimes: date,
+              dataPoints: dataPoint,
+              dateTimes: dateTimeList,
               minX: 0,
-              maxX: dataPoints.length - 1,
-              minY: 5,
-              leftTile: false,
+              maxY: 30.0,
+              maxX: dateTimeList.length - 1,
+              leftTile: true,
+              minY: 0,
               barColor: Constants.bmiCalculatorColor,
               gradientColors: gradientColors,
               bottomTile: true,
-              // dateFormat: "dd/MM/yy",
-              filter: "Daily",
+              interval: 5,
+              filter: filter,
             ),
           ),
         );

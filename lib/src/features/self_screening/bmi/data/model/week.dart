@@ -7,11 +7,11 @@ part 'week.g.dart';
 class Week with _$Week {
 
   const factory Week({
-    required String dayName,
+    String? dayName,
     String? date,
     double? weight,
     double? height,
-    required double results,
+    double? results,
   }) = _Week;
 
   factory Week.fromJson(Map<String, Object?> json)

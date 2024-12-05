@@ -7,11 +7,11 @@ part of 'week.dart';
 // **************************************************************************
 
 _$WeekImpl _$$WeekImplFromJson(Map<String, dynamic> json) => _$WeekImpl(
-      dayName: json['dayName'] as String,
+      dayName: json['dayName'] as String?,
       date: json['date'] as String?,
       weight: (json['weight'] as num?)?.toDouble(),
       height: (json['height'] as num?)?.toDouble(),
-      results: (json['results'] as num).toDouble(),
+      results: (json['results'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$WeekImplToJson(_$WeekImpl instance) =>

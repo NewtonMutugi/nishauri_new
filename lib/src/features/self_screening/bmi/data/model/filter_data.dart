@@ -14,6 +14,10 @@ class FilterData with _$FilterData {
     String? user_id,
   }) = _FilterData;
 
-  factory FilterData.fromJson(Map<String, Object?> json)
-  => _$FilterDataFromJson(json);
+  factory FilterData.fromJson(Map<String, dynamic> json){
+    return FilterData(
+        week: (json['weekly'] as List<dynamic>? ?? []).map((wk) => Week.fromJson(wk)).toList(),
+        sixMonths: (json['sixMonthly'] as List<dynamic>? ?? []).map((month) => SixMonths.fromJson(month)).toList(),
+    );
+  }
 }

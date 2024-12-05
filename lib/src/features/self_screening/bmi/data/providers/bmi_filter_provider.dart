@@ -11,5 +11,3 @@ final bmiFilterProvider = FutureProvider<FilterData>((ref) async {
   final repository = ref.watch(bmiFilterRepositoryProvider);
   return await repository.fetchBMIFilter();
 });
-
-final selectedIndexProvider = StateProvider<int>((ref) => 0);

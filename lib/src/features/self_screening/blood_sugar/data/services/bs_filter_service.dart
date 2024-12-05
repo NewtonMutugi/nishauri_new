@@ -39,7 +39,6 @@ class BsFilterService extends HTTPService {
         if (responseData.containsKey('data')) {
           final filterData = responseData['data'];
           final FilterBs filterBs = FilterBs.fromJson(filterData);
-          print(filterBs.weekly);
           return filterBs;
         } else {
           throw "Invalid response format";
