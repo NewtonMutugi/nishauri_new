@@ -16,6 +16,7 @@ class GeneralDashboard extends ConsumerWidget {
     final bmiAsync = ref.watch(bmiFilterProvider);
     final bloodPressureAsync = ref.watch(bloodPressureListProvider);
     final bloodSugarAsync = ref.watch(bloodSugarEntriesProvider);
+    final bsFilterListAsync = ref.watch(bsFilterListProvider);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -32,7 +33,7 @@ class GeneralDashboard extends ConsumerWidget {
                     Expanded(
                       child: bmiAsync.when(
                         data: (bmiData) {
-                          return BMILineGraph(data: bmiData,);
+                          return BMILineGraph(data: bmiData, filter: "Week",);
                         },
 
                         loading: () => Center(child: CircularProgressIndicator()),
@@ -84,10 +85,9 @@ class GeneralDashboard extends ConsumerWidget {
                   children: [
                     Text("Blood Sugar Trend", style: theme.textTheme.titleMedium),
                     Expanded(
-                      child: bloodSugarAsync.when(
-                        data: (bSugarData) {
-                          final displayedData = bSugarData.length > 5 ? bSugarData.sublist(bSugarData.length - 5) : bSugarData;
-                          return BloodSugarTrendChart(data: displayedData);
+                      child: bsFilterListAsync.when(
+                        data: (bSFilteredData) {
+                          return BloodSugarTrendChart(data: bSFilteredData);
                         },
 
                         loading: () => const Center(child: CircularProgressIndicator()),

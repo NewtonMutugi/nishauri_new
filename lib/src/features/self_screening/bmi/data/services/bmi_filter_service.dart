@@ -34,20 +34,7 @@ class BMIFilterService extends HTTPService{
 
       if (responseData["success"] == true) {
         final Map<String, dynamic> data = responseData["data"];
-
-        final List<Week> week = [];
-        final List<SixMonths> sixMonths = [];
-
-        final List<dynamic> weekly = data['weekly'];
-        week.addAll(weekly.map((wk) => Week.fromJson(wk)));
-
-        final List<dynamic> sixMonthly = data['sixMonthly'];
-        sixMonths.addAll(sixMonthly.map((mn) => SixMonths.fromJson(mn)));
-        return FilterData.fromJson({
-          "week" : week,
-          "sixMonths" : sixMonths,
-          "user_id" : data["user_id"]
-        });
+        return FilterData.fromJson(data);
       } else {
         throw Exception(responseData["message"]);
       }

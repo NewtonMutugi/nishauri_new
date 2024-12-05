@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:nishauri/src/features/self_screening/blood_sugar/data/models/filter_bs.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/providers/blood_sugar_provider.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
 import 'package:nishauri/src/shared/display/custome_filter_chart.dart';
@@ -11,21 +12,10 @@ import 'package:nishauri/src/shared/input/Button.dart';
 import 'package:nishauri/src/utils/constants.dart';
 import 'package:nishauri/src/utils/routes.dart';
 
-class BloodSugarScreen extends ConsumerStatefulWidget {
+import '../../../../../shared/providers/selectedIndexProvider.dart';
+
+class BloodSugarScreen extends ConsumerWidget {
   const BloodSugarScreen({super.key});
-
-  @override
-  _BloodSugarScreenState createState() => _BloodSugarScreenState();
-}
-
-class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
-  Color buttonColor = Colors.blue;
-
-  void _changeColor() {
-    setState(() {
-      buttonColor = buttonColor == Colors.blue ? Colors.red : Colors.blue;
-    });
-  }
 
   Color _getStatusColor(String status) {
     switch (status) {
@@ -38,7 +28,7 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
       case 'Diabetes':
         return Colors.red;
       default:
-        return Colors.white24;
+        return Colors.grey;
     }
   }
 
@@ -62,49 +52,108 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final bloodSugarListProvider = ref.watch(bloodSugarEntriesProvider);
     final adviceAsync = ref.watch(bloodSugarListAdviceProvider);
+    final selectedIndex = ref.watch(selectedIndexProvider);
+    final bsFilterListAsync = ref.watch(bsFilterListProvider);
     final theme = Theme.of(context);
 
+    final filter =  ["Day", "Week", "6 Months"];
+
     final data = bloodSugarListProvider.when(
-      data: (data) {
-        data.sort((a, b) => b.created_at.compareTo(a.created_at));
-        return data;
-      },
+      data: (data) => data..sort((a, b) => b.created_at.compareTo(a.created_at)),
       error: (_, __) => [],
-      loading: () => [],
+      loading: () => [Center(child: CircularProgressIndicator())],
     );
 
-    final displayedData = data.isNotEmpty ? data.first : null;
-    if (displayedData == null) return Center(child: CircularProgressIndicator());
+    if (data.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
+    final displayedData = data.first;
     final status = _getBloodSugarStatus(displayedData.level, displayedData.condition);
+
     final advice = adviceAsync.when(
       data: (adviceData) => adviceData.firstWhere((ad) => ad.label == status).advice ?? 'No advice available',
       error: (_, __) => 'Error loading advice',
       loading: () => 'Loading advice...',
     );
 
-    final data2 = bloodSugarListProvider.when(
-      data: (data) {
-        // Sort the data by created_at date in ascending order
-        data.sort((a, b) => a.created_at.compareTo(b.created_at));
-
-        // Return the last five entries (or all if there are less than five)
-        return data.length > 5 ? data.sublist(data.length - 5) : data;
-      },
-      error: (_, __) => [],
-      loading: () => [],
+    final FilterBs filteredData = bsFilterListAsync.when(
+      data: (data) => data,
+      error: (_, __) => FilterBs(
+        hourly: [],
+        weekly: [],
+        sixMonthly: [],
+      ),
+      loading: () => FilterBs(
+        hourly: [],
+        weekly: [],
+        sixMonthly: [],
+      ),
     );
 
-
-
-    final dataPoints = data2.asMap().entries.map((entry) {
-      return FlSpot(entry.key.toDouble(), _convertToMMOL(entry.value.level));
-    }).toList();
-
-    final dateTimeList = data2.map((e) => e.created_at.toString()).toList();
+    final List<FlSpot>? dataPoint;
+    if (filter[selectedIndex] == "Day") {
+      dataPoint = filteredData.hourly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),
+        _convertToMMOL(entry.value.level ?? 0),
+      ))
+          .toList();
+    } else if (filter[selectedIndex] == "Week") {
+      dataPoint = filteredData.weekly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),
+        _convertToMMOL(entry.value.level ?? 0),
+      ))
+          .toList();
+    } else if (filter[selectedIndex] == "6 Months") {
+      dataPoint = filteredData.sixMonthly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),
+        _convertToMMOL(entry.value.avg_level ?? 0),
+      ))
+          .toList();
+    } else {
+      dataPoint = [];
+    }
+    final List<String> dateTimeList;
+    if (filter[selectedIndex] == "Day") {
+      dateTimeList = filteredData.hourly
+          ?.asMap()
+          .entries
+          .map((entry) {
+        final timeString = entry.value.time;
+        final dateTime = timeString != null ? DateTime.parse(timeString) : DateTime.now();
+        return DateFormat('dd/MM').format(dateTime);
+      })
+          .whereType<String>()
+          .toList() ?? [];
+    } else if (filter[selectedIndex] == "Week") {
+      dateTimeList = filteredData.weekly
+          ?.asMap()
+          .entries
+          .map((entry) => entry.value.dayName )
+          .whereType<String>()
+          .toList() ?? [];
+    } else if (filter[selectedIndex] == "6 Months") {
+      dateTimeList = filteredData.sixMonthly
+          ?.asMap()
+          .entries
+          .map((entry) => entry.value.month)
+          .whereType<String>()
+          .toList() ?? [];
+    } else {
+      dateTimeList = [];
+    }
 
     return Scaffold(
       body: Column(
@@ -126,36 +175,93 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
                     Wrap(
                       spacing: 16,
                       runSpacing: 16,
-                      children: [FilterCard(columnTitles: ["Day", "Week", "6 Months"],)],
+                      children: [
+                        FilterCard(
+                          columnTitles:filter,
+                          onPressed: (index) {
+                            ref.read(selectedIndexProvider.notifier).state = index;
+                          },
+                        ),
+                      ],
                     ),
                     const SizedBox(height: Constants.SPACING),
-                    _buildLastRecordRow(displayedData, theme),
+                    Row(
+                      children: [
+                        Text("Last Record Date: ", style: theme.textTheme.bodyLarge),
+                        Text(
+                          DateFormat('dd MMM yyyy').format(displayedData.created_at),
+                          style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: Constants.SPACING),
-                    _buildBloodSugarLevelRow(displayedData, status, theme),
+                    Row(
+                      children: [
+                        Text(
+                          "${_convertToMMOL(displayedData.level)}",
+                          style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(width: 4),
+                        Text("MMOL/L", style: theme.textTheme.bodyMedium),
+                        const SizedBox(width: 4),
+                        Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: _getStatusColor(status))),
+                      ],
+                    ),
                     const SizedBox(height: Constants.SPACING),
-                    Text(displayedData.condition, style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold, color: Colors.blueGrey)),
+                    Text(
+                      displayedData.condition,
+                      style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                    ),
                     const SizedBox(height: Constants.SPACING),
                     CustomFilterLineChart(
-                      dataPoints: dataPoints,
+                      dataPoints: dataPoint,
                       dateTimes: dateTimeList,
                       gradientColors: [
                         Constants.bloodSugarColor,
                         Constants.bloodSugarColor.withOpacity(0.3),
                       ],
                       minX: 0,
-                      maxX: data2.length.toDouble() - 1,
+                      maxX: dateTimeList.length.toDouble() - 1,
                       minY: 0.0,
                       maxY: 30.0,
                       leftTile: true,
                       bottomTile: true,
                       interval: 5,
-                      filter: "Daily",
+                      filter: filter[selectedIndex],
                       barColor: Constants.barColor,
                     ),
                     const SizedBox(height: Constants.SPACING),
-                    _buildShowAllDataCard(data, theme),
+                    Card(
+                      color: Constants.bgColor,
+                      child: ListTile(
+                        title: Text(
+                          "Show All Data",
+                          style: theme.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        trailing: const Icon(Icons.arrow_forward_ios_outlined),
+                        onTap: () => context.goNamed(RouteNames.BLOOD_SUGAR_RECORDS, extra: data),
+                      ),
+                    ),
                     const SizedBox(height: Constants.SPACING),
-                    _buildAdviceCard(advice, status, theme),
+                    Container(
+                      color: Constants.bgColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(Constants.SPACING),
+                        child: ListTile(
+                          title: Row(
+                            children: [
+                              Text(
+                                'Your Blood Sugar Levels are ',
+                                style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: Colors.green)),
+                            ],
+                          ),
+                          subtitle: Text(advice, style: theme.textTheme.bodyMedium),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: Constants.SPACING),
                     Button(
                       title: "More Insight",
@@ -168,61 +274,6 @@ class _BloodSugarScreenState extends ConsumerState<BloodSugarScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Row _buildLastRecordRow(displayedData, ThemeData theme) {
-    return Row(
-      children: [
-        Text("Last Record Date:", style: theme.textTheme.bodyLarge),
-        const SizedBox(width: 4),
-        Text(DateFormat('dd MMM yyyy').format(displayedData.created_at), style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey, fontWeight: FontWeight.bold)),
-      ],
-    );
-  }
-
-  Row _buildBloodSugarLevelRow(displayedData, String status, ThemeData theme) {
-    return Row(
-      children: [
-        Text("${_convertToMMOL(displayedData.level)}", style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold)),
-        const SizedBox(width: 4),
-        Text("MMOL/L", style: theme.textTheme.bodyMedium),
-        const SizedBox(width: 4),
-        Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: _getStatusColor(status))),
-      ],
-    );
-  }
-
-  Card _buildShowAllDataCard(List data, ThemeData theme) {
-    return Card(
-      color: Constants.bgColor,
-      child: ListTile(
-        title: Text("Show All Data", style: theme.textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold)),
-        trailing: const Icon(Icons.arrow_forward_ios_outlined),
-        onTap: () => context.goNamed(RouteNames.BLOOD_SUGAR_RECORDS, extra: data),
-      ),
-    );
-  }
-
-  Container _buildAdviceCard(String advice, String status, ThemeData theme) {
-    return Container(
-      color: Constants.bgColor,
-      child: Padding(
-        padding: const EdgeInsets.all(Constants.SPACING),
-        child: ListTile(
-          title: Row(
-            children: [
-              Text(
-                'Your Blood Sugar Levels are ',
-                style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(width: 4),
-              Text(status, style: theme.textTheme.bodyLarge!.copyWith(color: Colors.green)),
-            ],
-          ),
-          subtitle: Text(advice, style: theme.textTheme.bodyMedium),
-        ),
       ),
     );
   }

@@ -20,11 +20,11 @@ Week _$WeekFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Week {
-  String get dayName => throw _privateConstructorUsedError;
+  String? get dayName => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
   double? get weight => throw _privateConstructorUsedError;
   double? get height => throw _privateConstructorUsedError;
-  double get results => throw _privateConstructorUsedError;
+  double? get results => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,11 +37,11 @@ abstract class $WeekCopyWith<$Res> {
       _$WeekCopyWithImpl<$Res, Week>;
   @useResult
   $Res call(
-      {String dayName,
+      {String? dayName,
       String? date,
       double? weight,
       double? height,
-      double results});
+      double? results});
 }
 
 /// @nodoc
@@ -57,17 +57,17 @@ class _$WeekCopyWithImpl<$Res, $Val extends Week>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? dayName = null,
+    Object? dayName = freezed,
     Object? date = freezed,
     Object? weight = freezed,
     Object? height = freezed,
-    Object? results = null,
+    Object? results = freezed,
   }) {
     return _then(_value.copyWith(
-      dayName: null == dayName
+      dayName: freezed == dayName
           ? _value.dayName
           : dayName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -80,10 +80,10 @@ class _$WeekCopyWithImpl<$Res, $Val extends Week>
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as double?,
-      results: null == results
+      results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ) as $Val);
   }
 }
@@ -96,11 +96,11 @@ abstract class _$$WeekImplCopyWith<$Res> implements $WeekCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String dayName,
+      {String? dayName,
       String? date,
       double? weight,
       double? height,
-      double results});
+      double? results});
 }
 
 /// @nodoc
@@ -113,17 +113,17 @@ class __$$WeekImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? dayName = null,
+    Object? dayName = freezed,
     Object? date = freezed,
     Object? weight = freezed,
     Object? height = freezed,
-    Object? results = null,
+    Object? results = freezed,
   }) {
     return _then(_$WeekImpl(
-      dayName: null == dayName
+      dayName: freezed == dayName
           ? _value.dayName
           : dayName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -136,10 +136,10 @@ class __$$WeekImplCopyWithImpl<$Res>
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as double?,
-      results: null == results
+      results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 }
@@ -148,17 +148,13 @@ class __$$WeekImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$WeekImpl implements _Week {
   const _$WeekImpl(
-      {required this.dayName,
-      this.date,
-      this.weight,
-      this.height,
-      required this.results});
+      {this.dayName, this.date, this.weight, this.height, this.results});
 
   factory _$WeekImpl.fromJson(Map<String, dynamic> json) =>
       _$$WeekImplFromJson(json);
 
   @override
-  final String dayName;
+  final String? dayName;
   @override
   final String? date;
   @override
@@ -166,7 +162,7 @@ class _$WeekImpl implements _Week {
   @override
   final double? height;
   @override
-  final double results;
+  final double? results;
 
   @override
   String toString() {
@@ -206,16 +202,16 @@ class _$WeekImpl implements _Week {
 
 abstract class _Week implements Week {
   const factory _Week(
-      {required final String dayName,
+      {final String? dayName,
       final String? date,
       final double? weight,
       final double? height,
-      required final double results}) = _$WeekImpl;
+      final double? results}) = _$WeekImpl;
 
   factory _Week.fromJson(Map<String, dynamic> json) = _$WeekImpl.fromJson;
 
   @override
-  String get dayName;
+  String? get dayName;
   @override
   String? get date;
   @override
@@ -223,7 +219,7 @@ abstract class _Week implements Week {
   @override
   double? get height;
   @override
-  double get results;
+  double? get results;
   @override
   @JsonKey(ignore: true)
   _$$WeekImplCopyWith<_$WeekImpl> get copyWith =>

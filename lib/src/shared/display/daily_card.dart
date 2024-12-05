@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nishauri/src/shared/input/Button.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
-final selectedIndexProvider = StateProvider<int>((ref) => 1);
+import '../../features/self_screening/blood_sugar/presentation/pages/BloodSugarScreen.dart';
+import '../providers/selectedIndexProvider.dart';
+
 class FilterCard extends HookConsumerWidget {
   final List<String>? columnTitles;
   final Function(int selectedIndex)? onPressed;
@@ -16,6 +17,8 @@ class FilterCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedIndex = ref.watch(selectedIndexProvider);
+
     return Card(
       color: Constants.bgColor,
       elevation: Constants.FOUR,
@@ -27,7 +30,7 @@ class FilterCard extends HookConsumerWidget {
             IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: _buildColumns(context, ref),
+                children: _buildColumns(context, ref, selectedIndex),
               ),
             ),
           ],
@@ -36,7 +39,7 @@ class FilterCard extends HookConsumerWidget {
     );
   }
 
-  List<Widget> _buildColumns(BuildContext context, WidgetRef ref) {
+  List<Widget> _buildColumns(BuildContext context, WidgetRef ref, int selectedIndex) {
     if (columnTitles!.isEmpty) {
       return [];
     }
@@ -46,7 +49,7 @@ class FilterCard extends HookConsumerWidget {
       String title = columnTitles![i];
       columns.add(
         Expanded(
-          child: _buildColumn(title, i, context, ref),
+          child: _buildColumn(title, i, context, ref, selectedIndex),
         ),
       );
       if (i < columnTitles!.length - 1) {
@@ -56,10 +59,9 @@ class FilterCard extends HookConsumerWidget {
     return columns;
   }
 
-  // Build a column and highlight the selected one
-  Widget _buildColumn(String title, int index, BuildContext context, WidgetRef ref) {
+  Widget _buildColumn(String title, int index, BuildContext context, WidgetRef ref, int selectedIndex) {
     final theme = Theme.of(context);
-    // final bool isSelected = index == _selectedIndex;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Constants.SMALL_SPACING),
       child: Row(
@@ -71,7 +73,7 @@ class FilterCard extends HookConsumerWidget {
                 width: Constants.SMALL_APP_BAR_HEIGHT,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: index == ref.watch(selectedIndexProvider) ? Constants.white : null,
+                    backgroundColor: index == selectedIndex ? Constants.white : null,
                   ),
                   onPressed: () => onPressed!(index),
                   child: Text(

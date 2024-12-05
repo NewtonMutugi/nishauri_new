@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nishauri/src/features/self_screening/bmi/data/model/filter_data.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_filter_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_log_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_status_nutrition_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/presentation/widgets/BMILineGraph.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
 import 'package:nishauri/src/shared/display/daily_card.dart';
-import 'package:nishauri/src/shared/input/Button.dart';
+import 'package:nishauri/src/shared/providers/selectedIndexProvider.dart';
 import 'package:nishauri/src/utils/constants.dart';
-import 'package:nishauri/src/utils/helpers.dart';
 import 'package:nishauri/src/utils/routes.dart';
-
-final selectedIndexProvider = StateProvider<int>((ref) => 1);
 
 class BMICalculatorResultsScreen extends HookConsumerWidget {
   final double? otherBMI;
@@ -51,7 +46,8 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
     final bmiListAsync = ref.watch(bmiListProvider);
     final bmiFilter = ref.watch(bmiFilterProvider);
     final selectedIndex = ref.watch(selectedIndexProvider);
-    final filterData = selectedIndex == 0 ? "Week" : "6 Months";
+
+    final filter =  ["Week", "6 Months"];
 
     final currentBMIEntries = bmiListAsync.when(
       data: (data) {
@@ -90,7 +86,7 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                     runSpacing: Constants.SIXTEEN,
                     children: [
                       FilterCard(
-                        columnTitles: ["Week", "6 Months"],
+                        columnTitles: filter,
                         onPressed: (index) {
                         ref.read(selectedIndexProvider.notifier).state = index;
                         }
@@ -184,13 +180,11 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                                   Expanded(
                                     child: bmiFilter.when(
                                       data: (bmiData) {
-                                        print(selectedIndex);
-                                        print("BMI Filtered: ${bmiData}");
-                                        return BMILineGraph(data: bmiData, filter: filterData,);
+                                        return BMILineGraph(data: bmiData, filter: filter[selectedIndex],);
                                       },
 
                                       loading: () => Center(child: CircularProgressIndicator()),
-                                      error: (error, _) => Center(child: Text("No BMI Data")),
+                                      error: (error, _) => Center(child: Text("No BMI Data $error")),
                                     ),
                                   ),
                                 ],

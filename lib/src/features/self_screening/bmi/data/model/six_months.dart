@@ -7,10 +7,10 @@ part 'six_months.g.dart';
 class SixMonths with _$SixMonths {
 
   const factory SixMonths({
-    required String month,
+    String? month,
     double? avgWeight,
     double? avgHeight,
-    required double avgResults,
+    double? avgResults,
   }) = _SixMonths;
 
   factory SixMonths.fromJson(Map<String, Object?> json)
