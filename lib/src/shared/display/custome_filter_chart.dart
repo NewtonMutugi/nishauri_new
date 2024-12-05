@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CustomFilterLineChart extends StatelessWidget {
-  final List<FlSpot> dataPoints;
+  final List<FlSpot>? dataPoints;
   final String? xAxisLabel;
   final String? yAxisLabel;
   final double? minX;
@@ -50,7 +50,7 @@ class CustomFilterLineChart extends StatelessWidget {
                 LineChartData(
                   lineBarsData: [
                     LineChartBarData(
-                      spots: dataPoints,
+                      spots: dataPoints!,
                       isCurved: true,
                       color: barColor,
                       barWidth: 2,
@@ -64,27 +64,7 @@ class CustomFilterLineChart extends StatelessWidget {
                         showTitles: bottomTile,
                         getTitlesWidget: (value, meta) {
                           int index = value.toInt();
-                          String label;
-
-                          // Determine the label based on the filter
-                          switch (filter) {
-                            case 'Daily':
-                              // DateTime date = DateTime.parse(dateTimes[index]);
-                              label = dateTimes[index];
-                              break;
-                            case 'Weekly':
-                              label = 'Week ${index + 1}'; // Week number
-                              break;
-                            case 'Monthly':
-                              label = 'Month ${index + 1}'; // Month number
-                              break;
-                            case 'Yearly':
-                              label = 'Year ${index + 1}'; // Year number
-                              break;
-                            default:
-                              label = '';
-                          }
-
+                          String label = dateTimes[index];
                           return Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Text(label),

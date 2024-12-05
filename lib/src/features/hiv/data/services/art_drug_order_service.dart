@@ -73,18 +73,6 @@ class ARTDrugOrderService extends HTTPService {
     }
   }
 
-
-  // Future<List<ARTDrugOrder>> getOrders() async {
-  //   final response = await call(getOrders_, null);
-  //   final responseString = await response.stream.bytesToString();
-  //   final Map<String, dynamic> programData = json.decode(responseString);
-  //   final programs = (programData["programs"] as List<dynamic>)
-  //       .map((e) => ARTDrugOrder.fromJson(e))
-  //       .toList();
-  //   print(programs.toString());
-  //   return programs;
-  // }
-
   Future<StreamedResponse> createOrder_(Map<String, dynamic> data) async {
     final id = await _repository.getUserId();
     final tokenPair = await getCachedToken();

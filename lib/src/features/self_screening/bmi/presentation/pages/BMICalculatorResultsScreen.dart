@@ -184,8 +184,6 @@ class BMICalculatorResultsScreen extends HookConsumerWidget {
                                   Expanded(
                                     child: bmiFilter.when(
                                       data: (bmiData) {
-                                        print(selectedIndex);
-                                        print("BMI Filtered: ${bmiData}");
                                         return BMILineGraph(data: bmiData, filter: filterData,);
                                       },
 
