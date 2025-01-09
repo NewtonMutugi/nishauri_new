@@ -160,7 +160,7 @@ class BloodSugarScreen extends ConsumerWidget {
         children: [
           const CustomAppBar(
             smallTitle: "Blood Sugar",
-            height: 120,
+            height: Constants.SMALL_APP_BAR_HEIGHT,
             color: Constants.selfScreeningBgColor,
             rightBtTitle: "Add Data",
             path: RouteNames.BLOOD_SUGAR_INPUT,
@@ -173,8 +173,8 @@ class BloodSugarScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Wrap(
-                      spacing: 16,
-                      runSpacing: 16,
+                      spacing: Constants.SIXTEEN,
+                      runSpacing: Constants.SIXTEEN,
                       children: [
                         FilterCard(
                           columnTitles:filter,

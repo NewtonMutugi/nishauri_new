@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:nishauri/src/features/self_screening/blood_sugar/data/providers/blood_sugar_provider.dart';
 import 'package:nishauri/src/features/self_screening/bp/data/models/blood_pressure.dart';
 import 'package:nishauri/src/features/self_screening/bp/data/providers/blood_pressure_provider.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
@@ -55,6 +56,7 @@ class _BloodPressureInputsState extends ConsumerState<BloodPressureInputs> {
 
   void _reloadData() {
     ref.refresh(bloodPressureListProvider);
+    ref.refresh(bpFilterProvider);
   }
 
   void _submitData(double systolic, double diastolic, double? pulseRate){

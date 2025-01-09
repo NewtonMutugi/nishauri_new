@@ -14,17 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-FilterData _$FilterDataFromJson(Map<String, dynamic> json) {
-  return _FilterData.fromJson(json);
-}
-
 /// @nodoc
 mixin _$FilterData {
   List<Week> get week => throw _privateConstructorUsedError;
   List<SixMonths> get sixMonths => throw _privateConstructorUsedError;
   String? get user_id => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FilterDataCopyWith<FilterData> get copyWith =>
       throw _privateConstructorUsedError;
@@ -117,7 +112,7 @@ class __$$FilterDataImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$FilterDataImpl implements _FilterData {
   const _$FilterDataImpl(
       {required final List<Week> week,
@@ -125,9 +120,6 @@ class _$FilterDataImpl implements _FilterData {
       this.user_id})
       : _week = week,
         _sixMonths = sixMonths;
-
-  factory _$FilterDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FilterDataImplFromJson(json);
 
   final List<Week> _week;
   @override
@@ -164,7 +156,6 @@ class _$FilterDataImpl implements _FilterData {
             (identical(other.user_id, user_id) || other.user_id == user_id));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -177,13 +168,6 @@ class _$FilterDataImpl implements _FilterData {
   @pragma('vm:prefer-inline')
   _$$FilterDataImplCopyWith<_$FilterDataImpl> get copyWith =>
       __$$FilterDataImplCopyWithImpl<_$FilterDataImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$FilterDataImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _FilterData implements FilterData {
@@ -191,9 +175,6 @@ abstract class _FilterData implements FilterData {
       {required final List<Week> week,
       required final List<SixMonths> sixMonths,
       final String? user_id}) = _$FilterDataImpl;
-
-  factory _FilterData.fromJson(Map<String, dynamic> json) =
-      _$FilterDataImpl.fromJson;
 
   @override
   List<Week> get week;

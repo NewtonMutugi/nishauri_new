@@ -51,29 +51,10 @@ class CustomMultiLineChart extends StatelessWidget {
                         //   child: Text(label),
                         // );
                         if (index >= 0 && index < dateTimes.length) {
-                          DateTime date = DateTime.parse(dateTimes[index]);
-                          print(date);
 
-                          String label;
 
-                          // Determine the label based on the filter
-                          switch (filter) {
-                            case 'Daily':
-                              // DateTime date = DateTime.parse(dateTimes[index]);
-                              label = DateFormat('E').format(date);
-                              break;
-                            case 'Weekly':
-                              label = 'Week ${index + 1}'; // Week number
-                              break;
-                            case 'Monthly':
-                              label = 'Month ${index + 1}'; // Month number
-                              break;
-                            case 'Yearly':
-                              label = 'Year ${index + 1}'; // Year number
-                              break;
-                            default:
-                              label = '';
-                          }
+                          String label = dateTimes[index];
+
                           return Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Transform.rotate(

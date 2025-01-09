@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nishauri/src/features/auth/data/respositories/auth_repository.dart';
 import 'package:nishauri/src/features/auth/data/services/AuthApiService.dart';
+import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_filter_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/data/providers/bmi_log_provider.dart';
 import 'package:nishauri/src/features/self_screening/bmi/presentation/widgets/GenderPicker.dart';
 import 'package:nishauri/src/features/self_screening/bmi/presentation/widgets/HeightPicker.dart';
@@ -248,24 +249,14 @@ class BMICalculatorScreen extends HookConsumerWidget {
                                 .logBMI(height.value.toString(), weight.value.toString(), bmi.toString())
                                 .then((_) {
                               context.goNamed(RouteNames.BMI_CALCULATOR_RESULTS, extra: {"bmi" : bmi, "others" : isForSelf.value});
-                              print("I am printing ${isForSelf.value}");
                             });
                             ref.refresh(bmiListProvider);
+                            ref.refresh(bmiFilterProvider);
                           } else {
                             context.goNamed(RouteNames.BMI_CALCULATOR_RESULTS, extra: {"bmi" : bmi, "others" : isForSelf.value});
                           }
                         },
                       ),
-                      // const SizedBox(height: Constants.SPACING),
-                      // Button(
-                      //   title: "BMI History",
-                      //   backgroundColor: activeColor,
-                      //   textColor: theme.canvasColor,
-                      //   onPress: () {
-                      //     ref.refresh(bmiListProvider);
-                      //     context.goNamed(RouteNames.BMI_HISTORY);
-                      //   },
-                      // ),
                     ],
                   ),
                 ),
