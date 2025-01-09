@@ -67,7 +67,11 @@ class CustomFilterLineChart extends StatelessWidget {
                           String label = dateTimes[index];
                           return Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Text(label),
+                            child: Transform.rotate(
+                              angle: -45 * (3.14 / 180),
+                              child: Text(label),
+                              // child: Text(DateFormat('HH:mm-dd/MM').format(date)),
+                            ),
                           );
                         },
                         reservedSize: 30,

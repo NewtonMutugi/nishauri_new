@@ -4,7 +4,7 @@ import 'package:nishauri/src/features/self_screening/blood_sugar/data/models/blo
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/models/filter_bs.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/repository/blood_sugar_repository.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/repository/bs_advice_repository.dart';
-import 'package:nishauri/src/features/self_screening/blood_sugar/data/repository/sb_filter_repository.dart';
+import 'package:nishauri/src/features/self_screening/blood_sugar/data/repository/bs_filter_repository.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/services/blood_sugar_service.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/services/bs_advice_service.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/services/bs_filter_service.dart';

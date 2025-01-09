@@ -14,8 +14,7 @@ class GeneralDashboard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bmiAsync = ref.watch(bmiFilterProvider);
-    final bloodPressureAsync = ref.watch(bloodPressureListProvider);
-    final bloodSugarAsync = ref.watch(bloodSugarEntriesProvider);
+    final bloodPressureAsync = ref.watch(bpFilterProvider);
     final bsFilterListAsync = ref.watch(bsFilterListProvider);
     final theme = Theme.of(context);
 
@@ -56,9 +55,8 @@ class GeneralDashboard extends ConsumerWidget {
                     Expanded(
                       child: bloodPressureAsync.when(
                         data: (bpData) {
-                          final displayedData = bpData.length > 5 ? bpData.sublist(bpData.length - 5) : bpData;
 
-                          return TrendChartScreen(data: displayedData);
+                          return TrendChartScreen(data: bpData, filter: 'Week',);
                         },
                         loading: () => Center(child: CircularProgressIndicator()),
                         error: (error, _) => Center(

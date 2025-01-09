@@ -1,41 +1,109 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:nishauri/src/features/self_screening/bp/data/models/blood_pressure.dart';
+import 'package:intl/intl.dart';
+import 'package:nishauri/src/features/self_screening/bp/data/models/filter_bp.dart';
 import 'package:nishauri/src/shared/charts/CustomeMultLineChart.dart';
 import 'package:nishauri/src/utils/constants.dart';
 
 class TrendChartScreen extends StatelessWidget {
-  final List<BloodPressure> data;
+  final FilterBp data;
+  final String filter;
   const TrendChartScreen({
-    required this.data,
+    required this.data, required this.filter,
     Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final List<FlSpot> systolicSpots;
 
-        final systolicSpots = data.asMap().entries.map((entry) {
-          final index = entry.key.toDouble();
-          final systolic = entry.value.systolic;
-          return FlSpot(index, systolic);
-        }).toList();
+    if (filter == "Day") {
+      systolicSpots = data.hourly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),entry.value.systolic ?? 0,
+      ))
+          .toList() ?? [];
+    } else if (filter == "Week") {
+      systolicSpots = data.weekly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),entry.value.systolic ?? 0,
+      ))
+          .toList() ?? [];
+    } else if (filter == "6 Months") {
+      systolicSpots = data.sixMonthly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),entry.value.avg_systolic ?? 0,
+      ))
+          .toList() ?? [];
+    } else {
+      systolicSpots = [];
+    }
 
-        final diastolicSpots = data.asMap().entries.map((entry) {
-          final index = entry.key.toDouble();
-          final diastolic = entry.value.diastolic;
-          return FlSpot(index, diastolic);
-        }).toList();
+    final List<FlSpot> diastolicSpots;
 
-        // final pulseRateSpots = data.asMap().entries.map((entry) {
-        //   final index = entry.key.toDouble();
-        //   final pulse = entry.value.pulse_rate;
-        //   return FlSpot(index, pulse);
-        // }).toList();
+    if (filter == "Day") {
+      diastolicSpots = data.hourly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),entry.value.diastolic ?? 0,
+      ))
+          .toList() ?? [];
+    } else if (filter == "Week") {
+      diastolicSpots = data.weekly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),entry.value.diastolic ?? 0,
+      ))
+          .toList() ?? [];
+    } else if (filter == "6 Months") {
+      diastolicSpots = data.sixMonthly
+          ?.asMap()
+          .entries
+          .map((entry) => FlSpot(
+        entry.key.toDouble(),entry.value.avg_diastolic ?? 0,
+      ))
+          .toList() ?? [];
+    } else {
+      diastolicSpots = [];
+    }
 
-        final date = data.asMap().entries.map((e) {
-          return e.value.created_at.toString();
-        }).toList();
-        print(data);
-        print(date);
+
+    final List<String> dateTimeList;
+    if (filter == "Day") {
+      dateTimeList = data.hourly
+          ?.asMap()
+          .entries
+          .map((entry) {
+        final timeString = entry.value.time;
+        final dateTime = timeString != null ? DateTime.parse(timeString) : DateTime.now();
+        return DateFormat('dd/MM').format(dateTime);
+      })
+          .whereType<String>()
+          .toList() ?? [];
+    } else if (filter == "Week") {
+      dateTimeList = data.weekly
+          ?.asMap()
+          .entries
+          .map((entry) => entry.value.dayName )
+          .whereType<String>()
+          .toList() ?? [];
+    } else if (filter == "6 Months") {
+      dateTimeList = data.sixMonthly
+          ?.asMap()
+          .entries
+          .map((entry) => entry.value.month)
+          .whereType<String>()
+          .toList() ?? [];
+    } else {
+      dateTimeList = [];
+    }
 
         return Container(
           height: 350,
@@ -70,26 +138,12 @@ class TrendChartScreen extends StatelessWidget {
                     ),
                     dotData: FlDotData(show: true),
                   ),
-                  // LineChartBarData(
-                  //   spots: pulseRateSpots,
-                  //   isCurved: true,
-                  //   color: Constants.programsColor,
-                  //   barWidth: 2,
-                  //   belowBarData: BarAreaData(
-                  //     show: false,
-                  //     gradient: LinearGradient(
-                  //       colors: [Constants.programsColor.withOpacity(0.3), Constants.programsColor.withOpacity(0)],
-                  //     ),
-                  //   ),
-                  //   dotData: FlDotData(show: true),
-                  // ),
                 ],
                 minX: 0,
-                maxX: systolicSpots.length - 1,
-                minY: 29,
-                dateTimes: date,
+                maxX: dateTimeList.length - 1,
+                dateTimes: dateTimeList,
                 showLeftTitles: false,
-                filter: "Daily",
+                filter: filter,
               ),
             ),
           ),

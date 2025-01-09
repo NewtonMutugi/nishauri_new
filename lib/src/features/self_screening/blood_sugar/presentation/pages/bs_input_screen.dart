@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:nishauri/src/features/self_screening/blood_sugar/data/models/blood_sugar.dart';
@@ -64,6 +63,7 @@ class _BloodSugarInputsState extends ConsumerState<BloodSugarInputs> {
 
   void _reloadData() {
     ref.refresh(bloodSugarProvider);
+    ref.refresh(bsFilterListProvider);
   }
 
   void _submitData(double level) {

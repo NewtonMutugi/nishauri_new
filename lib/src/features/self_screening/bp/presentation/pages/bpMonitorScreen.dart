@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:nishauri/src/features/self_screening/bp/data/models/blood_pressure.dart';
 import 'package:nishauri/src/features/self_screening/bp/data/providers/blood_pressure_provider.dart';
-import 'package:nishauri/src/features/self_screening/bp/presentation/pages/BPLinelistScreen.dart';
 import 'package:nishauri/src/features/self_screening/bp/presentation/pages/trend_chart_screen.dart';
 import 'package:nishauri/src/shared/display/CustomAppBar.dart';
 import 'package:nishauri/src/shared/display/background_image_widget.dart';
-import 'package:nishauri/src/shared/display/custome_filter_chart.dart';
 import 'package:nishauri/src/shared/display/daily_card.dart';
 import 'package:nishauri/src/shared/input/Button.dart';
+import 'package:nishauri/src/shared/providers/selectedIndexProvider.dart';
 import 'package:nishauri/src/utils/constants.dart';
 import 'package:nishauri/src/utils/routes.dart';
 
@@ -67,14 +65,17 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
     final bloodPressureListAsync = ref.watch(bloodPressureListProvider);
     final theme = Theme.of(context);
     final adviceAsync = ref.watch(bloodPressureListAdviceProvider);
+    final selectedIndex = ref.watch(selectedIndexProvider);
+    final bloodPressureAsync = ref.watch(bpFilterProvider);
     return bloodPressureListAsync.when(
       data: (data) {
         data.sort((a, b) => b.created_at.compareTo(a.created_at));
         final displayedData = data.isNotEmpty ? data.first : null;
         data.sort((a, b) => a.created_at.compareTo(b.created_at));
-        final chatData = data.length > 5 ? data.sublist(data.length - 5) : data;
 
         final status = _getBloodPressureStatus(displayedData!.systolic, displayedData.diastolic);
+
+        final filter = ["Day", "Week", "6 Months"];
 
         final advice = adviceAsync.when(
           data: (adviceData) => adviceData.firstWhere(
@@ -109,7 +110,10 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                               runSpacing: Constants.SIXTEEN,
                               children: [
                                 FilterCard(
-                                    columnTitles: ["Day", "Week", "6 Months"]
+                                    columnTitles: filter,
+                                  onPressed: (index) {
+                                    ref.read(selectedIndexProvider.notifier).state = index;
+                                  },
                                 ),
                               ],
                             ),
@@ -136,7 +140,21 @@ class _BPMonitorScreenState extends ConsumerState<BPMonitorScreen> {
                               spacing: 1,
                               runSpacing: Constants.SIXTEEN,
                               children: [
-                                TrendChartScreen(data: chatData,)
+                                bloodPressureAsync.when(
+                                  data: (bpData) {
+
+                                    return TrendChartScreen(data: bpData, filter: filter[selectedIndex],);
+                                  },
+                                  loading: () => Center(child: CircularProgressIndicator()),
+                                  error: (error, _) => Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("No Blood Pressure Data"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             const SizedBox(height: Constants.SPACING,),

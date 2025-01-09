@@ -3,7 +3,6 @@ import 'package:nishauri/src/features/self_screening/bmi/data/model/six_months.d
 import 'package:nishauri/src/features/self_screening/bmi/data/model/week.dart';
 
 part 'filter_data.freezed.dart';
-part 'filter_data.g.dart';
 
 @Freezed()
 class FilterData with _$FilterData {
